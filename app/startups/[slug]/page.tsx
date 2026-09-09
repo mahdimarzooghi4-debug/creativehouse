@@ -1,10 +1,9 @@
+import { notFound } from "next/navigation";
 import { SiteFooter, SiteHeader } from "../../../components/site-chrome";
+import { db } from "../../../lib/db";
+import { startupStageLabels } from "../../../lib/content-utils";
 
-const productCards = [
-  ["مسئله", "فرآیند فعلی برای کاربران زمان‌بر، پراکنده و فاقد تجربه یکپارچه است؛ نتیجه آن کاهش سرعت و کیفیت تصمیم‌گیری است."],
-  ["راهکار", "یک راهکار دیجیتال ساده که جریان کار را شفاف می‌کند، داده‌ها را یکجا جمع می‌کند و ارتباط میان ذی‌نفعان را سریع‌تر می‌سازد."],
-  ["محصول", "نسخه اولیه محصول برای آزمون با کاربر واقعی آماده شده و مسیر توسعه آن بر اساس بازخورد، داده و نیاز بازار ادامه پیدا می‌کند."],
-];
+export const dynamic = "force-dynamic";
 
 const milestones = [
   ["تعریف مسئله", "شناخت دقیق مسئله و کاربران هدف"],
@@ -13,13 +12,18 @@ const milestones = [
   ["رشد و بازار", "مدل درآمد، توسعه بازار و همکاری"],
 ];
 
-const team = [
-  ["م", "مهدی نمونه", "هم‌بنیان‌گذار و مدیر محصول"],
-  ["س", "سارا نمونه", "طراح محصول و تجربه کاربر"],
-  ["ع", "علی نمونه", "توسعه‌دهنده و مسئول فنی"],
-];
+export default async function StartupDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const startup = await db.startup.findFirst({ where: { slug, deletedAt: null, status: "published" } });
+  if (!startup) notFound();
 
-export default function StartupDetailPage() {
+  const mediaIds = [startup.logoMediaId, startup.coverMediaId].filter((value): value is string => Boolean(value));
+  const media = mediaIds.length ? await db.media.findMany({ where: { id: { in: mediaIds } } }) : [];
+  const mediaMap = new Map(media.map((item) => [item.id, item]));
+  const cover = startup.coverMediaId ? mediaMap.get(startup.coverMediaId) : null;
+  const logo = startup.logoMediaId ? mediaMap.get(startup.logoMediaId) : null;
+  const stageLabel = startupStageLabels[startup.stage] || startup.stage;
+
   return (
     <div className="public-page">
       <SiteHeader active="startups" />
@@ -27,20 +31,24 @@ export default function StartupDetailPage() {
         <section className="startup-detail-hero">
           <div className="shell startup-detail-hero__grid">
             <div className="startup-detail-visual" aria-hidden="true">
-              <span className="startup-detail-visual__navy" />
-              <span className="startup-detail-visual__coral" />
-              <span className="startup-detail-visual__gold" />
-              <strong>نمونه ۰۱</strong>
-              <p>لوگو / هویت بصری استارتاپ</p>
+              {cover ? <img src={`/uploads/${cover.storageKey}`} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : (
+                <>
+                  <span className="startup-detail-visual__navy" />
+                  <span className="startup-detail-visual__coral" />
+                  <span className="startup-detail-visual__gold" />
+                  <strong>{startup.name}</strong>
+                  <p>هویت بصری استارتاپ</p>
+                </>
+              )}
             </div>
             <div className="startup-detail-copy">
               <p className="eyebrow">پروفایل استارتاپ</p>
-              <h1>استارتاپ نمونه ۰۱</h1>
-              <p>یک تیم خلاق در حوزه فناوری نرم که برای یک مسئله واقعی، محصولی قابل استفاده و توسعه‌پذیر می‌سازد. این صفحه نمونه ساختار پروفایل استارتاپ در سایت خانه خلاق آینه است.</p>
+              <h1>{startup.name}</h1>
+              <p>{startup.summary || "معرفی این استارتاپ به‌زودی تکمیل می‌شود."}</p>
               <div className="detail-tags">
-                <span className="detail-tag detail-tag--primary">فناوری نرم</span>
-                <span className="detail-tag">در حال رشد</span>
-                <span className="detail-tag">تیم منتخب</span>
+                <span className="detail-tag detail-tag--primary">{startup.field}</span>
+                <span className="detail-tag">{stageLabel}</span>
+                {startup.featured ? <span className="detail-tag">تیم منتخب</span> : null}
               </div>
             </div>
           </div>
@@ -54,14 +62,14 @@ export default function StartupDetailPage() {
             </div>
             <div className="startup-about-grid">
               <div className="startup-facts">
-                <article className="startup-fact"><span>مرحله فعلی</span><strong>اعتبارسنجی و توسعه محصول</strong></article>
-                <article className="startup-fact"><span>سال شروع</span><strong>۱۴۰۵</strong></article>
-                <article className="startup-fact"><span>تعداد اعضای تیم</span><strong>۴ نفر</strong></article>
-                <article className="startup-fact"><span>حوزه فعالیت</span><strong>فناوری نرم و خدمات</strong></article>
+                <article className="startup-fact"><span>مرحله فعلی</span><strong>{stageLabel}</strong></article>
+                <article className="startup-fact"><span>حوزه فعالیت</span><strong>{startup.field}</strong></article>
+                <article className="startup-fact"><span>بنیان‌گذار</span><strong>{startup.founder || "—"}</strong></article>
+                <article className="startup-fact"><span>وضعیت</span><strong>فعال در خانه خلاق</strong></article>
               </div>
               <article className="startup-about-copy">
                 <h3>معرفی کوتاه</h3>
-                <p>این استارتاپ با تمرکز بر طراحی یک راهکار ساده، قابل سنجش و مقیاس‌پذیر شکل گرفته است. تیم در خانه خلاق آینه روی اعتبارسنجی مسئله، ساخت نمونه اولیه، دریافت بازخورد از کاربران و آماده‌سازی برای ورود به بازار کار می‌کند.</p>
+                <p>{startup.summary || "اطلاعات تکمیلی این تیم در حال آماده‌سازی است."}</p>
               </article>
             </div>
           </div>
@@ -74,13 +82,21 @@ export default function StartupDetailPage() {
               <h2>مسئله را می‌شناسیم، راهکار را می‌سازیم</h2>
             </div>
             <div className="startup-product-grid">
-              {productCards.map(([title, text]) => (
-                <article className="startup-product-card" key={title}>
-                  <div className="startup-product-card__accent" />
-                  <h3>{title}</h3>
-                  <p>{text}</p>
-                </article>
-              ))}
+              <article className="startup-product-card">
+                <div className="startup-product-card__accent" />
+                <h3>مسئله و راهکار</h3>
+                <p>{startup.solution || "شرح مسئله و راهکار این تیم به‌زودی تکمیل می‌شود."}</p>
+              </article>
+              <article className="startup-product-card">
+                <div className="startup-product-card__accent" />
+                <h3>مرحله رشد</h3>
+                <p>این تیم در مرحله «{stageLabel}» قرار دارد و مسیر توسعه خود را در کنار شبکه خانه خلاق ادامه می‌دهد.</p>
+              </article>
+              <article className="startup-product-card">
+                <div className="startup-product-card__accent" />
+                <h3>حوزه فعالیت</h3>
+                <p>{startup.field}</p>
+              </article>
             </div>
           </div>
         </section>
@@ -103,24 +119,24 @@ export default function StartupDetailPage() {
           </div>
         </section>
 
-        <section className="startup-team-section">
-          <div className="shell">
-            <div className="section-intro">
-              <p className="eyebrow">تیم</p>
-              <h2>آدم‌هایی که پشت محصول ایستاده‌اند</h2>
-            </div>
-            <div className="startup-team-grid">
-              {team.map(([initial, name, role]) => (
-                <article className="team-card" key={name}>
-                  <span className="team-avatar">{initial}</span>
-                  <h3>{name}</h3>
-                  <p>{role}</p>
-                  <a href="#">مشاهده پروفایل ←</a>
+        {(startup.founder || startup.website || logo) ? (
+          <section className="startup-team-section">
+            <div className="shell">
+              <div className="section-intro">
+                <p className="eyebrow">تیم و ارتباط</p>
+                <h2>آدم‌هایی که پشت محصول ایستاده‌اند</h2>
+              </div>
+              <div className="startup-team-grid">
+                <article className="team-card">
+                  {logo ? <img src={`/uploads/${logo.storageKey}`} alt={`لوگوی ${startup.name}`} style={{ width: 72, height: 72, objectFit: "contain" }} /> : <span className="team-avatar">{(startup.founder || startup.name).slice(0, 1)}</span>}
+                  <h3>{startup.founder || startup.name}</h3>
+                  <p>{startup.founder ? `بنیان‌گذار ${startup.name}` : startup.field}</p>
+                  {startup.website ? <a href={startup.website.startsWith("http") ? startup.website : `https://${startup.website}`} target="_blank" rel="noreferrer">وب‌سایت / شبکه اجتماعی ←</a> : null}
                 </article>
-              ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ) : null}
       </main>
       <SiteFooter />
     </div>

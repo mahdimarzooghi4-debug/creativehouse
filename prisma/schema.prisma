@@ -37,6 +37,7 @@ model News {
   title        String
   summary      String?
   body         String
+  tags         String?
   category     String    @default("news")
   status       String    @default("draft")
   publishedAt  DateTime?

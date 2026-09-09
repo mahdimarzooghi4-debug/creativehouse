@@ -1,16 +1,38 @@
 import { CmsShell } from "./cms-shell";
 
-type NewsEditorProps = {
-  mode?: "create" | "edit";
+type NewsEditorValue = {
+  slug: string;
+  title: string;
+  summary: string | null;
+  body: string;
+  tags: string | null;
+  category: string;
+  status: string;
+  publishedAt: Date | null;
+  featured: boolean;
 };
 
-export function CmsNewsEditor({ mode = "edit" }: NewsEditorProps) {
+type NewsEditorProps = {
+  mode?: "create" | "edit";
+  news?: NewsEditorValue | null;
+};
+
+function dateInputValue(value?: Date | null) {
+  if (!value) return "";
+  const year = value.getFullYear();
+  const month = String(value.getMonth() + 1).padStart(2, "0");
+  const day = String(value.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+export function CmsNewsEditor({ mode = "edit", news }: NewsEditorProps) {
   const isCreate = mode === "create";
-  const previewHref = isCreate ? "/news" : "/news/selected-teams-gathering";
+  const action = isCreate ? "/api/admin/news" : `/api/admin/news/${news?.slug}`;
+  const previewHref = isCreate ? "/news" : `/news/${news?.slug}`;
 
   return (
     <CmsShell active="news">
-      <form className="cms-dashboard cms-news-editor" action="/admin/news" method="get">
+      <form className="cms-dashboard cms-news-editor" action={action} method="post" encType="multipart/form-data">
         <header className="cms-page-header cms-news-editor-header">
           <div>
             <h1>{isCreate ? "ثبت خبر جدید" : "ویرایش خبر"}</h1>
@@ -19,7 +41,9 @@ export function CmsNewsEditor({ mode = "edit" }: NewsEditorProps) {
           <div className="cms-news-editor-actions" aria-label="عملیات ویرایش خبر">
             <a className="cms-outline-button" href="/admin/news">{isCreate ? "لغو" : "بازگشت"}</a>
             <a className="cms-outline-button" href={previewHref} target="_blank" rel="noreferrer">پیش‌نمایش</a>
-            <button className="cms-news-dark-button" type="submit" name="notice" value="published">انتشار</button>
+            {!isCreate ? <button className="cms-outline-button" type="submit" name="operation" value="delete" formNoValidate>حذف</button> : null}
+            <button className="cms-outline-button" type="submit" name="operation" value="draft" formNoValidate>ذخیره پیش‌نویس</button>
+            <button className="cms-news-dark-button" type="submit" name="operation" value="publish">انتشار</button>
           </div>
         </header>
 
@@ -27,45 +51,22 @@ export function CmsNewsEditor({ mode = "edit" }: NewsEditorProps) {
           <section className="cms-news-editor-card cms-news-editor-card--main" aria-label="محتوای خبر">
             <label className="cms-news-form-field">
               <span>عنوان خبر</span>
-              <input
-                name="title"
-                required
-                defaultValue={isCreate ? "" : "نخستین گردهمایی تیم‌های منتخب خانه خلاق آینه برگزار شد"}
-                placeholder="عنوان خبر"
-              />
+              <input name="title" required defaultValue={news?.title ?? ""} placeholder="عنوان خبر" />
             </label>
 
             <label className="cms-news-form-field">
               <span>خلاصه</span>
-              <textarea
-                className="cms-news-summary"
-                name="summary"
-                rows={3}
-                required
-                defaultValue={isCreate ? "" : "تیم‌های منتخب در یک نشست مشترک مسیر توسعه محصول، شبکه منتورینگ و برنامه‌های ماه‌های پیش‌رو را مرور کردند."}
-                placeholder="خلاصه خبر"
-              />
+              <textarea className="cms-news-summary" name="summary" rows={3} required defaultValue={news?.summary ?? ""} placeholder="خلاصه خبر" />
             </label>
 
             <label className="cms-news-form-field">
               <span>متن خبر</span>
-              <textarea
-                className="cms-news-body"
-                name="body"
-                rows={10}
-                required
-                defaultValue={isCreate ? "" : "متن کامل خبر در این بخش با امکان افزودن پاراگراف، تیتر میانی و لینک مدیریت می‌شود. این نمونه برای طراحی CMS قرار گرفته است."}
-                placeholder="متن کامل خبر"
-              />
+              <textarea className="cms-news-body" name="body" rows={10} required defaultValue={news?.body ?? ""} placeholder="متن کامل خبر" />
             </label>
 
             <label className="cms-news-form-field">
               <span>برچسب‌ها</span>
-              <input
-                name="tags"
-                defaultValue={isCreate ? "" : "خانه خلاق، استارتاپ، منتورینگ"}
-                placeholder="برچسب‌ها را با ویرگول جدا کن"
-              />
+              <input name="tags" defaultValue={news?.tags ?? ""} placeholder="برچسب‌ها را با ویرگول جدا کن" />
             </label>
           </section>
 
@@ -74,9 +75,10 @@ export function CmsNewsEditor({ mode = "edit" }: NewsEditorProps) {
 
             <label className="cms-news-form-field">
               <span>دسته‌بندی</span>
-              <select name="category" defaultValue={isCreate ? "news" : "activity-report"}>
+              <select name="category" defaultValue={news?.category ?? "news"}>
                 <option value="news">خبر</option>
                 <option value="activity-report">گزارش فعالیت</option>
+                <option value="report">گزارش</option>
                 <option value="call">فراخوان</option>
                 <option value="collaboration">همکاری</option>
               </select>
@@ -84,7 +86,7 @@ export function CmsNewsEditor({ mode = "edit" }: NewsEditorProps) {
 
             <label className="cms-news-form-field">
               <span>وضعیت</span>
-              <select name="status" defaultValue={isCreate ? "draft" : "published"}>
+              <select name="status" defaultValue={news?.status ?? "draft"}>
                 <option value="published">منتشرشده</option>
                 <option value="scheduled">زمان‌بندی</option>
                 <option value="draft">پیش‌نویس</option>
@@ -94,26 +96,21 @@ export function CmsNewsEditor({ mode = "edit" }: NewsEditorProps) {
 
             <label className="cms-news-form-field">
               <span>تاریخ انتشار</span>
-              <input
-                name="publishedAt"
-                inputMode="numeric"
-                defaultValue={isCreate ? "" : "۱۴۰۵/۰۶/۱۸"}
-                placeholder="۱۴۰۵/۰۶/۱۸"
-              />
+              <input name="publishedAt" type="date" defaultValue={dateInputValue(news?.publishedAt)} />
             </label>
 
             <label className="cms-news-form-field">
               <span>خبر منتخب</span>
-              <select name="featured" defaultValue={isCreate ? "no" : "yes"}>
+              <select name="featured" defaultValue={news?.featured ? "yes" : "no"}>
                 <option value="yes">بله</option>
                 <option value="no">خیر</option>
               </select>
             </label>
 
             <label className="cms-news-upload-field">
-              <input type="file" name="cover" accept="image/*" />
+              <input type="file" name="cover" accept="image/png,image/jpeg,image/webp" />
               <span>تصویر خبر</span>
-              <small>نسبت پیشنهادی 16:9</small>
+              <small>PNG / JPG / WebP • حداکثر ۵ مگابایت</small>
             </label>
           </section>
         </div>
