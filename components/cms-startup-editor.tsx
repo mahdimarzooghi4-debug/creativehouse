@@ -15,9 +15,10 @@ export function CmsStartupEditor({ mode = "edit" }: StartupEditorProps) {
             <h1>{isCreate ? "افزودن پروفایل استارتاپ" : "ویرایش پروفایل استارتاپ"}</h1>
             <p>اطلاعات عمومی، تصویر، تیم و وضعیت انتشار را مدیریت کن</p>
           </div>
-          <div className="cms-editor-actions">
-            <button className="cms-outline-button" type="submit" name="state" value="draft">ذخیره پیش‌نویس</button>
-            <button className="cms-dark-button" type="submit" name="state" value="published">انتشار</button>
+          <div className="cms-editor-actions" aria-label="عملیات ویرایش استارتاپ">
+            <a className="cms-outline-button" href="/admin/startups">{isCreate ? "لغو" : "بازگشت"}</a>
+            <button className="cms-outline-button" type="submit" name="notice" value="draft-saved" formNoValidate>ذخیره پیش‌نویس</button>
+            <button className="cms-dark-button" type="submit" name="notice" value="published">انتشار</button>
           </div>
         </header>
 
@@ -27,12 +28,12 @@ export function CmsStartupEditor({ mode = "edit" }: StartupEditorProps) {
 
             <label className="cms-form-field">
               <span>نام استارتاپ</span>
-              <input name="name" defaultValue={isCreate ? "" : "مرکز نوآوری آفتاب"} placeholder="نام استارتاپ" />
+              <input name="name" required defaultValue={isCreate ? "" : "مرکز نوآوری آفتاب"} placeholder="نام استارتاپ" />
             </label>
 
             <label className="cms-form-field">
               <span>حوزه فعالیت</span>
-              <input name="field" defaultValue={isCreate ? "" : "فناوری فرهنگی و صنایع خلاق"} placeholder="حوزه فعالیت" />
+              <input name="field" required defaultValue={isCreate ? "" : "فناوری فرهنگی و صنایع خلاق"} placeholder="حوزه فعالیت" />
             </label>
 
             <div className="cms-form-split">
@@ -57,7 +58,7 @@ export function CmsStartupEditor({ mode = "edit" }: StartupEditorProps) {
 
             <label className="cms-form-field">
               <span>معرفی کوتاه</span>
-              <textarea name="summary" rows={4} defaultValue={isCreate ? "" : "تیمی مسئله‌محور برای توسعه راهکارهای نوآورانه در بازار صنایع خلاق ایران."} placeholder="معرفی کوتاه استارتاپ" />
+              <textarea name="summary" rows={4} required defaultValue={isCreate ? "" : "تیمی مسئله‌محور برای توسعه راهکارهای نوآورانه در بازار صنایع خلاق ایران."} placeholder="معرفی کوتاه استارتاپ" />
             </label>
 
             <label className="cms-form-field">
