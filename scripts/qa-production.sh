@@ -90,10 +90,10 @@ delete_status="$(curl -sS -o /dev/null -w '%{http_code}' \
 expect_status 404 "$BASE_URL/startups/qa-startup"
 
 echo "Checking public collaboration submission..."
-collab_status="$(curl -sS -o /dev/null -w '%{http_code}' \
+collab_headers="$TMP_DIR/collab-headers"
+collab_status="$(curl -sS -D "$collab_headers" -o /dev/null -w '%{http_code}' \
   -X POST \
   --data-urlencode 'fullName=qa-contact' \
-  --data-urlencode 'teamName=QA Team' \
   --data-urlencode 'phone=09121234567' \
   --data-urlencode 'email=qa@example.com' \
   --data-urlencode 'type=mentor' \
@@ -101,6 +101,7 @@ collab_status="$(curl -sS -o /dev/null -w '%{http_code}' \
   --data-urlencode 'description=This is a production quality assurance collaboration request.' \
   "$BASE_URL/api/collaboration")"
 [[ "$collab_status" == "303" ]] || fail "collaboration submit returned HTTP $collab_status"
-expect_body "qa-contact" -H "$auth_header" "$BASE_URL/admin/collaboration"
+grep -Eqi '^location: .*result=sent' "$collab_headers" || fail "collaboration submission did not report a successful save"
+expect_body "qa-contact" -H "$auth_header" "$BASE_URL/admin/collaboration?q=qa-contact"
 
 echo "Production QA passed."
