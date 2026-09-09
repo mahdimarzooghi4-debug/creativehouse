@@ -1,0 +1,111 @@
+.cms-secondary-feedback {
+  margin-top: 8px;
+  padding: 12px 16px;
+  border: 1px solid #cfe5d9;
+  border-radius: 10px;
+  color: #2e7b60;
+  background: #f1faf5;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.cms-secondary-editor-header {
+  align-items: flex-start;
+}
+
+.cms-secondary-editor-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  direction: ltr;
+}
+
+.cms-secondary-editor-actions > * {
+  direction: rtl;
+  min-width: 130px;
+}
+
+.cms-secondary-editor-card {
+  width: min(760px, 100%);
+  margin-top: 24px;
+  padding: 28px;
+  display: grid;
+  gap: 20px;
+  border: 1px solid var(--cms-border);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.cms-secondary-editor-card label {
+  display: grid;
+  gap: 8px;
+  color: var(--cms-text);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.cms-secondary-editor-card input,
+.cms-secondary-editor-card select,
+.cms-secondary-editor-card textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid var(--cms-border);
+  border-radius: 10px;
+  color: var(--cms-navy);
+  background: #fff;
+  font: inherit;
+}
+
+.cms-secondary-editor-card textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+.cms-secondary-editor-card input:focus-visible,
+.cms-secondary-editor-card select:focus-visible,
+.cms-secondary-editor-card textarea:focus-visible,
+.cms-secondary-upload:focus-within {
+  outline: 3px solid color-mix(in srgb, var(--cms-coral) 35%, transparent);
+  outline-offset: 2px;
+}
+
+.cms-secondary-editor-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.cms-secondary-upload {
+  min-height: 150px;
+  padding: 22px;
+  align-content: center;
+  justify-items: center;
+  border: 1px dashed #c9c6c0;
+  border-radius: 12px;
+  background: var(--cms-paper);
+  text-align: center;
+  cursor: pointer;
+}
+
+.cms-secondary-upload input {
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  width: auto;
+  max-width: 100%;
+}
+
+.cms-secondary-upload span {
+  color: var(--cms-navy);
+  font-weight: 700;
+}
+
+.cms-secondary-upload small {
+  color: var(--cms-text);
+  font-size: 11px;
+}
+
+@media (max-width: 1280px) {
+  .cms-secondary-editor-card { width: 100%; }
+}
