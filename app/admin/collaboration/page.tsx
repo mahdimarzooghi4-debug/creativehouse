@@ -14,7 +14,15 @@ const collaborationRequests = [
   ["narges-mousavi", "نرگس موسوی", "منتور", "۰۹۹۰ *** ۱۱۲۲", "جدید", "new", "۳ روز قبل"],
 ] as const;
 
-export default function AdminCollaborationPage() {
+const resultMessages: Record<string, string> = {
+  updated: "نتیجه پیگیری ثبت شد.",
+  "draft-saved": "پیش‌نویس پیگیری ذخیره شد.",
+};
+
+export default async function AdminCollaborationPage({ searchParams }: { searchParams: Promise<{ result?: string }> }) {
+  const { result } = await searchParams;
+  const feedback = result ? resultMessages[result] : undefined;
+
   return (
     <CmsShell active="collaboration">
       <div className="cms-dashboard cms-collaboration-page">
@@ -23,8 +31,10 @@ export default function AdminCollaborationPage() {
             <h1>درخواست‌های همکاری</h1>
             <p>درخواست‌های استارتاپ‌ها، منتورها، سازمان‌ها و حامیان را پیگیری کن</p>
           </div>
-          <a className="cms-outline-button cms-view-site" href="/">مشاهده سایت</a>
+          <a className="cms-outline-button cms-view-site" href="/collaboration">مشاهده سایت</a>
         </header>
+
+        {feedback ? <div className="cms-secondary-feedback" role="status">{feedback}</div> : null}
 
         <section className="cms-collaboration-stat-grid" aria-label="آمار درخواست‌های همکاری">
           {collaborationStats.map(([label, value, note]) => (
