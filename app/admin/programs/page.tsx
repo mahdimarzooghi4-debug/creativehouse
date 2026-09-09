@@ -14,7 +14,20 @@ const programs = [
   ["expert-mentoring", "مسیر منتورینگ تخصصی", "منتورینگ", "۶ هفته", "منتشرشده", "published", "۴ روز قبل"],
 ] as const;
 
-export default function AdminProgramsPage() {
+type AdminProgramsPageProps = {
+  searchParams: Promise<{ notice?: string }>;
+};
+
+function getNoticeText(notice?: string) {
+  if (notice === "draft-saved") return "پیش‌نویس برنامه ذخیره شد.";
+  if (notice === "published") return "برنامه برای انتشار ثبت شد.";
+  return null;
+}
+
+export default async function AdminProgramsPage({ searchParams }: AdminProgramsPageProps) {
+  const { notice } = await searchParams;
+  const noticeText = getNoticeText(notice);
+
   return (
     <CmsShell active="programs">
       <div className="cms-dashboard cms-programs-page">
@@ -28,6 +41,8 @@ export default function AdminProgramsPage() {
             <a className="cms-program-dark-button cms-add-program" href="/admin/programs/new">افزودن برنامه</a>
           </div>
         </header>
+
+        {noticeText ? <p className="cms-flow-notice" role="status">{noticeText}</p> : null}
 
         <section className="cms-program-stat-grid" aria-label="آمار برنامه‌ها">
           {programStats.map(([label, value, note]) => (
