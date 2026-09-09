@@ -218,3 +218,124 @@ h3,
   white-space: nowrap;
 }
 
+/* Authoritative About/Impact geometry copied from Figma node 530:40. */
+.home-page .home-about {
+  box-sizing: border-box;
+  height: 530px;
+  padding: 96px 0;
+}
+
+.home-page .home-about > .shell {
+  width: 1240px;
+  height: 338px;
+}
+
+.home-page .home-about .section-heading {
+  width: 1240px;
+  height: 98px;
+  gap: 10px;
+  margin: 0 0 48px;
+  overflow: hidden;
+}
+
+.home-page .home-about .section-heading .eyebrow {
+  width: 1240px;
+  height: 24px;
+  line-height: 24px;
+  flex: 0 0 24px;
+}
+
+.home-page .home-about .section-heading h2 {
+  width: 1240px;
+  height: 64px;
+  line-height: 64px;
+  flex: 0 0 64px;
+}
+
+.home-page .impact-grid {
+  display: flex;
+  flex-direction: row;
+  direction: rtl;
+  align-items: flex-start;
+  width: 1240px;
+  height: 230px;
+  gap: 32px;
+  overflow: hidden;
+}
+
+.home-page .mission-card {
+  box-sizing: border-box;
+  flex: 0 0 560px;
+  width: 560px;
+  min-width: 560px;
+  max-width: 560px;
+  height: 230px;
+  min-height: 230px;
+  max-height: 230px;
+  padding: 22px 28px;
+  border-radius: 20px;
+  direction: rtl;
+  overflow: hidden;
+}
+
+.home-page .mission-card h3 {
+  width: 500px;
+  height: 24px;
+  margin: 0 0 10px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.home-page .mission-card p {
+  width: 500px;
+  height: 150px;
+  margin: 0;
+  font-size: 20px;
+  line-height: 30px;
+  overflow: hidden;
+}
+
+.home-page .metric-grid {
+  display: flex;
+  flex-direction: row;
+  direction: rtl;
+  align-items: flex-start;
+  flex: 0 0 648px;
+  width: 648px;
+  min-width: 648px;
+  max-width: 648px;
+  height: 230px;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.home-page .metric {
+  box-sizing: border-box;
+  flex: 0 0 208px;
+  width: 208px;
+  min-width: 208px;
+  max-width: 208px;
+  height: 230px;
+  min-height: 230px;
+  max-height: 230px;
+  padding: 24px 22px 22px;
+  border-radius: 20px;
+  direction: rtl;
+  overflow: hidden;
+}
+
+.home-page .metric strong {
+  display: block;
+  width: 164px;
+  height: 55px;
+  font-size: 38px;
+  line-height: 55px;
+}
+
+.home-page .metric span {
+  display: block;
+  width: 164px;
+  height: 48px;
+  font-size: 15px;
+  line-height: 24px;
+}
