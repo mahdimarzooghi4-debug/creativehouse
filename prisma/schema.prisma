@@ -1,0 +1,162 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id           String    @id @default(cuid())
+  username     String    @unique
+  passwordHash String
+  name         String    @default("مدیر سایت")
+  role         String    @default("admin")
+  active       Boolean   @default(true)
+  lastLoginAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Media {
+  id           String   @id @default(cuid())
+  storageKey   String   @unique
+  originalName String
+  mimeType     String
+  sizeBytes    Int
+  width        Int?
+  height       Int?
+  altText      String?
+  createdAt    DateTime @default(now())
+}
+
+model News {
+  id           String    @id @default(cuid())
+  slug         String    @unique
+  title        String
+  summary      String?
+  body         String
+  category     String    @default("news")
+  status       String    @default("draft")
+  publishedAt  DateTime?
+  featured     Boolean   @default(false)
+  coverMediaId String?
+  views        Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+}
+
+model Startup {
+  id           String    @id @default(cuid())
+  slug         String    @unique
+  name         String
+  field        String
+  stage        String    @default("idea")
+  status       String    @default("draft")
+  summary      String?
+  solution     String?
+  founder      String?
+  website      String?
+  featured     Boolean   @default(false)
+  displayOrder Int       @default(0)
+  logoMediaId  String?
+  coverMediaId String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+}
+
+model Program {
+  id               String    @id @default(cuid())
+  slug             String    @unique
+  title            String
+  type             String
+  duration         String?
+  summary          String?
+  outputs          String?
+  registrationUrl  String?
+  status           String    @default("draft")
+  startsAt         DateTime?
+  endsAt           DateTime?
+  featured         Boolean   @default(false)
+  displayOrder     Int       @default(0)
+  coverMediaId     String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  deletedAt        DateTime?
+}
+
+model Partner {
+  id           String    @id @default(cuid())
+  slug         String    @unique
+  name         String
+  website      String?
+  status       String    @default("draft")
+  featured     Boolean   @default(false)
+  displayOrder Int       @default(0)
+  logoMediaId  String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+}
+
+model License {
+  id              String    @id @default(cuid())
+  slug            String    @unique
+  title           String
+  issuer          String?
+  status          String    @default("draft")
+  documentMediaId String?
+  previewMediaId  String?
+  displayOrder    Int       @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+}
+
+model CollaborationRequest {
+  id                   String   @id @default(cuid())
+  name                 String
+  organization         String?
+  type                 String
+  phone                String
+  email                String?
+  city                 String?
+  preferredContactTime String?
+  message              String
+  internalNote         String?
+  status               String   @default("new")
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model HomepageSettings {
+  id                 String   @id @default("main")
+  heroEyebrow        String?
+  heroTitle          String
+  heroSubtitle       String?
+  heroPrimaryLabel   String?
+  heroPrimaryHref    String?
+  heroSecondaryLabel String?
+  heroSecondaryHref  String?
+  heroMediaId        String?
+  featuredNewsSlug   String?
+  featuredStartupIds String?
+  updatedAt          DateTime @updatedAt
+}
+
+model SiteSettings {
+  id              String   @id @default("main")
+  siteName        String
+  tagline         String?
+  domain          String?
+  phone1          String?
+  phone2          String?
+  email           String?
+  address         String?
+  defaultTitle    String?
+  metaDescription String?
+  updatedAt       DateTime @updatedAt
+}
