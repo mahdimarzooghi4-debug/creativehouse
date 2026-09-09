@@ -84,7 +84,7 @@ export default async function HomePage() {
           <div className="hero-visual" aria-label="تصویر محیط خلاق و نوآوری ایران">
             <div className="hero-photo-frame">
               <img
-                src={heroMedia ? `/uploads/${heroMedia.storageKey}` : "/figma-home-hero.jpg"}
+                src={heroMedia ? `/uploads/${heroMedia.storageKey}` : "/figma-home-hero.png"}
                 alt="جوانان ایرانی در محیط خلاق پیرامون نقشه ایران"
               />
             </div>
