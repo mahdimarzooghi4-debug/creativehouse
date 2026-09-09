@@ -1,6 +1,15 @@
 const BRAND_IMAGE = "https://www.figma.com/api/mcp/asset/573a13c7-ca7c-4d5c-9ed6-414e3e12c437.png";
 
-export default function AdminLoginPage() {
+const errorMessages: Record<string, string> = {
+  invalid: "نام کاربری یا رمز عبور صحیح نیست.",
+  locked: "تلاش‌های ورود بیش از حد مجاز بود. حدود ۱۵ دقیقه بعد دوباره امتحان کن.",
+  setup: "حساب مدیر هنوز راه‌اندازی نشده است. تنظیمات اولیه سرور را بررسی کن.",
+};
+
+export default async function AdminLoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
+  const { error } = await searchParams;
+  const errorMessage = error ? errorMessages[error] : undefined;
+
   return (
     <main className="cms-login" dir="rtl">
       <section className="cms-login__visual" aria-label="هویت خانه خلاق و نوآوری آینه">
@@ -21,10 +30,12 @@ export default function AdminLoginPage() {
             <p>اطلاعات حساب مدیر خانه خلاق را وارد کن.</p>
           </header>
 
-          <form action="/admin" method="get" className="cms-login__form">
+          {errorMessage ? <p className="cms-login__error" role="alert">{errorMessage}</p> : null}
+
+          <form action="/api/admin/login" method="post" className="cms-login__form">
             <label>
               <span>نام کاربری</span>
-              <input name="username" type="text" defaultValue="admin" autoComplete="username" required />
+              <input name="username" type="text" autoCapitalize="none" autoComplete="username" required />
             </label>
 
             <label>
