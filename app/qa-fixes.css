@@ -143,3 +143,46 @@ h3,
 .home-page .partner-card--placeholder p {
   opacity: 0.55;
 }
+
+/* Lock the two About/Impact blocks to the exact Figma 1240×230 row. */
+.home-page .impact-grid {
+  width: 1240px;
+  height: 230px;
+  grid-template-columns: 560px 648px;
+  gap: 32px;
+  overflow: hidden;
+}
+
+.home-page .mission-card {
+  width: 560px;
+  height: 230px;
+  min-height: 230px;
+  padding: 22px 28px;
+  overflow: hidden;
+}
+
+.home-page .mission-card h3 {
+  height: 24px;
+  margin-bottom: 10px;
+  line-height: 24px;
+}
+
+.home-page .mission-card p {
+  width: 500px;
+  height: 150px;
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+.home-page .metric-grid {
+  width: 648px;
+  height: 230px;
+  grid-template-columns: repeat(3, 208px);
+  gap: 12px;
+}
+
+.home-page .metric {
+  width: 208px;
+  height: 230px;
+  min-height: 230px;
+}
