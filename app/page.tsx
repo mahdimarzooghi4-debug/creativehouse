@@ -2,6 +2,7 @@ import { NewsArt, type NewsArtVariant } from "../components/news-art";
 import { SiteFooter, SiteHeader } from "../components/site-chrome";
 import { formatPersianMonth, newsCategoryLabels, programTypeLabels } from "../lib/content-utils";
 import { db } from "../lib/db";
+import { getHomepageSettings, splitStoredIds } from "../lib/homepage-settings";
 
 export const dynamic = "force-dynamic";
 
@@ -13,16 +14,37 @@ const services = [
 ];
 const newsArt: NewsArtVariant[] = ["stage", "workshop", "lab"];
 
+function prependUnique<T extends { id: string }>(selected: T | null, items: T[], take: number) {
+  const result: T[] = [];
+  if (selected) result.push(selected);
+  for (const item of items) if (!result.some((entry) => entry.id === item.id)) result.push(item);
+  return result.slice(0, take);
+}
+
 export default async function HomePage() {
   const now = new Date();
-  const [publishedStartups, homeNews, homePrograms, homePartners, startupCount, programCount] = await Promise.all([
+  const settings = await getHomepageSettings();
+  const selectedStartupId = splitStoredIds(settings.featuredStartupIds)[0];
+  const publicNewsWhere = { deletedAt: null, OR: [{ status: "published" }, { status: "scheduled", publishedAt: { lte: now } }] };
+  const publicProgramWhere = { deletedAt: null, status: { in: ["published", "active"] } };
+
+  const [defaultStartups, defaultNews, defaultPrograms, homePartners, startupCount, programCount, partnerCount, selectedStartup, selectedNews, selectedProgram, heroMedia] = await Promise.all([
     db.startup.findMany({ where: { deletedAt: null, status: "published" }, orderBy: [{ featured: "desc" }, { displayOrder: "asc" }, { updatedAt: "desc" }], take: 4 }),
-    db.news.findMany({ where: { deletedAt: null, OR: [{ status: "published" }, { status: "scheduled", publishedAt: { lte: now } }] }, orderBy: [{ featured: "desc" }, { publishedAt: "desc" }, { createdAt: "desc" }], take: 3 }),
-    db.program.findMany({ where: { deletedAt: null, status: { in: ["published", "active"] } }, orderBy: [{ featured: "desc" }, { displayOrder: "asc" }, { updatedAt: "desc" }], take: 3 }),
+    db.news.findMany({ where: publicNewsWhere, orderBy: [{ featured: "desc" }, { publishedAt: "desc" }, { createdAt: "desc" }], take: 3 }),
+    db.program.findMany({ where: publicProgramWhere, orderBy: [{ featured: "desc" }, { displayOrder: "asc" }, { updatedAt: "desc" }], take: 3 }),
     db.partner.findMany({ where: { deletedAt: null, status: "active" }, orderBy: [{ featured: "desc" }, { displayOrder: "asc" }, { updatedAt: "desc" }], take: 6 }),
     db.startup.count({ where: { deletedAt: null, status: "published" } }),
-    db.program.count({ where: { deletedAt: null, status: { in: ["published", "active"] } } }),
+    db.program.count({ where: publicProgramWhere }),
+    db.partner.count({ where: { deletedAt: null, status: "active" } }),
+    selectedStartupId ? db.startup.findFirst({ where: { id: selectedStartupId, deletedAt: null, status: "published" } }) : Promise.resolve(null),
+    settings.featuredNewsSlug ? db.news.findFirst({ where: { slug: settings.featuredNewsSlug, ...publicNewsWhere } }) : Promise.resolve(null),
+    settings.featuredProgramSlug ? db.program.findFirst({ where: { slug: settings.featuredProgramSlug, ...publicProgramWhere } }) : Promise.resolve(null),
+    settings.heroMediaId ? db.media.findUnique({ where: { id: settings.heroMediaId } }) : Promise.resolve(null),
   ]);
+
+  const publishedStartups = prependUnique(selectedStartup, defaultStartups, 4);
+  const homeNews = prependUnique(selectedNews, defaultNews, 3);
+  const homePrograms = prependUnique(selectedProgram, defaultPrograms, 3);
   const logoIds = homePartners.map((partner) => partner.logoMediaId).filter((id): id is string => Boolean(id));
   const logoMedia = logoIds.length ? await db.media.findMany({ where: { id: { in: logoIds } } }) : [];
   const logoById = new Map(logoMedia.map((item) => [item.id, item]));
@@ -30,13 +52,42 @@ export default async function HomePage() {
   return (
     <main>
       <SiteHeader active="home" />
-      <section className="hero"><div className="shell hero-grid"><div className="hero-copy"><p className="eyebrow">خانه خلاق و نوآوری آینه</p><h1>وطن<span>،</span> ساختنی است</h1><p className="hero-lead">جایی برای شکل‌گیری، رشد و تبدیل ایده‌های خلاق به کسب‌وکارها و راهکارهای اثرگذار؛ با تمرکز بر ساختن، آزمودن و ایجاد اثر واقعی.</p><div className="hero-actions"><a className="button button--primary" href="/startups">مشاهده استارتاپ‌ها</a><a className="button button--secondary" href="/about">آشنایی با خانه خلاق</a></div></div><div className="hero-visual" aria-label="تصویر محیط خلاق و نوآوری ایران"><div className="hero-photo-frame"><img src="/images/hero-home.webp" alt="جوانان ایرانی در محیط خلاق پیرامون نقشه ایران" /></div><div className="hero-ornament" aria-hidden="true"><span /><i /><span /></div></div></div></section>
+      <section className="hero">
+        <div className="shell hero-grid">
+          <div className="hero-copy">
+            <p className="eyebrow">{settings.heroEyebrow}</p>
+            <h1>{settings.heroTitle}</h1>
+            <p className="hero-lead">{settings.heroSubtitle}</p>
+            <div className="hero-actions">
+              <a className="button button--primary" href={settings.heroPrimaryHref || "/startups"}>{settings.heroPrimaryLabel || "مشاهده استارتاپ‌ها"}</a>
+              <a className="button button--secondary" href={settings.heroSecondaryHref || "/about"}>{settings.heroSecondaryLabel || "آشنایی با خانه خلاق"}</a>
+            </div>
+          </div>
+          <div className="hero-visual" aria-label="تصویر محیط خلاق و نوآوری ایران">
+            <div className="hero-photo-frame"><img src={heroMedia ? `/uploads/${heroMedia.storageKey}` : "/images/hero-home.webp"} alt="جوانان ایرانی در محیط خلاق پیرامون نقشه ایران" /></div>
+            <div className="hero-ornament" aria-hidden="true"><span /><i /><span /></div>
+          </div>
+        </div>
+      </section>
 
-      <section className="section section--white"><div className="shell"><div className="section-heading"><p className="eyebrow">درباره خانه خلاق</p><h2>از ایده تا ساختن یک اثر واقعی</h2></div><div className="impact-grid"><article className="mission-card"><h3>ماموریت ما</h3><p>کمک می‌کنیم ایده‌های خلاق از مرحله تصور عبور کنند، ساخته شوند، با واقعیت آزموده شوند و به راهکار یا کسب‌وکار اثرگذار برای خدمت به محرومان تبدیل شوند.</p></article><div className="metric-grid"><article className="metric"><strong>{startupCount.toLocaleString("fa-IR")}</strong><span>استارتاپ همراه</span></article><article className="metric"><strong>{programCount.toLocaleString("fa-IR")}</strong><span>برنامه و رویداد</span></article><article className="metric"><strong>+۳۰</strong><span>منتور و متخصص</span></article></div></div></div></section>
+      <section className="section section--white">
+        <div className="shell">
+          <div className="section-heading"><p className="eyebrow">درباره خانه خلاق</p><h2>از ایده تا ساختن یک اثر واقعی</h2></div>
+          <div className="impact-grid">
+            <article className="mission-card"><h3>ماموریت ما</h3><p>کمک می‌کنیم ایده‌های خلاق از مرحله تصور عبور کنند، ساخته شوند، با واقعیت آزموده شوند و به راهکار یا کسب‌وکار اثرگذار برای خدمت به محرومان تبدیل شوند.</p></article>
+            <div className="metric-grid">
+              <article className="metric"><strong>{settings.statStartups || startupCount.toLocaleString("fa-IR")}</strong><span>استارتاپ همراه</span></article>
+              <article className="metric"><strong>{settings.statPrograms || programCount.toLocaleString("fa-IR")}</strong><span>برنامه و رویداد</span></article>
+              <article className="metric"><strong>{settings.statProvinces || "۳۱"}</strong><span>استان درگیر</span></article>
+              <article className="metric"><strong>{settings.statPartners || partnerCount.toLocaleString("fa-IR")}</strong><span>همراه</span></article>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="section"><div className="shell"><div className="section-heading"><p className="eyebrow">استارتاپ‌های خانه خلاق</p><h2>ایده‌هایی که وارد مرحله ساخت شده‌اند</h2><p>پروفایل‌های این بخش مستقیماً از پنل مدیریت سایت به‌روزرسانی می‌شوند.</p></div><div className="startup-grid">{publishedStartups.map((startup) => <article className="startup-card" key={startup.id}><span className="tag">{startup.field}</span><h3>{startup.name}</h3><p>{startup.summary || "معرفی کوتاه این استارتاپ به‌زودی تکمیل می‌شود."}</p><div className="card-divider" /><a href={`/startups/${startup.slug}`}>مشاهده پروفایل ←</a></article>)}</div><a className="section-link" href="/startups">مشاهده همه استارتاپ‌ها ←</a></div></section>
 
-      <section className="section section--white"><div className="shell"><div className="section-heading"><p className="eyebrow">برنامه‌های خانه خلاق</p><h2>برنامه‌هایی برای ساختن، رشد کردن و متصل شدن</h2><p>این فهرست مستقیماً از بخش مدیریت برنامه‌ها به‌روزرسانی می‌شود.</p></div><div className="program-grid">{homePrograms.map((program) => <article className={`program-card${program.featured ? " program-card--featured" : ""}`} key={program.id}><span className="tag">{programTypeLabels[program.type] || program.type}</span><h3>{program.title}</h3><p>{program.summary || "اطلاعات این برنامه به‌زودی تکمیل می‌شود."}</p><a href={`/programs/${program.slug}`}>{program.featured ? "ورود به صفحه برنامه" : "مشاهده جزئیات"} ←</a></article>)}</div></div></section>
+      <section className="section section--white"><div className="shell"><div className="section-heading"><p className="eyebrow">برنامه‌های خانه خلاق</p><h2>برنامه‌هایی برای ساختن، رشد کردن و متصل شدن</h2><p>این فهرست مستقیماً از بخش مدیریت برنامه‌ها به‌روزرسانی می‌شود.</p></div><div className="program-grid">{homePrograms.map((program) => <article className={`program-card${program.id === selectedProgram?.id || program.featured ? " program-card--featured" : ""}`} key={program.id}><span className="tag">{programTypeLabels[program.type] || program.type}</span><h3>{program.title}</h3><p>{program.summary || "اطلاعات این برنامه به‌زودی تکمیل می‌شود."}</p><a href={`/programs/${program.slug}`}>{program.id === selectedProgram?.id || program.featured ? "ورود به صفحه برنامه" : "مشاهده جزئیات"} ←</a></article>)}</div></div></section>
 
       <section className="section"><div className="shell"><div className="section-heading"><p className="eyebrow">خدمات و ظرفیت‌ها</p><h2>برای ساختن، فقط ایده کافی نیست</h2><p>خانه خلاق آینه مجموعه‌ای از ظرفیت‌های عملی را کنار هم می‌آورد تا تیم‌ها از مرحله ایده به اجرا و رشد برسند.</p></div><div className="service-grid">{services.map(([title, text], index) => <article className={`service-card${index === 0 ? " service-card--featured" : ""}`} key={title}><h3>{title}</h3><p>{text}</p></article>)}</div></div></section>
 

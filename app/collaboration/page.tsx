@@ -1,4 +1,5 @@
 import { SiteFooter, SiteHeader } from "../../components/site-chrome";
+import { getSiteSettings } from "../../lib/site-settings";
 
 const modes = [
   ["تیم و استارتاپ", "برای ساخت، اعتبارسنجی و رشد یک محصول یا راهکار مسئله‌محور."],
@@ -6,10 +7,18 @@ const modes = [
   ["سازمان و مجموعه", "برای تعریف مسئله، اجرای پایلوت، همکاری فناورانه و توسعه بازار."],
   ["حامی و شریک اجرایی", "برای حمایت مالی، زیرساختی، رسانه‌ای یا همراهی در اجرای برنامه‌ها."],
 ];
-
 const nextSteps = ["بررسی درخواست", "گفت‌وگوی اولیه", "تعریف مسیر همکاری"];
+const resultMessages: Record<string, string> = {
+  sent: "درخواست شما با موفقیت ثبت شد. پس از بررسی، در صورت تناسب برای ادامه مسیر با شما تماس می‌گیریم.",
+  invalid: "لطفاً نام، شماره تماس، نوع همکاری، موضوع و توضیحات را کامل و معتبر وارد کنید.",
+  limited: "تعداد درخواست‌های ارسالی از این اتصال زیاد بوده است. لطفاً کمی بعد دوباره تلاش کنید.",
+  error: "ثبت درخواست انجام نشد. لطفاً دوباره تلاش کنید یا از اطلاعات تماس مستقیم استفاده کنید.",
+};
 
-export default function CollaborationPage() {
+export default async function CollaborationPage({ searchParams }: { searchParams: Promise<{ result?: string }> }) {
+  const [{ result }, settings] = await Promise.all([searchParams, getSiteSettings()]);
+  const feedback = result ? resultMessages[result] : undefined;
+
   return (
     <div className="public-page">
       <SiteHeader />
@@ -49,65 +58,68 @@ export default function CollaborationPage() {
           </div>
         </section>
 
-        <section className="collaboration-form-section">
+        <section className="collaboration-form-section" id="collaboration-form">
           <div className="shell">
             <div className="section-intro section-intro--compact">
               <p className="eyebrow">فرم درخواست همکاری</p>
               <h2>کمی از خودتان و ایده همکاری بگویید</h2>
             </div>
+            {feedback ? <p className="cms-flow-notice" role="status">{feedback}</p> : null}
             <div className="collaboration-form-grid">
               <aside className="collaboration-side">
                 <p className="eyebrow">ارتباط مستقیم</p>
                 <h3>قبل از ارسال فرم هم می‌توانید با ما در تماس باشید</h3>
                 <div className="collaboration-side__contact">
-                  <p>تهران، خیابان انقلاب، خیابان رازی، کوچه شهبازیان، پلاک ۲۲</p>
-                  <p>تلفن: ۰۲۱-۶۶۴۸۵۳۷۴</p>
-                  <p>تلفن: ۰۲۱-۶۶۴۰۶۴۷۵</p>
-                  <p>info@ayenehouse.ir</p>
+                  <p>{settings.address}</p>
+                  {settings.phone1 ? <p>تلفن: {settings.phone1}</p> : null}
+                  {settings.phone2 ? <p>تلفن: {settings.phone2}</p> : null}
+                  {settings.email ? <p>{settings.email}</p> : null}
                 </div>
                 <p className="collaboration-side__note">پس از ارسال، درخواست بررسی می‌شود و در صورت تناسب، تیم خانه خلاق برای ادامه مسیر با شما تماس می‌گیرد.</p>
               </aside>
 
-              <form className="collaboration-form">
+              <form className="collaboration-form" action="/api/collaboration" method="post">
+                <input name="companyWebsite" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ display: "none" }} />
                 <div className="collaboration-form__two">
                   <div className="form-field">
                     <label htmlFor="fullName">نام و نام خانوادگی</label>
-                    <input id="fullName" name="fullName" placeholder="مثلاً: مهدی رضایی" autoComplete="name" />
+                    <input id="fullName" name="fullName" required maxLength={120} placeholder="مثلاً: مهدی رضایی" autoComplete="name" />
                   </div>
                   <div className="form-field">
                     <label htmlFor="teamName">نام مجموعه / تیم</label>
-                    <input id="teamName" name="teamName" placeholder="نام مجموعه یا تیم شما" />
+                    <input id="teamName" name="teamName" maxLength={160} placeholder="نام مجموعه یا تیم شما" />
                   </div>
                 </div>
                 <div className="collaboration-form__two">
                   <div className="form-field">
                     <label htmlFor="phone">شماره تماس</label>
-                    <input id="phone" name="phone" inputMode="tel" placeholder="۰۹۱۲۱۲۳۴۵۶۷" autoComplete="tel" />
+                    <input id="phone" name="phone" required inputMode="tel" maxLength={30} placeholder="۰۹۱۲۱۲۳۴۵۶۷" autoComplete="tel" />
                   </div>
                   <div className="form-field">
                     <label htmlFor="email">ایمیل</label>
-                    <input id="email" name="email" type="email" placeholder="name@example.com" autoComplete="email" />
+                    <input id="email" name="email" type="email" maxLength={180} placeholder="name@example.com" autoComplete="email" />
                   </div>
                 </div>
 
                 <fieldset>
                   <legend>نوع همکاری</legend>
                   <div className="collaboration-options">
-                    <label className="collaboration-option"><input type="radio" name="type" defaultChecked />تیم / استارتاپ</label>
-                    <label className="collaboration-option"><input type="radio" name="type" />منتور / متخصص</label>
-                    <label className="collaboration-option"><input type="radio" name="type" />سازمان / مجموعه</label>
+                    <label className="collaboration-option"><input type="radio" name="type" value="startup" defaultChecked />تیم / استارتاپ</label>
+                    <label className="collaboration-option"><input type="radio" name="type" value="mentor" />منتور / متخصص</label>
+                    <label className="collaboration-option"><input type="radio" name="type" value="organization" />سازمان / مجموعه</label>
+                    <label className="collaboration-option"><input type="radio" name="type" value="partner" />حامی / شریک اجرایی</label>
                   </div>
                 </fieldset>
 
                 <div className="form-field form-field--wide">
                   <label htmlFor="subject">موضوع همکاری</label>
-                  <input id="subject" name="subject" placeholder="در یک جمله موضوع اصلی همکاری را بنویسید" />
+                  <input id="subject" name="subject" required maxLength={180} placeholder="در یک جمله موضوع اصلی همکاری را بنویسید" />
                 </div>
                 <div className="form-field form-field--textarea">
                   <label htmlFor="description">توضیحات</label>
-                  <textarea id="description" name="description" rows={3} placeholder="مسئله، ظرفیت، پیشنهاد یا انتظارتان از همکاری با خانه خلاق را کوتاه توضیح دهید." />
+                  <textarea id="description" name="description" required minLength={10} maxLength={3000} rows={3} placeholder="مسئله، ظرفیت، پیشنهاد یا انتظارتان از همکاری با خانه خلاق را کوتاه توضیح دهید." />
                 </div>
-                <button className="button button--primary collaboration-submit" type="button">ارسال درخواست</button>
+                <button className="button button--primary collaboration-submit" type="submit">ارسال درخواست</button>
               </form>
             </div>
           </div>

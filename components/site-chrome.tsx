@@ -1,3 +1,5 @@
+import { getSiteSettings } from "../lib/site-settings";
+
 type ActiveNav = "home" | "about" | "startups" | "programs" | "news" | null;
 
 const navItems: Array<{ key: Exclude<ActiveNav, null>; label: string; href: string }> = [
@@ -35,13 +37,14 @@ export function SiteHeader({ active = null }: { active?: ActiveNav }) {
   );
 }
 
-export function SiteFooter() {
+export async function SiteFooter() {
+  const settings = await getSiteSettings();
   return (
     <footer className="site-footer">
       <div className="shell footer-grid">
         <div className="footer-brand">
           <Brand footer />
-          <p className="footer-slogan">وطن<span>،</span> ساختنی است</p>
+          <p className="footer-slogan">{settings.tagline || "وطن، ساختنی است"}</p>
         </div>
         <div>
           <h3>برنامه‌ها</h3>
@@ -58,13 +61,13 @@ export function SiteFooter() {
         </div>
         <div className="footer-contact">
           <h3>ارتباط با ما</h3>
-          <p>آدرس: تهران، خیابان انقلاب، خیابان رازی، کوچه شهبازیان، پلاک ۲۲</p>
-          <p>تلفن: ۰۲۱-۶۶۴۸۵۳۷۴</p>
-          <p>تلفن: ۰۲۱-۶۶۴۰۶۴۷۵</p>
-          <p>ایمیل: info@ayenehouse.ir</p>
+          {settings.address ? <p>آدرس: {settings.address}</p> : null}
+          {settings.phone1 ? <p>تلفن: {settings.phone1}</p> : null}
+          {settings.phone2 ? <p>تلفن: {settings.phone2}</p> : null}
+          {settings.email ? <p>ایمیل: {settings.email}</p> : null}
         </div>
       </div>
-      <div className="shell footer-bottom">تمام حقوق برای خانه خلاق و نوآوری آینه محفوظ است</div>
+      <div className="shell footer-bottom">تمام حقوق برای {settings.siteName} محفوظ است</div>
     </footer>
   );
 }

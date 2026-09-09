@@ -4,11 +4,15 @@ import "@fontsource-variable/estedad/wght.css";
 import "./globals.css";
 import "./pages.css";
 import "./news-art.css";
+import { getSiteSettings } from "../lib/site-settings";
 
-export const metadata: Metadata = {
-  title: "خانه خلاق و نوآوری آینه",
-  description: "خانه خلاق و نوآوری آینه؛ از ایده تا ساختن اثر واقعی.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  return {
+    title: settings.defaultTitle || settings.siteName,
+    description: settings.metaDescription || "خانه خلاق و نوآوری آینه؛ از ایده تا ساختن اثر واقعی.",
+  };
+}
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (

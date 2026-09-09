@@ -1,27 +1,42 @@
 import { CmsShell } from "../../../components/cms-shell";
+import { collaborationStatusLabels, collaborationTypeLabels, maskPhone } from "../../../lib/collaboration-utils";
+import { formatPersianDate } from "../../../lib/content-utils";
+import { db } from "../../../lib/db";
 
-const collaborationStats = [
-  ["کل درخواست‌ها", "۲۷", "از ابتدای دوره"],
-  ["جدید", "۶", "نیازمند بررسی"],
-  ["در حال پیگیری", "۹", "در جریان"],
-] as const;
-
-const collaborationRequests = [
-  ["sara-ahmadi", "سارا احمدی", "منتور", "۰۹۱۲ *** ۴۵۶۷", "جدید", "new", "امروز"],
-  ["team-ariana", "تیم آریانا", "استقرار", "۰۹۳۵ *** ۷۸۹۰", "در حال پیگیری", "following", "امروز"],
-  ["novafarin", "شرکت نوآفرین", "همکاری سازمانی", "۰۹۱۰ *** ۲۳۴۵", "تماس گرفته شد", "contacted", "دیروز"],
-  ["mohammad-karimi", "محمد کریمی", "استارتاپ", "۰۹۱۹ *** ۳۴۱۲", "بسته شد", "closed", "۲ روز قبل"],
-  ["narges-mousavi", "نرگس موسوی", "منتور", "۰۹۹۰ *** ۱۱۲۲", "جدید", "new", "۳ روز قبل"],
-] as const;
+export const dynamic = "force-dynamic";
 
 const resultMessages: Record<string, string> = {
   updated: "نتیجه پیگیری ثبت شد.",
-  "draft-saved": "پیش‌نویس پیگیری ذخیره شد.",
+  "draft-saved": "یادداشت داخلی ذخیره شد.",
+  "not-found": "درخواست موردنظر پیدا نشد.",
 };
 
-export default async function AdminCollaborationPage({ searchParams }: { searchParams: Promise<{ result?: string }> }) {
-  const { result } = await searchParams;
+export default async function AdminCollaborationPage({ searchParams }: { searchParams: Promise<{ result?: string; q?: string; type?: string }> }) {
+  const { result, q = "", type = "all" } = await searchParams;
   const feedback = result ? resultMessages[result] : undefined;
+  const cleanQuery = q.trim();
+  const where = {
+    ...(type !== "all" ? { type } : {}),
+    ...(cleanQuery ? {
+      OR: [
+        { name: { contains: cleanQuery } },
+        { organization: { contains: cleanQuery } },
+        { phone: { contains: cleanQuery } },
+      ],
+    } : {}),
+  };
+
+  const [requests, total, newCount, followingCount] = await Promise.all([
+    db.collaborationRequest.findMany({ where, orderBy: { createdAt: "desc" } }),
+    db.collaborationRequest.count(),
+    db.collaborationRequest.count({ where: { status: "new" } }),
+    db.collaborationRequest.count({ where: { status: "following" } }),
+  ]);
+  const collaborationStats = [
+    ["کل درخواست‌ها", String(total), "از ابتدای دوره"],
+    ["جدید", String(newCount), "نیازمند بررسی"],
+    ["در حال پیگیری", String(followingCount), "در جریان"],
+  ] as const;
 
   return (
     <CmsShell active="collaboration">
@@ -40,7 +55,7 @@ export default async function AdminCollaborationPage({ searchParams }: { searchP
           {collaborationStats.map(([label, value, note]) => (
             <article className="cms-collaboration-stat" key={label}>
               <span>{label}</span>
-              <strong>{value}</strong>
+              <strong>{Number(value).toLocaleString("fa-IR")}</strong>
               <small>{note}</small>
             </article>
           ))}
@@ -49,16 +64,16 @@ export default async function AdminCollaborationPage({ searchParams }: { searchP
         <form className="cms-collaboration-filter-bar" action="/admin/collaboration" method="get">
           <label className="cms-collaboration-search-field">
             <span className="cms-collaboration-sr-only">جست‌وجو با نام یا شماره تماس</span>
-            <input type="search" name="q" placeholder="جست‌وجو با نام یا شماره تماس" />
+            <input type="search" name="q" defaultValue={cleanQuery} placeholder="جست‌وجو با نام یا شماره تماس" />
           </label>
           <label className="cms-collaboration-filter-field">
             <span className="cms-collaboration-sr-only">نوع همکاری</span>
-            <select name="type" defaultValue="all">
+            <select name="type" defaultValue={type}>
               <option value="all">همه نوع‌های همکاری</option>
-              <option value="startup">استارتاپ</option>
-              <option value="mentor">منتور</option>
-              <option value="residency">استقرار</option>
-              <option value="organization">همکاری سازمانی</option>
+              <option value="startup">تیم / استارتاپ</option>
+              <option value="mentor">منتور / متخصص</option>
+              <option value="organization">سازمان / مجموعه</option>
+              <option value="partner">حامی / شریک اجرایی</option>
             </select>
           </label>
           <button className="cms-outline-button cms-collaboration-search-button" type="submit">جست‌وجو</button>
@@ -73,20 +88,16 @@ export default async function AdminCollaborationPage({ searchParams }: { searchP
               <span>وضعیت</span>
               <span>تاریخ</span>
             </div>
-            {collaborationRequests.map(([id, name, type, phone, status, tone, date], index) => (
-              <a
-                className={`cms-collaboration-row${index % 2 ? " is-alt" : ""}`}
-                href={`/admin/collaboration/${id}`}
-                role="row"
-                key={id}
-              >
-                <strong>{name}</strong>
-                <span>{type}</span>
-                <span className="cms-collaboration-phone">{phone}</span>
-                <span><i className={`cms-collaboration-status cms-collaboration-status--${tone}`}>{status}</i></span>
-                <span>{date}</span>
+            {requests.map((request, index) => (
+              <a className={`cms-collaboration-row${index % 2 ? " is-alt" : ""}`} href={`/admin/collaboration/${request.id}`} role="row" key={request.id}>
+                <strong>{request.organization || request.name}</strong>
+                <span>{collaborationTypeLabels[request.type] || request.type}</span>
+                <span className="cms-collaboration-phone">{maskPhone(request.phone)}</span>
+                <span><i className={`cms-collaboration-status cms-collaboration-status--${request.status}`}>{collaborationStatusLabels[request.status] || request.status}</i></span>
+                <span>{formatPersianDate(request.createdAt)}</span>
               </a>
             ))}
+            {requests.length === 0 ? <p className="cms-flow-notice">درخواستی با این فیلتر پیدا نشد.</p> : null}
           </div>
         </section>
       </div>
