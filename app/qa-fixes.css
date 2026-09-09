@@ -15,3 +15,82 @@
 .cms-login__brand-mark {
   display: block;
 }
+
+/* Fontsource variable packages expose these exact family names. */
+body,
+button,
+a,
+input,
+textarea,
+select {
+  font-family: "Vazirmatn Variable", Tahoma, Arial, sans-serif;
+}
+
+h1,
+h2,
+h3,
+.metric strong,
+.footer-slogan {
+  font-family: "Estedad Variable", "Vazirmatn Variable", Tahoma, Arial, sans-serif;
+}
+
+.mission-card h3,
+.site-footer h3 {
+  font-family: "Vazirmatn Variable", Tahoma, Arial, sans-serif;
+  font-weight: 500;
+}
+
+.main-nav a[aria-current="page"] {
+  color: var(--coral);
+}
+
+/* The desktop Figma frame is exactly 4638px tall: every home section below mirrors its frame height. */
+.home-page .home-about {
+  height: 530px;
+  overflow: hidden;
+}
+
+.home-page .home-startups {
+  height: 650px;
+  overflow: hidden;
+}
+
+.home-page .home-programs {
+  height: 680px;
+  overflow: hidden;
+}
+
+.home-page .home-services {
+  height: 570px;
+  overflow: hidden;
+}
+
+.home-page .partners-section {
+  height: 500px;
+  overflow: hidden;
+}
+
+.home-page .news-section {
+  height: 600px;
+  overflow: hidden;
+}
+
+.home-page .home-about .section-heading {
+  margin-bottom: 48px;
+}
+
+.home-page .partners-section .section-heading {
+  margin-bottom: 32px;
+}
+
+.home-page .news-section .section-heading {
+  margin-bottom: 34px;
+}
+
+.home-page .section-heading > p:last-child:not(.eyebrow) {
+  line-height: 1.56;
+}
+
+.home-page .partner-card--placeholder p {
+  opacity: 0.55;
+}
