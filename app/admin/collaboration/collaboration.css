@@ -1,0 +1,418 @@
+.cms-collaboration-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.cms-collaboration-stat-grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 300px);
+  gap: 20px;
+  direction: rtl;
+  justify-content: start;
+}
+
+.cms-collaboration-stat {
+  height: 108px;
+  padding: 13px 18px 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid #e4e1de;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.cms-collaboration-stat > span {
+  color: #667080;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.cms-collaboration-stat strong {
+  margin-top: 2px;
+  color: var(--cms-navy);
+  font-size: 26px;
+  line-height: 1.5;
+  font-weight: 800;
+}
+
+.cms-collaboration-stat small {
+  margin-top: auto;
+  color: #667080;
+  font-size: 12px;
+}
+
+.cms-collaboration-filter-bar {
+  width: 100%;
+  height: 72px;
+  margin-top: 30px;
+  padding: 13px 30px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  direction: rtl;
+  border: 1px solid #e4e1de;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.cms-collaboration-search-field,
+.cms-collaboration-filter-field {
+  height: 44px;
+  display: block;
+}
+
+.cms-collaboration-search-field {
+  width: 420px;
+}
+
+.cms-collaboration-filter-field {
+  width: 190px;
+}
+
+.cms-collaboration-search-field input,
+.cms-collaboration-filter-field select,
+.cms-collaboration-form-field input,
+.cms-collaboration-form-field select {
+  width: 100%;
+  height: 100%;
+  padding: 0 14px;
+  border: 1px solid #e4e1de;
+  border-radius: 10px;
+  color: var(--cms-navy);
+  background: #fff;
+  font-family: Estedad, Vazirmatn, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.cms-collaboration-search-field input,
+.cms-collaboration-filter-field select {
+  background: var(--cms-paper);
+}
+
+.cms-collaboration-search-field input::placeholder {
+  color: #667080;
+  opacity: 1;
+}
+
+.cms-collaboration-filter-field select,
+.cms-collaboration-form-field select {
+  appearance: auto;
+}
+
+.cms-collaboration-search-button {
+  width: 150px;
+  flex: 0 0 150px;
+  cursor: pointer;
+}
+
+.cms-collaboration-table-card {
+  height: 440px;
+  margin-top: 28px;
+  padding: 19px;
+  border: 1px solid #e4e1de;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.cms-collaboration-table {
+  width: 100%;
+}
+
+.cms-collaboration-row {
+  min-height: 62px;
+  padding: 0 30px;
+  display: grid;
+  grid-template-columns: 220px 180px 160px 150px 130px;
+  column-gap: 10px;
+  align-items: center;
+  justify-content: start;
+  direction: rtl;
+  border-radius: 8px;
+  color: #667080;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.cms-collaboration-row.is-alt {
+  background: var(--cms-paper);
+}
+
+.cms-collaboration-row--head {
+  min-height: 44px;
+  color: #667080;
+  background: #f4f1ed;
+  font-weight: 500;
+}
+
+.cms-collaboration-row strong {
+  color: var(--cms-navy);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.cms-collaboration-phone {
+  direction: rtl;
+  unicode-bidi: isolate;
+}
+
+.cms-collaboration-status {
+  width: 120px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.cms-collaboration-status--new {
+  color: #e66f51;
+  background: #fcede9;
+}
+
+.cms-collaboration-status--following {
+  color: #c5a15a;
+  background: #f7f0e2;
+}
+
+.cms-collaboration-status--contacted {
+  color: var(--cms-navy);
+  background: #eef2fa;
+}
+
+.cms-collaboration-status--closed {
+  color: #667080;
+  background: #f4f1ed;
+}
+
+.cms-collaboration-row:hover {
+  box-shadow: inset 0 0 0 1px rgba(24, 43, 94, .08);
+}
+
+.cms-collaboration-row:focus-visible,
+.cms-collaboration-search-field input:focus-visible,
+.cms-collaboration-filter-field select:focus-visible,
+.cms-collaboration-form-field input:focus-visible,
+.cms-collaboration-form-field select:focus-visible,
+.cms-collaboration-primary-button:focus-visible,
+.cms-collaboration-back:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--cms-coral) 35%, transparent);
+  outline-offset: 2px;
+}
+
+.cms-collaboration-detail-page {
+  padding-bottom: 40px;
+}
+
+.cms-collaboration-detail-header .cms-collaboration-back {
+  width: 130px;
+  flex: 0 0 130px;
+  font-weight: 500;
+}
+
+.cms-collaboration-detail-grid {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: 530px 460px;
+  gap: 30px;
+  direction: rtl;
+}
+
+.cms-collaboration-detail-main,
+.cms-collaboration-note-card {
+  direction: rtl;
+}
+
+.cms-collaboration-detail-main {
+  display: grid;
+  grid-template-rows: 330px 350px;
+  gap: 28px;
+}
+
+.cms-collaboration-card {
+  border: 1px solid #e4e1de;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.cms-collaboration-card h2 {
+  color: var(--cms-navy);
+  font-family: Estedad, Vazirmatn, sans-serif;
+  font-size: 22px;
+  line-height: 37.4px;
+  font-weight: 800;
+}
+
+.cms-collaboration-info-card {
+  height: 330px;
+  padding: 20px 29px;
+}
+
+.cms-collaboration-info-grid {
+  margin-top: 5px;
+  display: grid;
+  grid-template-columns: repeat(2, 225px);
+  column-gap: 20px;
+  row-gap: 12px;
+  direction: rtl;
+}
+
+.cms-collaboration-readonly-field {
+  display: grid;
+  gap: 4px;
+}
+
+.cms-collaboration-readonly-field > span,
+.cms-collaboration-form-field > span,
+.cms-collaboration-message-block > span {
+  color: #667080;
+  font-size: 13px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+.cms-collaboration-readonly-field > div {
+  height: 48px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #e4e1de;
+  border-radius: 10px;
+  color: var(--cms-navy);
+  background: #fff;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.cms-collaboration-followup-card {
+  height: 350px;
+  padding: 17px 29px 21px;
+}
+
+.cms-collaboration-form-field {
+  margin-top: 3px;
+  display: grid;
+  gap: 4px;
+}
+
+.cms-collaboration-form-field + .cms-collaboration-form-field {
+  margin-top: 16px;
+}
+
+.cms-collaboration-form-field input,
+.cms-collaboration-form-field select {
+  height: 48px;
+  font-size: 14px;
+}
+
+.cms-collaboration-followup-actions {
+  margin-top: 37px;
+  display: grid;
+  grid-template-columns: 260px 190px;
+  gap: 20px;
+  direction: rtl;
+}
+
+.cms-collaboration-followup-actions button {
+  height: 48px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.cms-collaboration-primary-button {
+  border: 0;
+  border-radius: 10px;
+  color: #fff;
+  background: var(--cms-navy);
+  font-family: Estedad, Vazirmatn, sans-serif;
+  font-size: 14px;
+}
+
+.cms-collaboration-note-card {
+  height: 708px;
+  padding: 20px 29px;
+}
+
+.cms-collaboration-message-block {
+  margin-top: 5px;
+  display: grid;
+  gap: 4px;
+}
+
+.cms-collaboration-message-block > div {
+  height: 120px;
+  padding: 9px 14px;
+  border: 1px solid #e4e1de;
+  border-radius: 10px;
+  color: var(--cms-navy);
+  background: #fff;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.cms-collaboration-internal-note {
+  margin-top: 10px;
+}
+
+.cms-collaboration-internal-note > div {
+  height: 110px;
+}
+
+.cms-collaboration-history {
+  margin-top: 15px;
+}
+
+.cms-collaboration-history h3 {
+  color: var(--cms-navy);
+  font-family: Estedad, Vazirmatn, sans-serif;
+  font-size: 16px;
+  line-height: 27.2px;
+  font-weight: 800;
+}
+
+.cms-collaboration-history p {
+  margin-top: 10px;
+  color: #667080;
+  font-size: 13px;
+  line-height: 24px;
+}
+
+.cms-collaboration-history p + p {
+  margin-top: 4px;
+}
+
+@media (max-width: 1280px) {
+  .cms-collaboration-stat-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cms-collaboration-row {
+    grid-template-columns: minmax(170px, 1.4fr) minmax(130px, 1fr) 145px 130px 105px;
+    padding-inline: 20px;
+  }
+
+  .cms-collaboration-detail-grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .cms-collaboration-info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cms-collaboration-followup-actions {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  }
+}
