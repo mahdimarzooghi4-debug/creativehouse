@@ -94,3 +94,79 @@ h3,
 .home-page .partner-card--placeholder p {
   opacity: 0.55;
 }
+
+/* About desktop frame 588:3 = 88 + 580 + 500 + 600 + 620 + 580 + 340 = 3308px. */
+.about-page .identity-hero__grid {
+  direction: ltr;
+}
+
+.about-page .identity-panel,
+.about-page .identity-copy {
+  direction: rtl;
+}
+
+.about-page .identity-panel {
+  margin-top: 4px;
+}
+
+.about-page .identity-panel__coral {
+  left: 430px;
+}
+
+.about-page .identity-panel__gold {
+  left: 382px;
+}
+
+.about-page .about-purpose {
+  height: 500px;
+  padding: 72px 0 66px;
+  overflow: hidden;
+}
+
+.about-page .about-values {
+  height: 600px;
+  padding: 72px 0 84px;
+  overflow: hidden;
+}
+
+.about-page .about-model {
+  height: 620px;
+  padding: 76px 0 100px;
+  overflow: hidden;
+}
+
+.about-page .about-audience {
+  height: 580px;
+  padding: 76px 0 94px;
+  overflow: hidden;
+}
+
+.about-page .section-intro h2 {
+  margin-top: 12px;
+}
+
+.about-page .about-purpose .section-intro {
+  margin-bottom: 38px;
+}
+
+.about-page .about-values .section-intro {
+  margin-bottom: 48px;
+}
+
+.about-page .about-model .section-intro {
+  margin-bottom: 54px;
+}
+
+.about-page .about-audience .section-intro {
+  margin-bottom: 66px;
+}
+
+.about-page .about-values .info-card {
+  height: 260px;
+}
+
+.about-page .about-audience .audience-grid {
+  width: 1210px;
+  grid-template-columns: repeat(3, 390px);
+  gap: 20px;
+}
