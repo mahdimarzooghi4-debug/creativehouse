@@ -1,4 +1,4 @@
-name: Apply exact Figma hero rebuild
+name: Apply hero rebuild
 
 on:
   push:
@@ -16,91 +16,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: rebuild-hero-from-figma
-
-      - name: Rebuild hero from exact Figma export
+      - name: Patch hero
         shell: bash
         run: |
           set -euo pipefail
-          python - <<'PY'
-          from pathlib import Path
-
-          page = Path('app/page.tsx')
-          text = page.read_text(encoding='utf-8')
-          old = '''          <div className="hero-visual" aria-label="تصویر محیط خلاق و نوآوری ایران">
-            <div className="hero-photo-frame">
-              <img
-                src={effectiveHeroMedia ? `/uploads/${effectiveHeroMedia.storageKey}` : "/figma-home-hero.png"}
-                alt="جوانان ایرانی در محیط خلاق پیرامون نقشه ایران"
-              />
-            </div>
-            <div className="hero-ornament" aria-hidden="true"><span /><i /><span /></div>
-          </div>'''
-          new = '''          <div className={`hero-visual${effectiveHeroMedia ? " hero-visual--cms" : " hero-visual--figma"}`} aria-label="تصویر محیط خلاق و نوآوری ایران">
-            {effectiveHeroMedia ? (
-              <>
-                <div className="hero-photo-frame">
-                  <img
-                    src={`/uploads/${effectiveHeroMedia.storageKey}`}
-                    alt="جوانان ایرانی در محیط خلاق پیرامون نقشه ایران"
-                  />
-                </div>
-                <div className="hero-ornament" aria-hidden="true"><span /><i /><span /></div>
-              </>
-            ) : (
-              <img
-                className="hero-visual__figma-export"
-                src="/figma-hero-visual.png"
-                alt="جوانان ایرانی در محیط خلاق پیرامون نقشه ایران"
-                width={560}
-                height={421}
-              />
-            )}
-          </div>'''
-          if old not in text:
-              raise SystemExit('Expected hero markup not found')
-          page.write_text(text.replace(old, new, 1), encoding='utf-8')
-
-          css = Path('app/qa-fixes.css')
-          styles = css.read_text(encoding='utf-8')
-          marker = '/* Exact Figma hero visual: use the exported 560×421 node as one pixel-faithful asset. */'
-          block = '''
-
-/* Exact Figma hero visual: use the exported 560×421 node as one pixel-faithful asset. */
-.hero-visual--figma {
-  display: block;
-}
-
-.hero-visual__figma-export {
-  display: block;
-  width: 560px;
-  height: 421px;
-  max-width: none;
-  object-fit: contain;
-}
-
-/* Match the two Hero actions to the 170×52 Figma boxes exactly. */
-.hero-actions {
-  height: 52px;
-  align-items: flex-start;
-}
-
-.hero-actions .button {
-  box-sizing: border-box;
-  width: 170px;
-  min-width: 170px;
-  flex: 0 0 170px;
-  height: 52px;
-  min-height: 52px;
-  padding: 14px 24px;
-  line-height: 22px;
-  white-space: nowrap;
-}
-'''
-          if marker not in styles:
-              css.write_text(styles.rstrip() + block + '\n', encoding='utf-8')
-          PY
-
-      - name: Commit rebuilt hero
+          echo 'CmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aAoKcGFnZSA9IFBhdGgoImFwcC9wYWdlLnRzeCIpCnRleHQgPSBwYWdlLnJlYWRfdGV4dChlbmNvZGluZz0idXRmLTgiKQpvbGQgPSAiIiIgICAgICAgICAgPGRpdiBjbGFzc05hbWU9Imhlcm8tdmlzdWFsIiBhcmlhLWxhYmVsPSLYqti12YjbjNixINmF2K3bjNi3INiu2YTYp9mCINmIINmG2YjYotmI2LHbjCDYp9uM2LHYp9mGIj4KICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9Imhlcm8tcGhvdG8tZnJhbWUiPgogICAgICAgICAgICAgIDxpbWcKICAgICAgICAgICAgICAgIHNyYz17ZWZmZWN0aXZlSGVyb01lZGlhID8gYC91cGxvYWRzLyR7ZWZmZWN0aXZlSGVyb01lZGlhLnN0b3JhZ2VLZXl9YCA6ICIvZmlnbWEtaG9tZS1oZXJvLnBuZyJ9CiAgICAgICAgICAgICAgICBhbHQ9Itis2YjYp9mG2KfZhiDYp9uM2LHYp9mG24wg2K/YsSDZhdit24zYtyDYrtmE2KfZgiDZvtuM2LHYp9mF2YjZhiDZhtmC2LTZhyDYp9uM2LHYp9mGIgogICAgICAgICAgICAgIC8+CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iaGVyby1vcm5hbWVudCIgYXJpYS1oaWRkZW49InRydWUiPjxzcGFuIC8+PGkgLz48c3BhbiAvPjwvZGl2PgogICAgICAgICAgPC9kaXY+IiIiCm5ldyA9ICIiIiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT17YGhlcm8tdmlzdWFsJHtlZmZlY3RpdmVIZXJvTWVkaWEgPyAiIGhlcm8tdmlzdWFsLS1jbXMiIDogIiBoZXJvLXZpc3VhbC0tZmlnbWEifWB9IGFyaWEtbGFiZWw9Itiq2LXZiNuM2LEg2YXYrduM2Lcg2K7ZhNin2YIg2Ygg2YbZiNii2YjYsduMINin24zYsdin2YYiPgogICAgICAgICAgICB7ZWZmZWN0aXZlSGVyb01lZGlhID8gKAogICAgICAgICAgICAgIDw+CiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iaGVyby1waG90by1mcmFtZSI+CiAgICAgICAgICAgICAgICAgIDxpbWcKICAgICAgICAgICAgICAgICAgICBzcmM9e2AvdXBsb2Fkcy8ke2VmZmVjdGl2ZUhlcm9NZWRpYS5zdG9yYWdlS2V5fWB9CiAgICAgICAgICAgICAgICAgICAgYWx0PSLYrNmI2KfZhtin2YYg2KfbjNix2KfZhtuMINiv2LEg2YXYrduM2Lcg2K7ZhNin2YIg2b7bjNix2KfZhdmI2YYg2YbZgti02Ycg2KfbjNix2KfZhiIKICAgICAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9Imhlcm8tb3JuYW1lbnQiIGFyaWEtaGlkZGVuPSJ0cnVlIj48c3BhbiAvPjxpIC8+PHNwYW4gLz48L2Rpdj4KICAgICAgICAgICAgICA8Lz4KICAgICAgICAgICAgKSA6ICgKICAgICAgICAgICAgICA8aW1nCiAgICAgICAgICAgICAgICBjbGFzc05hbWU9Imhlcm8tdmlzdWFsX19maWdtYS1leHBvcnQiCiAgICAgICAgICAgICAgICBzcmM9Ii9maWdtYS1oZXJvLXZpc3VhbC5wbmciCiAgICAgICAgICAgICAgICBhbHQ9Itis2YjYp9mG2KfZhiDYp9uM2LHYp9mG24wg2K/YsSDZhdit24zYtyDYrtmE2KfZgiDZvtuM2LHYp9mF2YjZhiDZhtmC2LTZhyDYp9uM2LHYp9mGIgogICAgICAgICAgICAgICAgd2lkdGg9ezU2MH0KICAgICAgICAgICAgICAgIGhlaWdodD17NDIxfQogICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICl9CiAgICAgICAgICA8L2Rpdj4iIiIKaWYgb2xkIG5vdCBpbiB0ZXh0OgogICAgcmFpc2UgU3lzdGVtRXhpdCgiRXhwZWN0ZWQgaGVybyBtYXJrdXAgbm90IGZvdW5kIikKcGFnZS53cml0ZV90ZXh0KHRleHQucmVwbGFjZShvbGQsIG5ldywgMSksIGVuY29kaW5nPSJ1dGYtOCIpCgpjc3MgPSBQYXRoKCJhcHAvcWEtZml4ZXMuY3NzIikKc3R5bGVzID0gY3NzLnJlYWRfdGV4dChlbmNvZGluZz0idXRmLTgiKQptYXJrZXIgPSAiLyogRXhhY3QgRmlnbWEgaGVybyB2aXN1YWwgKi8iCmJsb2NrID0gIiIiCgovKiBFeGFjdCBGaWdtYSBoZXJvIHZpc3VhbCAqLwouaGVyby12aXN1YWwtLWZpZ21hIHsKICBkaXNwbGF5OiBibG9jazsKfQoKLmhlcm8tdmlzdWFsX19maWdtYS1leHBvcnQgewogIGRpc3BsYXk6IGJsb2NrOwogIHdpZHRoOiA1NjBweDsKICBoZWlnaHQ6IDQyMXB4OwogIG1heC13aWR0aDogbm9uZTsKICBvYmplY3QtZml0OiBjb250YWluOwp9CgovKiBNYXRjaCB0aGUgdHdvIEhlcm8gYWN0aW9ucyB0byB0aGUgMTcweDUyIEZpZ21hIGJveGVzIGV4YWN0bHkuICovCi5oZXJvLWFjdGlvbnMgewogIGhlaWdodDogNTJweDsKICBhbGlnbi1pdGVtczogZmxleC1zdGFydDsKfQoKLmhlcm8tYWN0aW9ucyAuYnV0dG9uIHsKICBib3gtc2l6aW5nOiBib3JkZXItYm94OwogIHdpZHRoOiAxNzBweDsKICBtaW4td2lkdGg6IDE3MHB4OwogIGZsZXg6IDAgMCAxNzBweDsKICBoZWlnaHQ6IDUycHg7CiAgbWluLWhlaWdodDogNTJweDsKICBwYWRkaW5nOiAxNHB4IDI0cHg7CiAgbGluZS1oZWlnaHQ6IDIycHg7CiAgd2hpdGUtc3BhY2U6IG5vd3JhcDsKfQoiIiIKaWYgbWFya2VyIG5vdCBpbiBzdHlsZXM6CiAgICBjc3Mud3JpdGVfdGV4dChzdHlsZXMucnN0cmlwKCkgKyBibG9jayArICJcbiIsIGVuY29kaW5nPSJ1dGYtOCIpCg==' | base64 -d > /tmp/patch.py
+          python /tmp/patch.py
+      - name: Commit changes
         shell: bash
         run: |
           set -euo pipefail
