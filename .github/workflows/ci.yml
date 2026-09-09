@@ -51,6 +51,9 @@ jobs:
           docker compose logs app
           exit 1
 
+      - name: Full production QA
+        run: bash scripts/qa-production.sh
+
       - name: Cleanup production stack
         if: always()
         run: docker compose down -v --remove-orphans
