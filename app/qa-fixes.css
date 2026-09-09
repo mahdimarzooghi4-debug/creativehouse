@@ -186,3 +186,35 @@ h3,
   height: 230px;
   min-height: 230px;
 }
+
+/* Exact Figma hero visual */
+.hero-visual--figma {
+  display: block;
+}
+
+.hero-visual__figma-export {
+  display: block;
+  width: 560px;
+  height: 421px;
+  max-width: none;
+  object-fit: contain;
+}
+
+/* Match the two Hero actions to the 170x52 Figma boxes exactly. */
+.hero-actions {
+  height: 52px;
+  align-items: flex-start;
+}
+
+.hero-actions .button {
+  box-sizing: border-box;
+  width: 170px;
+  min-width: 170px;
+  flex: 0 0 170px;
+  height: 52px;
+  min-height: 52px;
+  padding: 14px 24px;
+  line-height: 22px;
+  white-space: nowrap;
+}
+
