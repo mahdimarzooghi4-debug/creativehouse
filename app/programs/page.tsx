@@ -4,19 +4,28 @@ import { db } from "../../lib/db";
 
 export const dynamic = "force-dynamic";
 
-const filters = ["همه", "رویدادها", "رشد و شتابدهی", "کارگاه‌ها"];
+const filters = [
+  { label: "همه", value: "all" },
+  { label: "رویدادها", value: "event" },
+  { label: "رشد و شتابدهی", value: "acceleration" },
+  { label: "کارگاه‌ها", value: "workshop" },
+] as const;
+const allowedTypes = new Set(filters.map((item) => item.value));
 const cycle = [
   ["فراخوان و ثبت‌نام", "انتخاب مخاطب و دریافت درخواست‌ها"],
   ["اجرا و همراهی", "منتورینگ، کارگاه و توسعه راهکار"],
   ["ارزیابی و ارائه", "سنجش خروجی و اتصال به فرصت بعدی"],
 ];
 
-export default async function ProgramsPage() {
+export default async function ProgramsPage({ searchParams }: { searchParams: Promise<{ type?: string }> }) {
+  const { type = "all" } = await searchParams;
+  const selectedType = allowedTypes.has(type as (typeof filters)[number]["value"]) ? type : "all";
   const programs = await db.program.findMany({
     where: { deletedAt: null, status: { in: ["published", "active"] } },
     orderBy: [{ featured: "desc" }, { displayOrder: "asc" }, { updatedAt: "desc" }],
   });
-  const featured = programs.find((program) => program.featured) || programs[0];
+  const visiblePrograms = selectedType === "all" ? programs : programs.filter((program) => program.type === selectedType);
+  const featured = visiblePrograms.find((program) => program.featured) || visiblePrograms[0] || programs.find((program) => program.featured) || programs[0];
   const activeCount = programs.filter((program) => program.status === "active").length;
 
   return (
@@ -62,10 +71,12 @@ export default async function ProgramsPage() {
               <p>فهرست برنامه‌ها مستقیماً از پنل مدیریت خانه خلاق به‌روزرسانی می‌شود.</p>
             </div>
             <div className="filter-row" aria-label="فیلتر برنامه‌ها">
-              {filters.map((filter, index) => <span className={`filter-chip${index === 0 ? " filter-chip--active" : ""}`} key={filter}>{filter}</span>)}
+              {filters.map((filter) => (
+                <a className={`filter-chip${selectedType === filter.value ? " filter-chip--active" : ""}`} href={filter.value === "all" ? "/programs" : `/programs?type=${filter.value}`} key={filter.value}>{filter.label}</a>
+              ))}
             </div>
             <div className="program-directory-grid">
-              {programs.map((program) => (
+              {visiblePrograms.map((program) => (
                 <article className={`program-directory-card${program.featured ? " program-directory-card--featured" : ""}`} key={program.id}>
                   <span className="tag">{programTypeLabels[program.type] || program.type}</span>
                   <h3>{program.title}</h3>
