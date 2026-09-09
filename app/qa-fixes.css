@@ -17,22 +17,52 @@
 }
 
 /* Keep the public brand lockup at the exact 210×70 Figma geometry. */
+.brand {
+  direction: ltr;
+}
+
 .brand__title {
   flex: 0 0 128px;
+  width: 128px;
+  direction: rtl;
 }
 
 .brand__logo-shell {
-  display: block;
+  display: grid;
+  place-items: center;
   width: 82px;
   height: 70px;
   flex: 0 0 82px;
+  overflow: visible;
+  background: url("/figma-brand-logo.png") center / 82px 70px no-repeat;
 }
 
 .brand__logo {
-  width: 82px;
-  height: 70px;
-  max-width: none;
+  display: block;
+  width: 82px !important;
+  height: 70px !important;
+  max-width: none !important;
   object-fit: contain;
+  flex: 0 0 82px;
+}
+
+/* Figma uses a fixed 124×52 header CTA and 170×52 hero actions. */
+.header-cta {
+  width: 124px;
+  min-width: 124px;
+  flex: 0 0 124px;
+  height: 52px;
+  padding-inline: 0;
+  white-space: nowrap;
+}
+
+.hero-actions .button {
+  width: 170px;
+  min-width: 170px;
+  flex: 0 0 170px;
+  height: 52px;
+  padding-inline: 0;
+  white-space: nowrap;
 }
 
 /* Fontsource variable packages expose these exact family names. */
