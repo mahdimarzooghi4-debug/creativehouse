@@ -82,14 +82,26 @@ export default async function HomePage() {
               <a className="button button--secondary" href={settings.heroSecondaryHref || "/about"}>{settings.heroSecondaryLabel || "آشنایی با خانه خلاق"}</a>
             </div>
           </div>
-          <div className="hero-visual" aria-label="تصویر محیط خلاق و نوآوری ایران">
-            <div className="hero-photo-frame">
+          <div className={`hero-visual${effectiveHeroMedia ? " hero-visual--cms" : " hero-visual--figma"}`} aria-label="تصویر محیط خلاق و نوآوری ایران">
+            {effectiveHeroMedia ? (
+              <>
+                <div className="hero-photo-frame">
+                  <img
+                    src={`/uploads/${effectiveHeroMedia.storageKey}`}
+                    alt="جوانان ایرانی در محیط خلاق پیرامون نقشه ایران"
+                  />
+                </div>
+                <div className="hero-ornament" aria-hidden="true"><span /><i /><span /></div>
+              </>
+            ) : (
               <img
-                src={effectiveHeroMedia ? `/uploads/${effectiveHeroMedia.storageKey}` : "/figma-home-hero.png"}
+                className="hero-visual__figma-export"
+                src="/figma-hero-visual.png"
                 alt="جوانان ایرانی در محیط خلاق پیرامون نقشه ایران"
+                width={560}
+                height={421}
               />
-            </div>
-            <div className="hero-ornament" aria-hidden="true"><span /><i /><span /></div>
+            )}
           </div>
         </div>
       </section>
