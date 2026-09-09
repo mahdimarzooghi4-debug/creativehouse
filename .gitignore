@@ -10,3 +10,9 @@ pnpm-debug.log*
 .DS_Store
 *.pem
 coverage/
+
+# Runtime data
+prisma/*.db
+prisma/*.db-*
+data/
+uploads/

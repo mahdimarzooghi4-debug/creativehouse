@@ -43,10 +43,12 @@ export function CmsShell({ active = "dashboard", children }: { active?: CmsSecti
           <span>دسترسی کامل</span>
         </div>
 
-        <a className="cms-logout" href="/admin/login">
-          <img src={LOGOUT_ICON} alt="" width={20} height={20} />
-          <span>خروج از پنل</span>
-        </a>
+        <form action="/api/admin/logout" method="post">
+          <button className="cms-logout" type="submit" style={{ width: "100%", cursor: "pointer", textAlign: "right" }}>
+            <img src={LOGOUT_ICON} alt="" width={20} height={20} />
+            <span>خروج از پنل</span>
+          </button>
+        </form>
       </aside>
     </div>
   );
