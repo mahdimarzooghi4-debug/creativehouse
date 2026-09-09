@@ -1,0 +1,594 @@
+body,
+button,
+a,
+input,
+textarea,
+select {
+  font-family: "Vazirmatn Variable", Vazirmatn, Tahoma, Arial, sans-serif;
+}
+
+h1,
+h2,
+h3,
+.metric strong,
+.footer-slogan,
+.display-type {
+  font-family: "Estedad Variable", Estedad, "Vazirmatn Variable", Tahoma, Arial, sans-serif;
+  font-weight: 800;
+}
+
+.main-nav a[aria-current="page"] {
+  color: var(--coral);
+}
+
+.brand__logo-shell {
+  width: 82px;
+  height: 70px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.brand--footer {
+  background: var(--paper);
+}
+
+.brand--footer .brand__logo-shell {
+  background: rgba(246, 241, 232, 0.2);
+}
+
+.public-page {
+  min-height: 100vh;
+  background: var(--paper);
+}
+
+.public-page__main {
+  overflow: hidden;
+}
+
+.public-hero {
+  background: var(--white);
+  padding: 86px 0;
+}
+
+.public-hero--paper {
+  background: var(--paper);
+}
+
+.public-hero__row {
+  min-height: 268px;
+  display: grid;
+  grid-template-columns: 410px minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+}
+
+.public-hero__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.public-hero__copy .eyebrow,
+.section-intro .eyebrow {
+  width: 100%;
+}
+
+.public-hero__copy h1 {
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 48px;
+  line-height: 1.45;
+  letter-spacing: -1px;
+  font-weight: 800;
+}
+
+.public-hero__copy > p:not(.eyebrow) {
+  color: var(--text);
+  font-size: 18px;
+  line-height: 2;
+}
+
+.hero-stat-pair {
+  height: 120px;
+  display: grid;
+  grid-template-columns: repeat(2, 194px);
+  gap: 22px;
+  direction: rtl;
+}
+
+.hero-stat {
+  height: 120px;
+  padding: 18px 24px;
+  border: 1px solid var(--gold);
+  border-radius: 20px;
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: flex-start;
+}
+
+.hero-stat--filled {
+  color: var(--white);
+  border-color: var(--navy);
+  background: var(--navy);
+}
+
+.hero-stat strong {
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 34px;
+  line-height: 1.35;
+  font-weight: 800;
+}
+
+.hero-stat span {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.content-section {
+  padding: 72px 0 64px;
+  background: var(--paper);
+}
+
+.content-section--white {
+  background: var(--white);
+}
+
+.content-section--large {
+  padding-top: 96px;
+  padding-bottom: 96px;
+}
+
+.section-intro {
+  margin-bottom: 34px;
+}
+
+.section-intro h2 {
+  margin-top: 8px;
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 38px;
+  line-height: 1.55;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.section-intro > p:not(.eyebrow) {
+  margin-top: 6px;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 2;
+}
+
+.section-intro--compact {
+  margin-bottom: 28px;
+}
+
+.identity-hero {
+  min-height: 580px;
+  padding: 92px 0;
+  background: var(--paper);
+}
+
+.identity-hero__grid {
+  display: grid;
+  grid-template-columns: 560px 580px;
+  gap: 100px;
+  align-items: start;
+}
+
+.identity-panel {
+  height: 390px;
+  padding: 48px 40px;
+  border-radius: 28px;
+  background: var(--navy);
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+.identity-panel::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 4px;
+  top: 48px;
+  left: 40px;
+  background: var(--gold);
+  border-radius: 2px;
+}
+
+.identity-panel__coral,
+.identity-panel__gold {
+  position: absolute;
+  left: 56px;
+  border-radius: 18px;
+}
+
+.identity-panel__coral {
+  top: 48px;
+  width: 74px;
+  height: 74px;
+  background: var(--coral);
+}
+
+.identity-panel__gold {
+  top: 150px;
+  width: 122px;
+  height: 122px;
+  border-radius: 24px;
+  background: rgba(224, 200, 159, 0.95);
+}
+
+.identity-panel__text {
+  width: 300px;
+  margin-right: auto;
+  padding-top: 38px;
+}
+
+.identity-panel__kicker {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.identity-panel h2 {
+  margin-top: 18px;
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 42px;
+  line-height: 1.35;
+  font-weight: 800;
+}
+
+.identity-panel__caption {
+  margin-top: 24px;
+  font-size: 15px;
+  line-height: 2;
+}
+
+.identity-copy .eyebrow {
+  margin-bottom: 8px;
+}
+
+.identity-copy h1 {
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 48px;
+  line-height: 1.35;
+  font-weight: 800;
+}
+
+.identity-copy > p:not(.eyebrow) {
+  margin-top: 18px;
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.9;
+}
+
+.slogan-chip {
+  width: 260px;
+  height: 58px;
+  margin-top: 26px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--white);
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.slogan-chip span {
+  color: var(--coral);
+}
+
+.two-card-grid {
+  display: grid;
+  grid-template-columns: 596px 620px;
+  gap: 24px;
+}
+
+.purpose-card {
+  min-height: 230px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: var(--paper);
+}
+
+.purpose-card--featured {
+  color: var(--white);
+  border-color: var(--navy);
+  background: var(--navy);
+}
+
+.purpose-card .eyebrow {
+  margin-bottom: 8px;
+}
+
+.purpose-card--featured .eyebrow {
+  color: var(--gold);
+}
+
+.purpose-card h3 {
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 24px;
+  line-height: 1.6;
+  font-weight: 800;
+}
+
+.purpose-card p:not(.eyebrow) {
+  margin-top: 12px;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.purpose-card--featured p:not(.eyebrow) {
+  color: rgba(255,255,255,.92);
+}
+
+.four-card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.three-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.info-card {
+  min-height: 250px;
+  padding: 24px 22px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--white);
+  position: relative;
+}
+
+.info-card__accent {
+  width: 54px;
+  height: 6px;
+  margin-bottom: 26px;
+  border-radius: 3px;
+  background: var(--coral);
+}
+
+.info-card__accent--gold { background: var(--gold); }
+.info-card__accent--blue { background: var(--navy-2); }
+.info-card__accent--green { background: #14ae5c; }
+
+.info-card h3 {
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 22px;
+  line-height: 1.7;
+  font-weight: 800;
+}
+
+.info-card p {
+  margin-top: 14px;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 2;
+}
+
+.step-card {
+  min-height: 190px;
+  padding: 22px 24px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: var(--white);
+}
+
+.step-card__number {
+  width: 42px;
+  height: 42px;
+  margin-right: auto;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: var(--white);
+  background: var(--coral);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.step-card h3 {
+  margin-top: 14px;
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 22px;
+  line-height: 1.6;
+  font-weight: 800;
+}
+
+.step-card p {
+  margin-top: 6px;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.model-grid .step-card {
+  min-height: 250px;
+}
+
+.model-grid .step-card h3 {
+  margin-top: 20px;
+}
+
+.audience-grid .info-card {
+  min-height: 250px;
+}
+
+.audience-grid .info-card::after {
+  content: "";
+  position: absolute;
+  width: 70px;
+  height: 5px;
+  right: 24px;
+  bottom: 35px;
+  border-radius: 3px;
+  background: var(--gold);
+}
+
+.featured-startup {
+  min-height: 240px;
+  padding: 24px;
+  border-radius: 24px;
+  background: var(--white);
+  display: grid;
+  grid-template-columns: 330px 1fr;
+  gap: 36px;
+  align-items: center;
+}
+
+.featured-startup__visual {
+  height: 192px;
+  padding: 24px;
+  border-radius: 18px;
+  background: var(--navy);
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+.featured-startup__visual::before,
+.featured-startup__visual::after {
+  content: "";
+  position: absolute;
+  top: 24px;
+  border-radius: 14px;
+}
+
+.featured-startup__visual::before {
+  right: 24px;
+  width: 54px;
+  height: 54px;
+  background: var(--coral);
+}
+
+.featured-startup__visual::after {
+  right: 92px;
+  width: 86px;
+  height: 86px;
+  border-radius: 16px;
+  background: var(--gold);
+}
+
+.featured-startup__visual strong {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 25px;
+  line-height: 1.45;
+}
+
+.featured-startup__body h3 {
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 30px;
+  line-height: 1.6;
+  font-weight: 800;
+}
+
+.featured-startup__body p {
+  margin-top: 4px;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.95;
+}
+
+.featured-startup__body a {
+  display: inline-block;
+  margin-top: 18px;
+  color: var(--navy-2);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.filter-row {
+  min-height: 48px;
+  margin-bottom: 34px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter-chip {
+  height: 42px;
+  padding: 0 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e6e6e6;
+  border-radius: 21px;
+  color: var(--navy);
+  background: var(--paper);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.filter-chip--active {
+  color: var(--white);
+  border-color: var(--navy);
+  background: var(--navy);
+}
+
+.directory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px 16px;
+}
+
+.directory-card {
+  min-height: 286px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.directory-card h3 {
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 24px;
+  line-height: 1.7;
+  font-weight: 800;
+}
+
+.directory-card p {
+  min-height: 78px;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.directory-card__divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+}
+
+.directory-card a {
+  color: var(--navy-2);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.page-footer-space {
+  margin-top: 0;
+}
+
+@media (max-width: 1250px) {
+  .shell {
+    width: 1240px;
+  }
+}
