@@ -10,6 +10,11 @@ function text(form: FormData, key: string, max = 500) {
   return typeof value === "string" ? value.trim().slice(0, max) : "";
 }
 
+function rawText(form: FormData, key: string, max = 128) {
+  const value = form.get(key);
+  return typeof value === "string" ? value.slice(0, max) : "";
+}
+
 function redirect(request: NextRequest, result: string, sessionUser?: { id: string; username: string }) {
   const url = new URL("/admin/settings", request.url);
   url.searchParams.set("result", result);
@@ -36,8 +41,8 @@ export async function POST(request: NextRequest) {
   if (!currentUser) return NextResponse.redirect(new URL("/admin/login", request.url), 303);
 
   const requestedUsername = text(form, "adminUsername", 60).toLowerCase();
-  const currentPassword = text(form, "currentPassword", 128);
-  const newPassword = text(form, "password", 128);
+  const currentPassword = rawText(form, "currentPassword");
+  const newPassword = rawText(form, "password");
 
   if (operation === "change-password") {
     if (!currentPassword) return redirect(request, "current-password-required");
