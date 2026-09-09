@@ -108,6 +108,8 @@ model License {
   slug            String    @unique
   title           String
   issuer          String?
+  description     String?
+  issuedAt        DateTime?
   status          String    @default("draft")
   documentMediaId String?
   previewMediaId  String?
