@@ -1,0 +1,327 @@
+.startup-detail-hero {
+  min-height: 460px;
+  padding: 72px 0 74px;
+  background: var(--white);
+}
+
+.startup-detail-hero__grid {
+  display: grid;
+  grid-template-columns: 500px 640px;
+  gap: 100px;
+  align-items: start;
+}
+
+.startup-detail-visual {
+  height: 310px;
+  padding: 34px;
+  border-radius: 22px;
+  background: var(--paper);
+  position: relative;
+  overflow: hidden;
+}
+
+.startup-detail-visual__navy,
+.startup-detail-visual__coral,
+.startup-detail-visual__gold {
+  position: absolute;
+  top: 34px;
+}
+
+.startup-detail-visual__navy {
+  right: 34px;
+  width: 186px;
+  height: 186px;
+  border-radius: 22px;
+  background: var(--navy);
+}
+
+.startup-detail-visual__coral {
+  right: 246px;
+  width: 82px;
+  height: 82px;
+  border-radius: 16px;
+  background: var(--coral);
+}
+
+.startup-detail-visual__gold {
+  left: 34px;
+  width: 122px;
+  height: 122px;
+  border-radius: 18px;
+  background: var(--gold);
+}
+
+.startup-detail-visual strong {
+  position: absolute;
+  right: 54px;
+  top: 94px;
+  width: 146px;
+  color: var(--white);
+  text-align: center;
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 30px;
+  line-height: 1.55;
+  font-weight: 800;
+}
+
+.startup-detail-visual p {
+  position: absolute;
+  right: 34px;
+  bottom: 28px;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.startup-detail-copy h1 {
+  margin-top: 8px;
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 44px;
+  line-height: 1.6;
+  font-weight: 800;
+}
+
+.startup-detail-copy > p:not(.eyebrow) {
+  margin-top: 2px;
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.detail-tags {
+  margin-top: 18px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.detail-tag {
+  min-width: 136px;
+  height: 36px;
+  padding: 0 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e3e3e3;
+  border-radius: 18px;
+  color: var(--coral);
+  background: #fdfbf8;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.detail-tag--primary {
+  color: var(--white);
+  border-color: var(--navy);
+  background: var(--navy);
+}
+
+.startup-about-section {
+  padding: 66px 0 70px;
+  background: var(--paper);
+}
+
+.startup-about-grid {
+  margin-top: 38px;
+  display: grid;
+  grid-template-columns: 596px 620px;
+  gap: 24px;
+}
+
+.startup-facts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 12px;
+}
+
+.startup-fact,
+.startup-about-copy {
+  border: 1px solid #e3e3e3;
+  border-radius: 16px;
+  background: var(--white);
+}
+
+.startup-fact {
+  min-height: 112px;
+  padding: 17px 20px;
+}
+
+.startup-fact span {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.startup-fact strong {
+  display: block;
+  margin-top: 8px;
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  font-weight: 800;
+}
+
+.startup-about-copy {
+  min-height: 244px;
+  padding: 28px;
+}
+
+.startup-about-copy h3 {
+  color: var(--coral);
+  font-size: 18px;
+  font-family: "Vazirmatn Variable", Vazirmatn, sans-serif;
+  font-weight: 500;
+}
+
+.startup-about-copy p {
+  margin-top: 14px;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+.startup-product-section {
+  padding: 66px 0 82px;
+  background: var(--white);
+}
+
+.startup-product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 38px;
+}
+
+.startup-product-card {
+  min-height: 248px;
+  padding: 24px 28px;
+  border-radius: 18px;
+  background: var(--paper);
+}
+
+.startup-product-card__accent {
+  width: 50px;
+  height: 6px;
+  margin-bottom: 26px;
+  border-radius: 3px;
+  background: var(--coral);
+}
+
+.startup-product-card:nth-child(2) .startup-product-card__accent { background: var(--gold); }
+.startup-product-card:nth-child(3) .startup-product-card__accent { background: var(--navy); }
+
+.startup-product-card h3 {
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 24px;
+  line-height: 1.6;
+  font-weight: 800;
+}
+
+.startup-product-card p {
+  margin-top: 14px;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.startup-milestones {
+  padding: 62px 0 86px;
+  background: var(--paper);
+}
+
+.milestone-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.milestone-card {
+  min-height: 190px;
+  padding: 22px 24px;
+  border-radius: 18px;
+  background: var(--white);
+}
+
+.milestone-card span {
+  width: 46px;
+  height: 46px;
+  margin-right: auto;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: var(--white);
+  background: var(--coral);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.milestone-card h3 {
+  margin-top: 10px;
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 20px;
+  line-height: 1.6;
+  font-weight: 800;
+}
+
+.milestone-card p {
+  margin-top: 4px;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.startup-team-section {
+  padding: 62px 0 68px;
+  background: var(--white);
+}
+
+.startup-team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 38px;
+}
+
+.team-card {
+  min-height: 166px;
+  padding: 24px 28px;
+  border-radius: 18px;
+  background: var(--paper);
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  column-gap: 18px;
+  align-content: start;
+}
+
+.team-avatar {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--white);
+  background: var(--navy);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.team-card h3 {
+  padding-top: 2px;
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 20px;
+  line-height: 1.6;
+  font-weight: 800;
+}
+
+.team-card p,
+.team-card a {
+  grid-column: 2;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.team-card a {
+  margin-top: 8px;
+  color: var(--coral);
+  font-size: 13px;
+  font-weight: 500;
+}
