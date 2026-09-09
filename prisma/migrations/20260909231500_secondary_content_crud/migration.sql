@@ -15,6 +15,6 @@ INSERT OR IGNORE INTO "Partner" ("id", "slug", "name", "website", "status", "fea
 ('seed_partner_soft', 'soft-technology', 'ستاد توسعه فناوری‌های نرم و صنایع خلاق', NULL, 'active', 1, 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT OR IGNORE INTO "License" ("id", "slug", "title", "issuer", "description", "status", "displayOrder", "createdAt", "updatedAt") VALUES
-('seed_license_activity', 'creative-house-license', 'مجوز فعالیت خانه خلاق', 'مرجع صادرکننده', 'نسخه رسمی مجوز فعالیت خانه خلاق پس از بارگذاری سند در این بخش در دسترس است.', 'published', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('seed_license_collaboration', 'collaboration-approval', 'تأییدیه همکاری', 'مرجع صادرکننده', 'تأییدیه رسمی همکاری و اطلاعات مرجع صادرکننده در این بخش منتشر می‌شود.', 'published', 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('seed_license_activity', 'creative-house-license', 'مجوز فعالیت خانه خلاق', 'مرجع صادرکننده', 'نسخه رسمی مجوز فعالیت خانه خلاق پس از بارگذاری سند در این بخش در دسترس است.', 'draft', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('seed_license_collaboration', 'collaboration-approval', 'تأییدیه همکاری', 'مرجع صادرکننده', 'تأییدیه رسمی همکاری و اطلاعات مرجع صادرکننده در این بخش منتشر می‌شود.', 'draft', 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('seed_license_draft', 'new-document', 'سند جدید', NULL, 'اطلاعات این سند هنوز تکمیل نشده است.', 'draft', 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
