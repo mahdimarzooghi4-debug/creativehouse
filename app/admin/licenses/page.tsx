@@ -12,7 +12,15 @@ const licenses = [
   ["new", "سند جدید", "اطلاعات تکمیل نشده", "پیش‌نویس", "draft"],
 ] as const;
 
-export default function AdminLicensesPage() {
+const resultMessages: Record<string, string> = {
+  saved: "اطلاعات مجوز ذخیره شد.",
+  published: "مجوز برای نمایش عمومی منتشر شد.",
+};
+
+export default async function AdminLicensesPage({ searchParams }: { searchParams: Promise<{ result?: string }> }) {
+  const { result } = await searchParams;
+  const feedback = result ? resultMessages[result] : undefined;
+
   return (
     <CmsShell active="licenses">
       <div className="cms-dashboard cms-licenses-page">
@@ -22,10 +30,12 @@ export default function AdminLicensesPage() {
             <p>اسناد واقعی را بارگذاری و وضعیت نمایش عمومی آن‌ها را مدیریت کن</p>
           </div>
           <div className="cms-licenses-header-actions">
-            <a className="cms-outline-button cms-view-site" href="/">مشاهده سایت</a>
-            <a className="cms-licenses-dark-button cms-add-license" href="#license-new">افزودن مجوز</a>
+            <a className="cms-outline-button cms-view-site" href="/licenses">مشاهده سایت</a>
+            <a className="cms-licenses-dark-button cms-add-license" href="/admin/licenses/new">افزودن مجوز</a>
           </div>
         </header>
+
+        {feedback ? <div className="cms-secondary-feedback" role="status">{feedback}</div> : null}
 
         <section className="cms-licenses-stat-grid" aria-label="آمار مجوزها">
           {licenseStats.map(([label, value, note]) => (
@@ -47,7 +57,7 @@ export default function AdminLicensesPage() {
               <p>{issuer}</p>
               <div className="cms-license-card-footer">
                 <span className={`cms-license-status cms-license-status--${tone}`}>{status}</span>
-                <button className="cms-license-action" type="button">ویرایش</button>
+                <a className="cms-license-action" href={slug === "new" ? "/admin/licenses/new" : `/admin/licenses/${slug}`}>ویرایش</a>
               </div>
             </article>
           ))}
