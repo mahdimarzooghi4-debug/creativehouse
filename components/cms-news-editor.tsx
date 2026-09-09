@@ -6,6 +6,7 @@ type NewsEditorProps = {
 
 export function CmsNewsEditor({ mode = "edit" }: NewsEditorProps) {
   const isCreate = mode === "create";
+  const previewHref = isCreate ? "/news" : "/news/selected-teams-gathering";
 
   return (
     <CmsShell active="news">
@@ -15,9 +16,10 @@ export function CmsNewsEditor({ mode = "edit" }: NewsEditorProps) {
             <h1>{isCreate ? "ثبت خبر جدید" : "ویرایش خبر"}</h1>
             <p>عنوان، متن خبر، تصویر، دسته‌بندی و زمان انتشار را مدیریت کن</p>
           </div>
-          <div className="cms-news-editor-actions">
-            <button className="cms-outline-button" type="submit" name="action" value="preview">پیش‌نمایش</button>
-            <button className="cms-news-dark-button" type="submit" name="action" value="publish">انتشار</button>
+          <div className="cms-news-editor-actions" aria-label="عملیات ویرایش خبر">
+            <a className="cms-outline-button" href="/admin/news">{isCreate ? "لغو" : "بازگشت"}</a>
+            <a className="cms-outline-button" href={previewHref} target="_blank" rel="noreferrer">پیش‌نمایش</a>
+            <button className="cms-news-dark-button" type="submit" name="notice" value="published">انتشار</button>
           </div>
         </header>
 
@@ -27,6 +29,7 @@ export function CmsNewsEditor({ mode = "edit" }: NewsEditorProps) {
               <span>عنوان خبر</span>
               <input
                 name="title"
+                required
                 defaultValue={isCreate ? "" : "نخستین گردهمایی تیم‌های منتخب خانه خلاق آینه برگزار شد"}
                 placeholder="عنوان خبر"
               />
@@ -38,6 +41,7 @@ export function CmsNewsEditor({ mode = "edit" }: NewsEditorProps) {
                 className="cms-news-summary"
                 name="summary"
                 rows={3}
+                required
                 defaultValue={isCreate ? "" : "تیم‌های منتخب در یک نشست مشترک مسیر توسعه محصول، شبکه منتورینگ و برنامه‌های ماه‌های پیش‌رو را مرور کردند."}
                 placeholder="خلاصه خبر"
               />
@@ -49,6 +53,7 @@ export function CmsNewsEditor({ mode = "edit" }: NewsEditorProps) {
                 className="cms-news-body"
                 name="body"
                 rows={10}
+                required
                 defaultValue={isCreate ? "" : "متن کامل خبر در این بخش با امکان افزودن پاراگراف، تیتر میانی و لینک مدیریت می‌شود. این نمونه برای طراحی CMS قرار گرفته است."}
                 placeholder="متن کامل خبر"
               />
