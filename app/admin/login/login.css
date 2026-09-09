@@ -56,10 +56,10 @@
   font-weight: 500;
 }
 
-.cms-login__brand img {
+.cms-login__brand-mark {
   width: 82px;
   height: 70px;
-  object-fit: contain;
+  flex: 0 0 82px;
 }
 
 .cms-login__identity-copy {
