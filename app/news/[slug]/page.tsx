@@ -44,8 +44,8 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
               <h1>{title}</h1>
               <p>تیم‌های منتخب خانه خلاق در یک نشست مشترک، مسیر توسعه محصول، شبکه منتورینگ و برنامه‌های ماه‌های پیش‌رو را مرور کردند.</p>
               <div className="news-detail-tags">
-                <span className="program-detail-status">خبر منتخب</span>
-                <span className="program-detail-status">گزارش فعالیت</span>
+                <span className="news-detail-tag">خبر منتخب</span>
+                <span className="news-detail-tag">گزارش فعالیت</span>
               </div>
               <div className="news-detail-actions">
                 <a className="button button--primary" href="/news">بازگشت به اخبار</a>
