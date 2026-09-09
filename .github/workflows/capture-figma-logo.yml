@@ -1,0 +1,49 @@
+name: Capture Figma logo asset
+
+on:
+  push:
+    branches:
+      - fix-figma-logo-asset
+
+permissions:
+  contents: write
+
+jobs:
+  capture:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix-figma-logo-asset
+
+      - name: Download exact Figma logo export
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 3 \
+            'https://www.figma.com/api/mcp/asset/26c80d01-3a7f-4338-a06c-e7025c3de2e7.png' \
+            -o public/figma-brand-logo.png
+          python - <<'PY'
+          import struct
+          p = 'public/figma-brand-logo.png'
+          with open(p, 'rb') as f:
+              sig = f.read(24)
+          if sig[:8] != b'\x89PNG\r\n\x1a\n':
+              raise SystemExit('Downloaded asset is not a PNG')
+          w, h = struct.unpack('>II', sig[16:24])
+          print(f'logo dimensions: {w}x{h}')
+          if (w, h) != (82, 70):
+              raise SystemExit(f'Unexpected logo dimensions: {w}x{h}')
+          PY
+
+      - name: Commit logo asset
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add public/figma-brand-logo.png
+          git commit -m 'Replace placeholder with exact Figma logo asset'
+          git push origin HEAD:fix-figma-logo-asset
