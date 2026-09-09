@@ -14,7 +14,19 @@ const newsItems = [
   ["new-partner", "همراه جدید خانه خلاق معرفی شد", "همکاری", "بازبینی", "review", "—", "—"],
 ] as const;
 
-export default function AdminNewsPage() {
+type AdminNewsPageProps = {
+  searchParams: Promise<{ notice?: string }>;
+};
+
+function getNoticeText(notice?: string) {
+  if (notice === "published") return "خبر برای انتشار ثبت شد.";
+  return null;
+}
+
+export default async function AdminNewsPage({ searchParams }: AdminNewsPageProps) {
+  const { notice } = await searchParams;
+  const noticeText = getNoticeText(notice);
+
   return (
     <CmsShell active="news">
       <div className="cms-dashboard cms-news-page">
@@ -28,6 +40,8 @@ export default function AdminNewsPage() {
             <a className="cms-news-dark-button cms-add-news" href="/admin/news/new">ثبت خبر جدید</a>
           </div>
         </header>
+
+        {noticeText ? <p className="cms-flow-notice" role="status">{noticeText}</p> : null}
 
         <section className="cms-news-stat-grid" aria-label="آمار اخبار">
           {newsStats.map(([label, value, note]) => (
