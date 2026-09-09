@@ -233,6 +233,18 @@
   flex: 0 0 128px;
 }
 
+.cms-flow-notice {
+  margin: 8px 0 2px;
+  padding: 10px 14px;
+  border: 1px solid #cfe8dc;
+  border-radius: 10px;
+  color: #2f765b;
+  background: #f1faf5;
+  font-size: 13px;
+  line-height: 1.8;
+  font-weight: 600;
+}
+
 .cms-stat-grid {
   margin-top: 22px;
   display: grid;
