@@ -16,6 +16,25 @@
   display: block;
 }
 
+/* Keep the public brand lockup at the exact 210×70 Figma geometry. */
+.brand__title {
+  flex: 0 0 128px;
+}
+
+.brand__logo-shell {
+  display: block;
+  width: 82px;
+  height: 70px;
+  flex: 0 0 82px;
+}
+
+.brand__logo {
+  width: 82px;
+  height: 70px;
+  max-width: none;
+  object-fit: contain;
+}
+
 /* Fontsource variable packages expose these exact family names. */
 body,
 button,
