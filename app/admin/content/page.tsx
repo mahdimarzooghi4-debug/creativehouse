@@ -1,22 +1,40 @@
 import { CmsShell } from "../../../components/cms-shell";
+import { contentStatusLabels, formatPersianDate } from "../../../lib/content-utils";
+import { db } from "../../../lib/db";
 
-const stats = [
-  ["کل محتوا", "۳۶", "استارتاپ، برنامه و خبر"],
-  ["منتشرشده", "۲۸", "قابل مشاهده در سایت"],
-  ["پیش‌نویس", "۷", "نیازمند تکمیل"],
-  ["زمان‌بندی‌شده", "۱", "انتشار خودکار"],
-] as const;
+export const dynamic = "force-dynamic";
 
-const contentItems = [
-  ["رویداد ملی خلاقیت و نوآوری آینه", "برنامه", "منتشرشده", "امروز", "published", "/admin/programs"],
-  ["راهکار نو برای بازار محلی", "استارتاپ", "پیش‌نویس", "امروز", "draft", "/admin/startups"],
-  ["گزارش گردهمایی تیم‌های منتخب", "خبر", "منتشرشده", "دیروز", "published", "/admin/news"],
-  ["مرکز نوآوری آفتاب", "استارتاپ", "منتشرشده", "۲ روز قبل", "published", "/admin/startups"],
-  ["فراخوان برنامه رشد پاییز", "برنامه", "زمان‌بندی‌شده", "۳ روز قبل", "scheduled", "/admin/programs"],
-  ["کارگاه طراحی تجربه کاربر", "خبر", "پیش‌نویس", "۴ روز قبل", "draft", "/admin/news"],
-] as const;
+function statusTone(status: string) {
+  if (status === "published" || status === "active") return "published";
+  if (status === "scheduled") return "scheduled";
+  return "draft";
+}
 
-export default function AdminContentPage() {
+export default async function AdminContentPage() {
+  const [startups, programs, news] = await Promise.all([
+    db.startup.findMany({ where: { deletedAt: null }, select: { slug: true, name: true, status: true, updatedAt: true } }),
+    db.program.findMany({ where: { deletedAt: null }, select: { slug: true, title: true, status: true, updatedAt: true } }),
+    db.news.findMany({ where: { deletedAt: null }, select: { slug: true, title: true, status: true, updatedAt: true } }),
+  ]);
+
+  const contentItems = [
+    ...startups.map((item) => ({ title: item.name, type: "استارتاپ", status: item.status, updatedAt: item.updatedAt, href: `/admin/startups/${item.slug}` })),
+    ...programs.map((item) => ({ title: item.title, type: "برنامه", status: item.status, updatedAt: item.updatedAt, href: `/admin/programs/${item.slug}` })),
+    ...news.map((item) => ({ title: item.title, type: "خبر", status: item.status, updatedAt: item.updatedAt, href: `/admin/news/${item.slug}` })),
+  ].sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime());
+
+  const total = contentItems.length;
+  const published = contentItems.filter((item) => item.status === "published" || item.status === "active").length;
+  const drafts = contentItems.filter((item) => item.status === "draft" || item.status === "review").length;
+  const scheduled = contentItems.filter((item) => item.status === "scheduled").length;
+
+  const stats = [
+    ["کل محتوا", total.toLocaleString("fa-IR"), "استارتاپ، برنامه و خبر"],
+    ["منتشرشده", published.toLocaleString("fa-IR"), "قابل مشاهده در سایت"],
+    ["پیش‌نویس", drafts.toLocaleString("fa-IR"), "نیازمند تکمیل یا بازبینی"],
+    ["زمان‌بندی‌شده", scheduled.toLocaleString("fa-IR"), "انتشار خودکار"],
+  ] as const;
+
   return (
     <CmsShell active="dashboard">
       <div className="cms-dashboard cms-content-page">
@@ -54,13 +72,13 @@ export default function AdminContentPage() {
             <div className="cms-content-row cms-content-head" role="row">
               <span>عنوان</span><span>نوع</span><span>وضعیت</span><span>آخرین تغییر</span><span>عملیات</span>
             </div>
-            {contentItems.map(([title, type, status, changed, tone, href], index) => (
-              <div className={`cms-content-row${index % 2 ? " is-alt" : ""}`} role="row" key={title}>
-                <strong>{title}</strong>
-                <span>{type}</span>
-                <span><i className={`cms-status cms-status--${tone}`}>{status}</i></span>
-                <span>{changed}</span>
-                <a href={href}>باز کردن</a>
+            {contentItems.map((item, index) => (
+              <div className={`cms-content-row${index % 2 ? " is-alt" : ""}`} role="row" key={`${item.type}-${item.href}`}>
+                <strong>{item.title}</strong>
+                <span>{item.type}</span>
+                <span><i className={`cms-status cms-status--${statusTone(item.status)}`}>{contentStatusLabels[item.status] || item.status}</i></span>
+                <span>{formatPersianDate(item.updatedAt)}</span>
+                <a href={item.href}>باز کردن</a>
               </div>
             ))}
           </div>
