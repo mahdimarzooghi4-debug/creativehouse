@@ -28,8 +28,8 @@ export async function POST(request: NextRequest) {
     const status = operation === "publish" ? (requestedStatus === "scheduled" ? "scheduled" : "published") : "draft";
     const publishedAt = operation === "publish" ? (parseOptionalDate(form.get("publishedAt")) || new Date()) : null;
     const slug = await uniqueNewsSlug(title);
-
-    await db.news.create({
+    const featured = asBoolean(form, "featured");
+    const createNews = db.news.create({
       data: {
         slug,
         title,
@@ -39,10 +39,19 @@ export async function POST(request: NextRequest) {
         category: asText(form, "category") || "news",
         status,
         publishedAt,
-        featured: asBoolean(form, "featured"),
+        featured,
         coverMediaId: cover?.id || null,
       },
     });
+
+    if (featured) {
+      await db.$transaction([
+        db.news.updateMany({ where: { deletedAt: null, featured: true }, data: { featured: false } }),
+        createNews,
+      ]);
+    } else {
+      await createNews;
+    }
 
     revalidatePath("/");
     revalidatePath("/news");
