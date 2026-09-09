@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,3 +27,30 @@ jobs:
 
       - name: Production build
         run: npm run build
+
+      - name: Validate production compose
+        run: |
+          cp .env.production.example .env.production
+          docker compose config >/dev/null
+
+      - name: Build production containers
+        run: docker compose build app migrate
+
+      - name: Apply production migrations
+        run: docker compose --profile tools run --rm migrate
+
+      - name: Smoke test production container
+        run: |
+          docker compose up -d app
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:3000/api/health >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          docker compose logs app
+          exit 1
+
+      - name: Cleanup production stack
+        if: always()
+        run: docker compose down -v --remove-orphans
