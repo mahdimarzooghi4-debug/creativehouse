@@ -14,7 +14,20 @@ const startups = [
   ["boom", "نوآوران بوم", "طراحی و محصول", "ایده", "بازبینی", "review", "۳ روز قبل"],
 ] as const;
 
-export default function AdminStartupsPage() {
+type AdminStartupsPageProps = {
+  searchParams: Promise<{ notice?: string }>;
+};
+
+function getNoticeText(notice?: string) {
+  if (notice === "draft-saved") return "پیش‌نویس استارتاپ ذخیره شد.";
+  if (notice === "published") return "پروفایل استارتاپ برای انتشار ثبت شد.";
+  return null;
+}
+
+export default async function AdminStartupsPage({ searchParams }: AdminStartupsPageProps) {
+  const { notice } = await searchParams;
+  const noticeText = getNoticeText(notice);
+
   return (
     <CmsShell active="startups">
       <div className="cms-dashboard cms-startups-page">
@@ -28,6 +41,8 @@ export default function AdminStartupsPage() {
             <a className="cms-dark-button cms-add-startup" href="/admin/startups/new">افزودن استارتاپ</a>
           </div>
         </header>
+
+        {noticeText ? <p className="cms-flow-notice" role="status">{noticeText}</p> : null}
 
         <section className="cms-startup-stat-grid" aria-label="آمار استارتاپ‌ها">
           {startupStats.map(([label, value, note]) => (
