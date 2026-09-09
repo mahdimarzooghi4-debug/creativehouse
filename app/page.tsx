@@ -26,6 +26,18 @@ function plusMetric(value: string | null | undefined, fallback: string) {
   return normalized.startsWith("+") ? normalized : `+${normalized}`;
 }
 
+function renderHeroTitle(title: string) {
+  const commaIndex = title.indexOf("،");
+  if (commaIndex < 0) return title;
+  return (
+    <>
+      {title.slice(0, commaIndex)}
+      <span>،</span>
+      {title.slice(commaIndex + 1)}
+    </>
+  );
+}
+
 export default async function HomePage() {
   const now = new Date();
   const settings = await getHomepageSettings();
@@ -62,7 +74,7 @@ export default async function HomePage() {
         <div className="shell hero-grid">
           <div className="hero-copy">
             <p className="eyebrow">{settings.heroEyebrow}</p>
-            <h1>{settings.heroTitle}</h1>
+            <h1>{renderHeroTitle(settings.heroTitle)}</h1>
             <p className="hero-lead">{settings.heroSubtitle}</p>
             <div className="hero-actions">
               <a className="button button--primary" href={settings.heroPrimaryHref || "/startups"}>{settings.heroPrimaryLabel || "مشاهده استارتاپ‌ها"}</a>
