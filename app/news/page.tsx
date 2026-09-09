@@ -1,8 +1,19 @@
 import { SiteFooter, SiteHeader } from "../../components/site-chrome";
+import { db } from "../../lib/db";
+import { formatPersianMonth, newsCategoryLabels } from "../../lib/content-utils";
 
 type NewsArtVariant = "lab" | "workshop" | "stage";
 
-function NewsArt({ variant, large = false }: { variant: NewsArtVariant; large?: boolean }) {
+export const dynamic = "force-dynamic";
+
+function NewsArt({ variant, large = false, src }: { variant: NewsArtVariant; large?: boolean; src?: string }) {
+  if (src) {
+    return (
+      <div className={`news-art news-art--${variant}${large ? " news-art--large" : ""}`} aria-hidden="true">
+        <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+      </div>
+    );
+  }
   return (
     <div className={`news-art news-art--${variant}${large ? " news-art--large" : ""}`} aria-hidden="true">
       <div className="news-art__canvas">
@@ -16,54 +27,39 @@ function NewsArt({ variant, large = false }: { variant: NewsArtVariant; large?: 
   );
 }
 
-const filters = ["همه", "رویدادها", "استارتاپ‌ها", "گزارش فعالیت"];
+const artVariants: NewsArtVariant[] = ["lab", "workshop", "stage"];
 
-const newsItems: Array<{
-  slug: string;
-  meta: string;
-  title: string;
-  art: NewsArtVariant;
-}> = [
-  {
-    slug: "selected-teams-gathering",
-    meta: "خانه خلاق • شهریور ۱۴۰۵",
-    title: "نخستین گردهمایی تیم‌های منتخب خانه خلاق آینه برگزار شد",
-    art: "lab",
-  },
-  {
-    slug: "teams-enter-mentoring",
-    meta: "استارتاپ‌ها • مرداد ۱۴۰۵",
-    title: "سه تیم خلاق وارد مرحله منتورینگ و توسعه محصول شدند",
-    art: "workshop",
-  },
-  {
-    slug: "problem-workshop-day",
-    meta: "گزارش فعالیت • تیر ۱۴۰۵",
-    title: "یک روز از کارگاه مسئله‌محور خانه خلاق؛ از ایده تا نمونه اولیه",
-    art: "stage",
-  },
-  {
-    slug: "growth-program-call",
-    meta: "برنامه‌ها • خرداد ۱۴۰۵",
-    title: "فراخوان دوره جدید برنامه رشد و شتابدهی منتشر شد",
-    art: "lab",
-  },
-  {
-    slug: "problem-to-market-session",
-    meta: "نشست‌ها • اردیبهشت ۱۴۰۵",
-    title: "نشست تجربه‌محور «از مسئله تا بازار» در خانه خلاق برگزار شد",
-    art: "workshop",
-  },
-  {
-    slug: "mentor-network",
-    meta: "همراهان • فروردین ۱۴۰۵",
-    title: "خانه خلاق آینه میزبان شبکه‌ای از منتورها و متخصصان شد",
-    art: "stage",
-  },
-];
+export default async function NewsPage({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
+  const { category = "all" } = await searchParams;
+  const now = new Date();
+  const allNews = await db.news.findMany({
+    where: {
+      deletedAt: null,
+      OR: [
+        { status: "published" },
+        { status: "scheduled", publishedAt: { lte: now } },
+      ],
+    },
+    orderBy: [{ featured: "desc" }, { publishedAt: "desc" }, { createdAt: "desc" }],
+  });
 
-export default function NewsPage() {
-  const featured = newsItems[0];
+  const categories = Array.from(new Set(allNews.map((item) => item.category)));
+  const newsItems = category === "all" ? allNews : allNews.filter((item) => item.category === category);
+  const featured = allNews.find((item) => item.featured) || allNews[0];
+  const mediaIds = allNews.map((item) => item.coverMediaId).filter((value): value is string => Boolean(value));
+  const media = mediaIds.length ? await db.media.findMany({ where: { id: { in: mediaIds } } }) : [];
+  const mediaMap = new Map(media.map((item) => [item.id, item]));
+
+  function meta(item: (typeof allNews)[number]) {
+    const categoryLabel = newsCategoryLabels[item.category] || item.category;
+    const month = formatPersianMonth(item.publishedAt);
+    return month ? `${categoryLabel} • ${month}` : categoryLabel;
+  }
+
+  function coverSrc(item: (typeof allNews)[number]) {
+    const cover = item.coverMediaId ? mediaMap.get(item.coverMediaId) : null;
+    return cover ? `/uploads/${cover.storageKey}` : undefined;
+  }
 
   return (
     <div className="public-page">
@@ -77,19 +73,21 @@ export default function NewsPage() {
           </div>
         </section>
 
-        <section className="news-featured-section">
-          <div className="shell">
-            <p className="eyebrow">خبر منتخب</p>
-            <article className="news-featured-card">
-              <NewsArt variant={featured.art} large />
-              <div className="news-featured-copy">
-                <p className="news-meta">{featured.meta}</p>
-                <h2>{featured.title}</h2>
-                <a href={`/news/${featured.slug}`}>مشاهده خبر ←</a>
-              </div>
-            </article>
-          </div>
-        </section>
+        {featured ? (
+          <section className="news-featured-section">
+            <div className="shell">
+              <p className="eyebrow">خبر منتخب</p>
+              <article className="news-featured-card">
+                <NewsArt variant="lab" large src={coverSrc(featured)} />
+                <div className="news-featured-copy">
+                  <p className="news-meta">{meta(featured)}</p>
+                  <h2>{featured.title}</h2>
+                  <a href={`/news/${featured.slug}`}>مشاهده خبر ←</a>
+                </div>
+              </article>
+            </div>
+          </section>
+        ) : null}
 
         <section className="news-directory-section">
           <div className="shell">
@@ -98,15 +96,16 @@ export default function NewsPage() {
               <h2>تازه‌ترین خبرها و روایت‌ها</h2>
             </div>
             <div className="filter-row" aria-label="فیلتر اخبار">
-              {filters.map((filter, index) => (
-                <span className={`filter-chip${index === 0 ? " filter-chip--active" : ""}`} key={filter}>{filter}</span>
+              <a className={`filter-chip${category === "all" ? " filter-chip--active" : ""}`} href="/news">همه</a>
+              {categories.map((item) => (
+                <a className={`filter-chip${category === item ? " filter-chip--active" : ""}`} href={`/news?category=${encodeURIComponent(item)}`} key={item}>{newsCategoryLabels[item] || item}</a>
               ))}
             </div>
             <div className="news-directory-grid">
-              {newsItems.map((item) => (
-                <article className="news-directory-card" key={item.slug}>
-                  <NewsArt variant={item.art} />
-                  <p className="news-meta">{item.meta}</p>
+              {newsItems.map((item, index) => (
+                <article className="news-directory-card" key={item.id}>
+                  <NewsArt variant={artVariants[index % artVariants.length]} src={coverSrc(item)} />
+                  <p className="news-meta">{meta(item)}</p>
                   <h3>{item.title}</h3>
                   <a href={`/news/${item.slug}`}>مشاهده خبر ←</a>
                 </article>
