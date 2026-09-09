@@ -52,7 +52,7 @@
   min-width: 124px;
   flex: 0 0 124px;
   height: 52px;
-  padding-inline: 0;
+  padding-inline: 24px;
   white-space: nowrap;
 }
 
@@ -61,7 +61,7 @@
   min-width: 170px;
   flex: 0 0 170px;
   height: 52px;
-  padding-inline: 0;
+  padding-inline: 24px;
   white-space: nowrap;
 }
 
