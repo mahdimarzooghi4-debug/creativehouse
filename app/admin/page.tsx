@@ -1,27 +1,62 @@
 import { CmsShell } from "../../components/cms-shell";
+import { collaborationTypeLabels } from "../../lib/collaboration-utils";
+import { contentStatusLabels, formatPersianDate } from "../../lib/content-utils";
+import { db } from "../../lib/db";
 
-const stats = [
-  ["استارتاپ‌ها", "۱۲", "۳ منتشرنشده", ""],
-  ["برنامه‌ها", "۶", "۱ فعال", ""],
-  ["اخبار", "۱۸", "۴ پیش‌نویس", ""],
-  ["درخواست همکاری", "۹", "۳ جدید", "accent"],
-] as const;
+export const dynamic = "force-dynamic";
 
-const recentContent = [
-  ["رویداد ملی خلاقیت و نوآوری آینه", "برنامه", "منتشرشده", "امروز", "published"],
-  ["راهکار نو برای بازار محلی", "استارتاپ", "پیش‌نویس", "امروز", "draft"],
-  ["گزارش گردهمایی تیم‌های منتخب", "خبر", "منتشرشده", "دیروز", "published"],
-  ["مرکز نوآوری آفتاب", "استارتاپ", "منتشرشده", "۲ روز قبل", "published"],
-  ["فراخوان برنامه رشد پاییز", "برنامه", "زمان‌بندی‌شده", "۳ روز قبل", "scheduled"],
-] as const;
+function statusTone(status: string) {
+  if (status === "published" || status === "active") return "published";
+  if (status === "scheduled") return "scheduled";
+  return "draft";
+}
 
-const collaborationRequests = [
-  ["سارا احمدی", "همکاری به‌عنوان منتور"],
-  ["تیم آریانا", "درخواست استقرار"],
-  ["شرکت نوآفرین", "پیشنهاد همکاری سازمانی"],
-] as const;
+export default async function AdminDashboardPage() {
+  const [
+    startupTotal,
+    startupPublished,
+    programTotal,
+    programActive,
+    newsTotal,
+    newsDraft,
+    collaborationTotal,
+    collaborationNew,
+    latestStartups,
+    latestPrograms,
+    latestNews,
+    latestRequests,
+  ] = await Promise.all([
+    db.startup.count({ where: { deletedAt: null } }),
+    db.startup.count({ where: { deletedAt: null, status: "published" } }),
+    db.program.count({ where: { deletedAt: null } }),
+    db.program.count({ where: { deletedAt: null, status: "active" } }),
+    db.news.count({ where: { deletedAt: null } }),
+    db.news.count({ where: { deletedAt: null, status: "draft" } }),
+    db.collaborationRequest.count(),
+    db.collaborationRequest.count({ where: { status: "new" } }),
+    db.startup.findMany({ where: { deletedAt: null }, orderBy: { updatedAt: "desc" }, take: 5, select: { slug: true, name: true, status: true, updatedAt: true } }),
+    db.program.findMany({ where: { deletedAt: null }, orderBy: { updatedAt: "desc" }, take: 5, select: { slug: true, title: true, status: true, updatedAt: true } }),
+    db.news.findMany({ where: { deletedAt: null }, orderBy: { updatedAt: "desc" }, take: 5, select: { slug: true, title: true, status: true, updatedAt: true } }),
+    db.collaborationRequest.findMany({ orderBy: { createdAt: "desc" }, take: 3, select: { id: true, name: true, organization: true, type: true, subject: true, createdAt: true } }),
+  ]);
 
-export default function AdminDashboardPage() {
+  const stats = [
+    ["استارتاپ‌ها", startupTotal.toLocaleString("fa-IR"), `${(startupTotal - startupPublished).toLocaleString("fa-IR")} منتشرنشده`, ""],
+    ["برنامه‌ها", programTotal.toLocaleString("fa-IR"), `${programActive.toLocaleString("fa-IR")} فعال`, ""],
+    ["اخبار", newsTotal.toLocaleString("fa-IR"), `${newsDraft.toLocaleString("fa-IR")} پیش‌نویس`, ""],
+    ["درخواست همکاری", collaborationTotal.toLocaleString("fa-IR"), `${collaborationNew.toLocaleString("fa-IR")} جدید`, "accent"],
+  ] as const;
+
+  const recentContent = [
+    ...latestStartups.map((item) => ({ title: item.name, type: "استارتاپ", status: item.status, updatedAt: item.updatedAt, href: `/admin/startups/${item.slug}` })),
+    ...latestPrograms.map((item) => ({ title: item.title, type: "برنامه", status: item.status, updatedAt: item.updatedAt, href: `/admin/programs/${item.slug}` })),
+    ...latestNews.map((item) => ({ title: item.title, type: "خبر", status: item.status, updatedAt: item.updatedAt, href: `/admin/news/${item.slug}` })),
+  ].sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime()).slice(0, 5);
+
+  const lastContentUpdate = recentContent[0]?.updatedAt;
+  const lastRequestUpdate = latestRequests[0]?.createdAt;
+  const latestSync = [lastContentUpdate, lastRequestUpdate].filter((value): value is Date => Boolean(value)).sort((a, b) => b.getTime() - a.getTime())[0];
+
   return (
     <CmsShell active="dashboard">
       <div className="cms-dashboard">
@@ -63,13 +98,13 @@ export default function AdminDashboardPage() {
               <div className="cms-table__row cms-table__head" role="row">
                 <span>عنوان</span><span>نوع</span><span>وضعیت</span><span>آخرین تغییر</span>
               </div>
-              {recentContent.map(([title, type, status, changed, statusClass], index) => (
-                <div className={`cms-table__row${index % 2 ? " is-alt" : ""}`} role="row" key={title}>
-                  <strong>{title}</strong>
-                  <span>{type}</span>
-                  <span><i className={`cms-status cms-status--${statusClass}`}>{status}</i></span>
-                  <span>{changed}</span>
-                </div>
+              {recentContent.map((item, index) => (
+                <a className={`cms-table__row${index % 2 ? " is-alt" : ""}`} role="row" key={`${item.type}-${item.href}`} href={item.href}>
+                  <strong>{item.title}</strong>
+                  <span>{item.type}</span>
+                  <span><i className={`cms-status cms-status--${statusTone(item.status)}`}>{contentStatusLabels[item.status] || item.status}</i></span>
+                  <span>{formatPersianDate(item.updatedAt)}</span>
+                </a>
               ))}
             </div>
             <a className="cms-outline-button cms-all-content" href="/admin/content">مشاهده همه محتواها</a>
@@ -89,15 +124,15 @@ export default function AdminDashboardPage() {
             <section className="cms-side-card cms-collab-card">
               <div className="cms-collab-heading">
                 <h2>درخواست‌های همکاری</h2>
-                <span>۳ جدید</span>
+                <span>{collaborationNew.toLocaleString("fa-IR")} جدید</span>
               </div>
               <div className="cms-collab-list">
-                {collaborationRequests.map(([name, subject]) => (
-                  <a href="/admin/collaboration" key={name}>
-                    <strong>{name}</strong>
-                    <small>{subject}</small>
+                {latestRequests.length ? latestRequests.map((request) => (
+                  <a href={`/admin/collaboration/${request.id}`} key={request.id}>
+                    <strong>{request.organization || request.name}</strong>
+                    <small>{request.subject || collaborationTypeLabels[request.type] || request.type}</small>
                   </a>
-                ))}
+                )) : <a href="/admin/collaboration"><strong>درخواستی ثبت نشده است</strong><small>فرم همکاری آماده دریافت درخواست است.</small></a>}
               </div>
             </section>
           </div>
@@ -105,7 +140,7 @@ export default function AdminDashboardPage() {
 
         <footer className="cms-dashboard-footer">
           <span>نسخه پنل مدیریت خانه خلاق</span>
-          <span>آخرین همگام‌سازی: امروز، ۱۹:۲۵</span>
+          <span>{latestSync ? `آخرین تغییر داده: ${formatPersianDate(latestSync)}` : "داده‌ای برای نمایش وجود ندارد"}</span>
         </footer>
       </div>
     </CmsShell>
