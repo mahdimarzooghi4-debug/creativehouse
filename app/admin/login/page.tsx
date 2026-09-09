@@ -1,4 +1,4 @@
-const BRAND_IMAGE = "https://www.figma.com/api/mcp/asset/573a13c7-ca7c-4d5c-9ed6-414e3e12c437.png";
+import { BrandMark } from "../../../components/brand-mark";
 
 const errorMessages: Record<string, string> = {
   invalid: "نام کاربری یا رمز عبور صحیح نیست.",
@@ -6,16 +6,22 @@ const errorMessages: Record<string, string> = {
   setup: "حساب مدیر هنوز راه‌اندازی نشده است. تنظیمات اولیه سرور را بررسی کن.",
 };
 
-export default async function AdminLoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
-  const { error } = await searchParams;
+function safeNext(value?: string) {
+  if (!value || !value.startsWith("/admin") || value.startsWith("//")) return "/admin";
+  return value;
+}
+
+export default async function AdminLoginPage({ searchParams }: { searchParams: Promise<{ error?: string; next?: string }> }) {
+  const { error, next } = await searchParams;
   const errorMessage = error ? errorMessages[error] : undefined;
+  const destination = safeNext(next);
 
   return (
     <main className="cms-login" dir="rtl">
       <section className="cms-login__visual" aria-label="هویت خانه خلاق و نوآوری آینه">
         <a className="cms-login__brand" href="/" aria-label="خانه خلاق و نوآوری آینه">
           <span className="cms-login__brand-title">خانه خلاق و نوآوری <b>آینه</b></span>
-          <img src={BRAND_IMAGE} alt="" width={82} height={70} />
+          <BrandMark className="cms-login__brand-mark" />
         </a>
         <div className="cms-login__identity-copy">
           <h1>وطن، ساختنی است</h1>
@@ -33,6 +39,7 @@ export default async function AdminLoginPage({ searchParams }: { searchParams: P
           {errorMessage ? <p className="cms-login__error" role="alert">{errorMessage}</p> : null}
 
           <form action="/api/admin/login" method="post" className="cms-login__form">
+            <input type="hidden" name="next" value={destination} />
             <label>
               <span>نام کاربری</span>
               <input name="username" type="text" autoCapitalize="none" autoComplete="username" required />
