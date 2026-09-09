@@ -1,0 +1,111 @@
+name: Apply exact Figma hero rebuild
+
+on:
+  push:
+    branches:
+      - rebuild-hero-from-figma
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: rebuild-hero-from-figma
+
+      - name: Rebuild hero from exact Figma export
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          page = Path('app/page.tsx')
+          text = page.read_text(encoding='utf-8')
+          old = '''          <div className="hero-visual" aria-label="تصویر محیط خلاق و نوآوری ایران">
+            <div className="hero-photo-frame">
+              <img
+                src={effectiveHeroMedia ? `/uploads/${effectiveHeroMedia.storageKey}` : "/figma-home-hero.png"}
+                alt="جوانان ایرانی در محیط خلاق پیرامون نقشه ایران"
+              />
+            </div>
+            <div className="hero-ornament" aria-hidden="true"><span /><i /><span /></div>
+          </div>'''
+          new = '''          <div className={`hero-visual${effectiveHeroMedia ? " hero-visual--cms" : " hero-visual--figma"}`} aria-label="تصویر محیط خلاق و نوآوری ایران">
+            {effectiveHeroMedia ? (
+              <>
+                <div className="hero-photo-frame">
+                  <img
+                    src={`/uploads/${effectiveHeroMedia.storageKey}`}
+                    alt="جوانان ایرانی در محیط خلاق پیرامون نقشه ایران"
+                  />
+                </div>
+                <div className="hero-ornament" aria-hidden="true"><span /><i /><span /></div>
+              </>
+            ) : (
+              <img
+                className="hero-visual__figma-export"
+                src="/figma-hero-visual.png"
+                alt="جوانان ایرانی در محیط خلاق پیرامون نقشه ایران"
+                width={560}
+                height={421}
+              />
+            )}
+          </div>'''
+          if old not in text:
+              raise SystemExit('Expected hero markup not found')
+          page.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          css = Path('app/qa-fixes.css')
+          styles = css.read_text(encoding='utf-8')
+          marker = '/* Exact Figma hero visual: use the exported 560×421 node as one pixel-faithful asset. */'
+          block = '''
+
+/* Exact Figma hero visual: use the exported 560×421 node as one pixel-faithful asset. */
+.hero-visual--figma {
+  display: block;
+}
+
+.hero-visual__figma-export {
+  display: block;
+  width: 560px;
+  height: 421px;
+  max-width: none;
+  object-fit: contain;
+}
+
+/* Match the two Hero actions to the 170×52 Figma boxes exactly. */
+.hero-actions {
+  height: 52px;
+  align-items: flex-start;
+}
+
+.hero-actions .button {
+  box-sizing: border-box;
+  width: 170px;
+  min-width: 170px;
+  flex: 0 0 170px;
+  height: 52px;
+  min-height: 52px;
+  padding: 14px 24px;
+  line-height: 22px;
+  white-space: nowrap;
+}
+'''
+          if marker not in styles:
+              css.write_text(styles.rstrip() + block + '\n', encoding='utf-8')
+          PY
+
+      - name: Commit rebuilt hero
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add app/page.tsx app/qa-fixes.css
+          git commit -m 'Rebuild hero from exact Figma visual export'
+          git push origin HEAD:rebuild-hero-from-figma
