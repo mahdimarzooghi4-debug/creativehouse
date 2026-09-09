@@ -22,7 +22,7 @@ const audience = [
 
 export default function AboutPage() {
   return (
-    <div className="public-page">
+    <div className="public-page about-page">
       <SiteHeader active="about" />
       <main className="public-page__main">
         <section className="identity-hero">
@@ -45,7 +45,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="content-section content-section--white">
+        <section className="content-section content-section--white about-purpose">
           <div className="shell">
             <div className="section-intro">
               <p className="eyebrow">ماموریت و چشم‌انداز</p>
@@ -66,7 +66,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="content-section">
+        <section className="content-section about-values">
           <div className="shell">
             <div className="section-intro">
               <p className="eyebrow">ارزش‌های ما</p>
@@ -85,7 +85,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="content-section content-section--white">
+        <section className="content-section content-section--white about-model">
           <div className="shell">
             <div className="section-intro">
               <p className="eyebrow">مدل همراهی</p>
@@ -104,7 +104,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="content-section">
+        <section className="content-section about-audience">
           <div className="shell">
             <div className="section-intro">
               <p className="eyebrow">برای چه کسانی؟</p>
