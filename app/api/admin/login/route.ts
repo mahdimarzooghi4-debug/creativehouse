@@ -35,41 +35,49 @@ function recordFailure(key: string) {
   attempts.set(key, current);
 }
 
-function loginRedirect(request: NextRequest, error?: string) {
+function safeNext(value: string) {
+  if (!value.startsWith("/admin") || value.startsWith("//")) return "/admin";
+  return value;
+}
+
+function loginRedirect(request: NextRequest, error?: string, next = "/admin") {
   const url = new URL("/admin/login", request.url);
   if (error) url.searchParams.set("error", error);
+  const destination = safeNext(next);
+  if (destination !== "/admin") url.searchParams.set("next", destination);
   return NextResponse.redirect(url, 303);
 }
 
 export async function POST(request: NextRequest) {
   const key = clientKey(request);
-  if (isBlocked(key)) return loginRedirect(request, "locked");
-
   const formData = await request.formData();
+  const next = String(formData.get("next") || "/admin");
+  if (isBlocked(key)) return loginRedirect(request, "locked", next);
+
   const username = String(formData.get("username") || "").trim().toLowerCase();
   const password = String(formData.get("password") || "");
 
   if (!username || !password) {
     recordFailure(key);
-    return loginRedirect(request, "invalid");
+    return loginRedirect(request, "invalid", next);
   }
 
   try {
     await ensureInitialAdmin();
   } catch {
-    return loginRedirect(request, "setup");
+    return loginRedirect(request, "setup", next);
   }
 
   const user = await db.adminUser.findUnique({ where: { username } });
   if (!user || !user.active || !(await verifyPassword(password, user.passwordHash))) {
     recordFailure(key);
-    return loginRedirect(request, "invalid");
+    return loginRedirect(request, "invalid", next);
   }
 
   attempts.delete(key);
   await db.adminUser.update({ where: { id: user.id }, data: { lastLoginAt: new Date() } });
 
-  const response = NextResponse.redirect(new URL("/admin", request.url), 303);
+  const response = NextResponse.redirect(new URL(safeNext(next), request.url), 303);
   response.cookies.set(ADMIN_SESSION_COOKIE, createSessionToken(user), {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",

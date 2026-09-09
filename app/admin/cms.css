@@ -57,10 +57,10 @@
   font-weight: 500;
 }
 
-.cms-brand img {
+.cms-brand__mark {
   width: 82px;
   height: 70px;
-  object-fit: contain;
+  flex: 0 0 82px;
 }
 
 .cms-sidebar__title {

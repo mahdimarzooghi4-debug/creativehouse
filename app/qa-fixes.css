@@ -1,0 +1,17 @@
+.hero-photo-fallback,
+.hero-photo-fallback svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.hero-photo-fallback {
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.brand__logo,
+.cms-brand__mark,
+.cms-login__brand-mark {
+  display: block;
+}
