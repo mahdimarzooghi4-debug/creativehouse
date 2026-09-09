@@ -1,0 +1,122 @@
+.news-art {
+  height: 150px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.news-art--large { height: 266px; }
+.news-art--lab { background: #f2f6f4; }
+.news-art--workshop { background: #f7f0e7; }
+.news-art--stage { background: #eef2fa; }
+
+.news-art__canvas {
+  position: absolute;
+  inset: 12% 9%;
+  border-radius: 12px;
+  background: #fffdf8;
+  overflow: hidden;
+}
+
+.news-art__board {
+  position: absolute;
+  right: 7%;
+  top: 20%;
+  width: 24%;
+  height: 48%;
+  border-radius: 10px;
+  background: var(--navy);
+}
+
+.news-art__board::before,
+.news-art__board::after {
+  content: "";
+  position: absolute;
+  right: 15%;
+  height: 5px;
+  border-radius: 3px;
+}
+
+.news-art__board::before {
+  top: 23%;
+  width: 68%;
+  background: var(--coral);
+  box-shadow: 0 15px 0 var(--gold);
+}
+
+.news-art__board::after {
+  top: 70%;
+  width: 55%;
+  background: #fff;
+}
+
+.news-art__table {
+  position: absolute;
+  left: 25%;
+  right: 10%;
+  bottom: 16%;
+  height: 16px;
+  border-radius: 9px;
+  background: var(--gold);
+}
+
+.news-art__person {
+  position: absolute;
+  bottom: 26%;
+  width: 20px;
+  height: 30px;
+  border-radius: 8px 8px 5px 5px;
+  background: var(--navy-2);
+}
+
+.news-art__person::before {
+  content: "";
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #e5b999;
+  left: 1px;
+  top: -16px;
+}
+
+.news-art__person--1 { left: 38%; }
+.news-art__person--2 { left: 58%; background: var(--coral); }
+.news-art__person--3 { left: 72%; background: var(--navy); }
+
+.news-art--workshop .news-art__board { display: none; }
+.news-art--workshop .news-art__table { left: 16%; right: 16%; height: 22px; }
+.news-art--workshop .news-art__person--1 { left: 23%; }
+.news-art--workshop .news-art__person--2 { left: 43%; }
+.news-art--workshop .news-art__person--3 { left: 67%; }
+
+.news-art--workshop .news-art__canvas::before,
+.news-art--workshop .news-art__canvas::after {
+  content: "";
+  position: absolute;
+  top: 10%;
+  width: 22px;
+  height: 18px;
+  border-radius: 4px;
+  background: var(--coral);
+  box-shadow: 32px 0 0 var(--gold);
+}
+
+.news-art--workshop .news-art__canvas::before { left: 8%; }
+.news-art--workshop .news-art__canvas::after { right: 8%; background: var(--navy-2); }
+
+.news-art--stage .news-art__board {
+  right: 8%;
+  top: 9%;
+  width: 32%;
+  height: 44%;
+}
+
+.news-art--stage .news-art__table {
+  left: 7%;
+  right: 7%;
+  bottom: 8%;
+  height: 14px;
+  background: var(--coral);
+}
