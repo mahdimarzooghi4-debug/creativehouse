@@ -1,6 +1,8 @@
 import { cache } from "react";
 import { db } from "./db";
 
+export const CMS_HERO_MEDIA_ALT = "تصویر هیرو صفحه اصلی (CMS)";
+
 export const defaultHomepageSettings = {
   id: "main",
   heroEyebrow: "خانه خلاق و نوآوری آینه",
