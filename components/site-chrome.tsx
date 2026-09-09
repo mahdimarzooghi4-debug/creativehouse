@@ -1,4 +1,5 @@
 import { getSiteSettings } from "../lib/site-settings";
+import { BrandMark } from "./brand-mark";
 
 type ActiveNav = "home" | "about" | "startups" | "programs" | "news" | null;
 
@@ -15,7 +16,7 @@ export function Brand({ footer = false }: { footer?: boolean }) {
     <a className={`brand${footer ? " brand--footer" : ""}`} href="/" aria-label="خانه خلاق و نوآوری آینه">
       <span className="brand__title">خانه خلاق و نوآوری <b>آینه</b></span>
       <span className="brand__logo-shell" aria-hidden="true">
-        <img className="brand__logo" src="/images/brand-creative-house.png" alt="" />
+        <BrandMark className="brand__logo" />
       </span>
     </a>
   );
@@ -49,8 +50,8 @@ export async function SiteFooter() {
         <div>
           <h3>برنامه‌ها</h3>
           <a href="/programs">همه برنامه‌ها</a>
-          <a href="/programs/ayene">رویداد آینه</a>
-          <a href="/programs">برنامه‌های آینده</a>
+          <a href="/programs?type=event">رویدادها</a>
+          <a href="/programs?type=workshop">کارگاه‌ها</a>
         </div>
         <div>
           <h3>خانه خلاق</h3>
