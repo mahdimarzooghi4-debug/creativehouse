@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(_request: Request, { params }: { params: Promise<{ key: string }> }) {
   const { key } = await params;
-  if (!/^[a-f0-9-]+\.(png|jpg|webp)$/i.test(key)) return new NextResponse("Not found", { status: 404 });
+  if (!/^[a-f0-9-]+\.(png|jpg|webp|pdf)$/i.test(key)) return new NextResponse("Not found", { status: 404 });
 
   const media = await db.media.findUnique({ where: { storageKey: key } });
   if (!media) return new NextResponse("Not found", { status: 404 });
@@ -18,6 +18,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ key
       headers: {
         "Content-Type": media.mimeType,
         "Cache-Control": "public, max-age=31536000, immutable",
+        "Content-Disposition": media.mimeType === "application/pdf" ? "inline" : "inline",
         "X-Content-Type-Options": "nosniff",
       },
     });
