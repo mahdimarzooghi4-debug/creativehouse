@@ -249,7 +249,7 @@ export default function HomePage() {
             {news.map((item, index) => (
               <article className="news-card" key={item.title}>
                 <div className="news-image">
-                  <img src={item.image} alt="" onError={undefined} />
+                  <img src={item.image} alt="" />
                   <span aria-hidden="true">{index + 1}</span>
                 </div>
                 <p className="news-meta">{item.meta}</p>
