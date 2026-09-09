@@ -1,6 +1,6 @@
 import { CmsShell } from "../../../components/cms-shell";
 import { db } from "../../../lib/db";
-import { getHomepageSettings, splitStoredIds } from "../../../lib/homepage-settings";
+import { CMS_HERO_MEDIA_ALT, getHomepageSettings, splitStoredIds } from "../../../lib/homepage-settings";
 
 export const dynamic = "force-dynamic";
 
@@ -33,6 +33,7 @@ export default async function AdminHomepageSettingsPage({ searchParams }: { sear
     ["همراهان", settings.statPartners || String(partnerCount), "statPartners"],
   ] as const;
   const heroMedia = settings.heroMediaId ? await db.media.findUnique({ where: { id: settings.heroMediaId } }) : null;
+  const effectiveHeroMedia = heroMedia?.altText === CMS_HERO_MEDIA_ALT ? heroMedia : null;
 
   return (
     <CmsShell active="settings">
@@ -52,7 +53,11 @@ export default async function AdminHomepageSettingsPage({ searchParams }: { sear
             <h2>هیرو صفحه اصلی</h2>
             <label className="cms-hero-preview" aria-label="جایگزینی تصویر هیرو">
               <input type="file" name="heroImage" accept="image/png,image/jpeg,image/webp" style={{ display: "none" }} />
-              {heroMedia ? <img src={`/uploads/${heroMedia.storageKey}`} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 14 }} /> : <span>تصویر هیرو • برای جایگزینی کلیک کن</span>}
+              <img
+                src={effectiveHeroMedia ? `/uploads/${effectiveHeroMedia.storageKey}` : "/figma-home-hero.png"}
+                alt=""
+                style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 14 }}
+              />
             </label>
             <div className="cms-homepage-pair">
               <label>

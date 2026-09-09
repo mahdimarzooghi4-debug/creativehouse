@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { asText } from "../../../../lib/content-utils";
 import { getCurrentAdmin } from "../../../../lib/current-admin";
 import { db } from "../../../../lib/db";
+import { CMS_HERO_MEDIA_ALT } from "../../../../lib/homepage-settings";
 import { saveImageUpload } from "../../../../lib/media-storage";
 
 function redirect(request: NextRequest, result: string) {
@@ -22,7 +23,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const existing = await db.homepageSettings.findUnique({ where: { id: "main" } });
-    const heroMedia = await saveImageUpload(form.get("heroImage"), "تصویر هیرو خانه خلاق", 6 * 1024 * 1024);
+    const heroMedia = await saveImageUpload(form.get("heroImage"), CMS_HERO_MEDIA_ALT, 6 * 1024 * 1024);
     const data = {
       heroEyebrow: existing?.heroEyebrow || "خانه خلاق و نوآوری آینه",
       heroTitle,
