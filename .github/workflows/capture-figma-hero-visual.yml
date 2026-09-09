@@ -1,0 +1,49 @@
+name: Capture exact Figma hero visual
+
+on:
+  push:
+    branches:
+      - rebuild-hero-from-figma
+
+permissions:
+  contents: write
+
+jobs:
+  capture:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: rebuild-hero-from-figma
+
+      - name: Download exact Figma hero visual
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 3 \
+            'https://www.figma.com/api/mcp/asset/b310499d-9fd5-4966-92d6-cbf25261bb4d.png' \
+            -o public/figma-hero-visual.png
+          python - <<'PY'
+          import struct
+          from pathlib import Path
+          p = Path('public/figma-hero-visual.png')
+          data = p.read_bytes()
+          if data[:8] != b'\x89PNG\r\n\x1a\n':
+              raise SystemExit('Not a PNG')
+          w, h = struct.unpack('>II', data[16:24])
+          print(f'hero visual: {w}x{h}')
+          if (w, h) != (560, 421):
+              raise SystemExit(f'Unexpected size: {w}x{h}')
+          PY
+
+      - name: Commit exact hero visual
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add public/figma-hero-visual.png
+          git commit -m 'Add exact Figma hero visual export'
+          git push origin HEAD:rebuild-hero-from-figma
