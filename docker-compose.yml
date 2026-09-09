@@ -1,0 +1,66 @@
+name: creativehouse
+
+services:
+  app:
+    build:
+      context: .
+      target: runner
+    image: creativehouse-app:latest
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    environment:
+      DATABASE_URL: file:/data/creativehouse.db
+    volumes:
+      - creativehouse_data:/data
+    ports:
+      - "127.0.0.1:3000:3000"
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  migrate:
+    build:
+      context: .
+      target: migrator
+    image: creativehouse-migrator:latest
+    profiles: ["tools"]
+    env_file:
+      - .env.production
+    environment:
+      DATABASE_URL: file:/data/creativehouse.db
+    volumes:
+      - creativehouse_data:/data
+
+  backup:
+    image: creativehouse-app:latest
+    profiles: ["tools"]
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
+    entrypoint: ["/bin/sh", "-c"]
+    command: >-
+      set -eu;
+      stamp=$$(date -u +%Y%m%dT%H%M%SZ);
+      mkdir -p /backups/$$stamp;
+      if [ -f /data/creativehouse.db ]; then
+        sqlite3 /data/creativehouse.db ".backup '/backups/$$stamp/creativehouse.db'";
+      fi;
+      if [ -d /data/uploads ]; then
+        cp -a /data/uploads /backups/$$stamp/uploads;
+      fi;
+      tar -czf /backups/creativehouse-$$stamp.tar.gz -C /backups/$$stamp .;
+      rm -rf /backups/$$stamp;
+      find /backups -type f -name 'creativehouse-*.tar.gz' -mtime +30 -delete;
+      echo "Backup created: /backups/creativehouse-$$stamp.tar.gz"
+    volumes:
+      - creativehouse_data:/data:ro
+      - ./backups:/backups
+
+volumes:
+  creativehouse_data:
