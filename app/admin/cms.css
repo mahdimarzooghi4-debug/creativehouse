@@ -103,11 +103,10 @@
   font-weight: 700;
 }
 
-.cms-nav img,
-.cms-logout img {
+.cms-nav .cms-icon,
+.cms-logout .cms-icon {
   width: 20px;
   height: 20px;
-  object-fit: contain;
   flex: 0 0 20px;
 }
 
