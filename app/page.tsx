@@ -2,7 +2,7 @@ import { NewsArt, type NewsArtVariant } from "../components/news-art";
 import { SiteFooter, SiteHeader } from "../components/site-chrome";
 import { formatPersianMonth, newsCategoryLabels, programTypeLabels } from "../lib/content-utils";
 import { db } from "../lib/db";
-import { getHomepageSettings, splitStoredIds } from "../lib/homepage-settings";
+import { CMS_HERO_MEDIA_ALT, getHomepageSettings, splitStoredIds } from "../lib/homepage-settings";
 
 export const dynamic = "force-dynamic";
 
@@ -61,6 +61,7 @@ export default async function HomePage() {
   const publishedStartups = prependUnique(selectedStartup, defaultStartups, 4);
   const homeNews = prependUnique(selectedNews, defaultNews, 3);
   const homePrograms = prependUnique(selectedProgram, defaultPrograms, 3);
+  const effectiveHeroMedia = heroMedia?.altText === CMS_HERO_MEDIA_ALT ? heroMedia : null;
   const logoIds = homePartners.map((partner) => partner.logoMediaId).filter((id): id is string => Boolean(id));
   const logoMedia = logoIds.length ? await db.media.findMany({ where: { id: { in: logoIds } } }) : [];
   const logoById = new Map(logoMedia.map((item) => [item.id, item]));
@@ -84,7 +85,7 @@ export default async function HomePage() {
           <div className="hero-visual" aria-label="تصویر محیط خلاق و نوآوری ایران">
             <div className="hero-photo-frame">
               <img
-                src={heroMedia ? `/uploads/${heroMedia.storageKey}` : "/figma-home-hero.png"}
+                src={effectiveHeroMedia ? `/uploads/${effectiveHeroMedia.storageKey}` : "/figma-home-hero.png"}
                 alt="جوانان ایرانی در محیط خلاق پیرامون نقشه ایران"
               />
             </div>
