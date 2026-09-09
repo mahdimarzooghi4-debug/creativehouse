@@ -9,7 +9,8 @@ const requestDetails = [
   ["شهر", "تهران"],
 ] as const;
 
-export default function AdminCollaborationDetailPage() {
+export default async function AdminCollaborationDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  await params;
   return (
     <CmsShell active="collaboration">
       <div className="cms-dashboard cms-collaboration-detail-page">
@@ -35,7 +36,7 @@ export default function AdminCollaborationDetailPage() {
               </div>
             </section>
 
-            <section className="cms-collaboration-card cms-collaboration-followup-card" aria-labelledby="collaboration-followup-title">
+            <form className="cms-collaboration-card cms-collaboration-followup-card" action="/admin/collaboration" method="get" aria-labelledby="collaboration-followup-title">
               <h2 id="collaboration-followup-title">پیگیری درخواست</h2>
               <label className="cms-collaboration-form-field">
                 <span>وضعیت فعلی</span>
@@ -43,7 +44,7 @@ export default function AdminCollaborationDetailPage() {
               </label>
               <label className="cms-collaboration-form-field">
                 <span>وضعیت جدید</span>
-                <select defaultValue="following">
+                <select name="status" defaultValue="following">
                   <option value="new">جدید</option>
                   <option value="following">در حال پیگیری</option>
                   <option value="contacted">تماس گرفته شد</option>
@@ -51,10 +52,10 @@ export default function AdminCollaborationDetailPage() {
                 </select>
               </label>
               <div className="cms-collaboration-followup-actions">
-                <button className="cms-collaboration-primary-button" type="button">ثبت نتیجه پیگیری</button>
-                <button className="cms-outline-button" type="button">ذخیره پیش‌نویس</button>
+                <button className="cms-collaboration-primary-button" type="submit" name="result" value="updated">ثبت نتیجه پیگیری</button>
+                <button className="cms-outline-button" type="submit" name="result" value="draft-saved">ذخیره پیش‌نویس</button>
               </div>
-            </section>
+            </form>
           </div>
 
           <section className="cms-collaboration-card cms-collaboration-note-card" aria-labelledby="collaboration-note-title">
