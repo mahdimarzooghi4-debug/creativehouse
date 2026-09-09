@@ -3,6 +3,7 @@ import "@fontsource-variable/vazirmatn/wght.css";
 import "@fontsource-variable/estedad/wght.css";
 import "./globals.css";
 import "./pages.css";
+import "./news-art.css";
 
 export const metadata: Metadata = {
   title: "خانه خلاق و نوآوری آینه",
