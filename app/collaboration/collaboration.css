@@ -1,0 +1,334 @@
+.collaboration-hero {
+  min-height: 470px;
+  padding: 70px 0;
+  background: var(--paper);
+}
+
+.collaboration-hero__grid {
+  display: grid;
+  grid-template-columns: 500px 640px;
+  gap: 100px;
+  align-items: start;
+}
+
+.collaboration-visual {
+  height: 330px;
+  padding: 33px;
+  border: 1px solid #e8e6e1;
+  border-radius: 18px;
+  background: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+.collaboration-visual__navy,
+.collaboration-visual__coral,
+.collaboration-visual__gold {
+  position: absolute;
+  top: 33px;
+}
+
+.collaboration-visual__navy {
+  right: 33px;
+  width: 190px;
+  height: 190px;
+  border-radius: 18px;
+  background: var(--navy);
+}
+
+.collaboration-visual__coral {
+  right: 247px;
+  width: 88px;
+  height: 88px;
+  border-radius: 14px;
+  background: var(--coral);
+}
+
+.collaboration-visual__gold {
+  left: 35px;
+  width: 112px;
+  height: 156px;
+  border-radius: 14px;
+  background: var(--gold);
+}
+
+.collaboration-visual strong {
+  position: absolute;
+  right: 55px;
+  top: 95px;
+  color: var(--white);
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 40px;
+  line-height: 1.5;
+  font-weight: 800;
+}
+
+.collaboration-visual p {
+  position: absolute;
+  right: 35px;
+  bottom: 40px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.collaboration-hero__copy {
+  padding-top: 6px;
+}
+
+.collaboration-hero__copy h1 {
+  margin-top: 10px;
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 48px;
+  line-height: 1.5;
+  font-weight: 800;
+}
+
+.collaboration-hero__copy > p:last-child {
+  margin-top: 10px;
+  color: #667085;
+  font-size: 20px;
+  line-height: 1.9;
+}
+
+.collaboration-modes {
+  padding: 64px 0 82px;
+  background: var(--white);
+}
+
+.collaboration-mode-grid {
+  margin-top: 54px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.collaboration-mode {
+  min-height: 230px;
+  padding: 24px 22px;
+  border-radius: 16px;
+  background: var(--paper);
+}
+
+.collaboration-mode__accent {
+  width: 54px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--coral);
+  margin-bottom: 26px;
+}
+
+.collaboration-mode:nth-child(even) .collaboration-mode__accent {
+  background: var(--gold);
+}
+
+.collaboration-mode h3 {
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 24px;
+  line-height: 1.6;
+  font-weight: 800;
+}
+
+.collaboration-mode p {
+  margin-top: 16px;
+  color: #667085;
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+.collaboration-form-section {
+  padding: 58px 0 82px;
+  background: var(--paper);
+}
+
+.collaboration-form-grid {
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: 450px 750px;
+  gap: 40px;
+  align-items: stretch;
+}
+
+.collaboration-side {
+  min-height: 650px;
+  padding: 34px 28px;
+  border-radius: 18px;
+  color: var(--white);
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+}
+
+.collaboration-side .eyebrow {
+  color: var(--coral);
+  font-size: 16px;
+}
+
+.collaboration-side h3 {
+  margin-top: 16px;
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 30px;
+  line-height: 1.65;
+  font-weight: 800;
+}
+
+.collaboration-side__contact {
+  margin-top: 24px;
+  font-size: 16px;
+  line-height: 2.05;
+}
+
+.collaboration-side__note {
+  margin-top: auto;
+  padding: 20px 18px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.08);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.collaboration-form {
+  min-height: 650px;
+  padding: 25px 27px 40px;
+  border: 1px solid #e8e6e1;
+  border-radius: 18px;
+  background: var(--white);
+}
+
+.collaboration-form__two {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-height: 70px;
+  padding: 9px 18px 10px;
+  border: 1px solid #e8e6e1;
+  border-radius: 12px;
+  background: var(--white);
+}
+
+.form-field label,
+.collaboration-form legend {
+  color: var(--navy);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  color: var(--navy);
+  background: transparent;
+  font-size: 15px;
+  line-height: 1.6;
+  resize: none;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: #98a2b3;
+}
+
+.form-field--wide {
+  margin-bottom: 20px;
+}
+
+.form-field--textarea {
+  min-height: 130px;
+  margin-bottom: 30px;
+}
+
+.collaboration-form fieldset {
+  margin: 0 0 20px;
+  padding: 0;
+  border: 0;
+}
+
+.collaboration-form legend {
+  margin-bottom: 14px;
+}
+
+.collaboration-options {
+  display: flex;
+  gap: 16px;
+}
+
+.collaboration-option {
+  min-width: 184px;
+  height: 42px;
+  padding: 0 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e8e6e1;
+  border-radius: 21px;
+  color: var(--navy);
+  background: var(--white);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.collaboration-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.collaboration-option:has(input:checked) {
+  color: var(--white);
+  border-color: var(--navy);
+  background: var(--navy);
+}
+
+.collaboration-submit {
+  width: 200px;
+  margin-right: auto;
+  border: 0;
+  cursor: pointer;
+}
+
+.collaboration-next {
+  padding: 42px 0 16px;
+  background: var(--white);
+}
+
+.collaboration-next-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+
+.collaboration-next-card {
+  min-height: 72px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: var(--paper);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.collaboration-next-card span {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 44px;
+  border-radius: 12px;
+  color: var(--white);
+  background: var(--coral);
+}
+
+.collaboration-next-card strong {
+  font-family: "Estedad Variable", Estedad, sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+}
