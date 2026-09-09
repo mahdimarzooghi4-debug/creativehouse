@@ -4,6 +4,7 @@ import "@fontsource-variable/estedad/wght.css";
 import "./globals.css";
 import "./pages.css";
 import "./news-art.css";
+import "./qa-fixes.css";
 import { getSiteSettings } from "../lib/site-settings";
 
 export async function generateMetadata(): Promise<Metadata> {
