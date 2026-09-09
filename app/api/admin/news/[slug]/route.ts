@@ -41,8 +41,8 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     const requestedStatus = asText(form, "status");
     const status = operation === "publish" ? (requestedStatus === "scheduled" ? "scheduled" : "published") : "draft";
     const publishedAt = operation === "publish" ? (parseOptionalDate(form.get("publishedAt")) || existing.publishedAt || new Date()) : existing.publishedAt;
-
-    await db.news.update({
+    const featured = asBoolean(form, "featured");
+    const updateNews = db.news.update({
       where: { id: existing.id },
       data: {
         title,
@@ -52,10 +52,19 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         category: asText(form, "category") || "news",
         status,
         publishedAt,
-        featured: asBoolean(form, "featured"),
+        featured,
         coverMediaId: cover?.id || existing.coverMediaId,
       },
     });
+
+    if (featured) {
+      await db.$transaction([
+        db.news.updateMany({ where: { deletedAt: null, featured: true, id: { not: existing.id } }, data: { featured: false } }),
+        updateNews,
+      ]);
+    } else {
+      await updateNews;
+    }
 
     revalidatePath("/");
     revalidatePath("/news");
