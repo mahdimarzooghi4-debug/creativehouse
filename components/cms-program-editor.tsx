@@ -15,9 +15,10 @@ export function CmsProgramEditor({ mode = "edit" }: ProgramEditorProps) {
             <h1>{isCreate ? "افزودن برنامه" : "ویرایش برنامه"}</h1>
             <p>محتوا، زمان‌بندی، ثبت‌نام و وضعیت انتشار برنامه را مدیریت کن</p>
           </div>
-          <div className="cms-program-editor-actions">
-            <button className="cms-outline-button" type="submit" name="state" value="draft">ذخیره پیش‌نویس</button>
-            <button className="cms-program-dark-button" type="submit" name="state" value="published">انتشار</button>
+          <div className="cms-program-editor-actions" aria-label="عملیات ویرایش برنامه">
+            <a className="cms-outline-button" href="/admin/programs">{isCreate ? "لغو" : "بازگشت"}</a>
+            <button className="cms-outline-button" type="submit" name="notice" value="draft-saved" formNoValidate>ذخیره پیش‌نویس</button>
+            <button className="cms-program-dark-button" type="submit" name="notice" value="published">انتشار</button>
           </div>
         </header>
 
@@ -27,7 +28,7 @@ export function CmsProgramEditor({ mode = "edit" }: ProgramEditorProps) {
 
             <label className="cms-program-form-field">
               <span>عنوان برنامه</span>
-              <input name="title" defaultValue={isCreate ? "" : "برنامه رشد و شتابدهی"} placeholder="عنوان برنامه" />
+              <input name="title" required defaultValue={isCreate ? "" : "برنامه رشد و شتابدهی"} placeholder="عنوان برنامه" />
             </label>
 
             <div className="cms-program-form-split cms-program-form-split--main">
@@ -49,7 +50,7 @@ export function CmsProgramEditor({ mode = "edit" }: ProgramEditorProps) {
 
             <label className="cms-program-form-field">
               <span>معرفی</span>
-              <textarea name="summary" rows={4} defaultValue={isCreate ? "" : "برنامه‌ای برای همراهی تیم‌ها از اعتبارسنجی مسئله تا توسعه محصول و بازار."} placeholder="معرفی برنامه" />
+              <textarea name="summary" rows={4} required defaultValue={isCreate ? "" : "برنامه‌ای برای همراهی تیم‌ها از اعتبارسنجی مسئله تا توسعه محصول و بازار."} placeholder="معرفی برنامه" />
             </label>
 
             <label className="cms-program-form-field">
