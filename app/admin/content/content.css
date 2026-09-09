@@ -1,0 +1,87 @@
+.cms-content-page {
+  padding-bottom: 44px;
+}
+
+.cms-content-shortcuts {
+  min-height: 78px;
+  margin-top: 28px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--cms-border);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.cms-content-shortcuts a {
+  min-width: 190px;
+}
+
+.cms-content-card {
+  margin-top: 22px;
+  padding: 20px 24px 26px;
+  border: 1px solid var(--cms-border);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.cms-content-table {
+  margin-top: 18px;
+}
+
+.cms-content-row {
+  min-height: 58px;
+  padding: 0 18px;
+  display: grid;
+  grid-template-columns: minmax(270px, 2fr) 110px 150px 120px 90px;
+  gap: 14px;
+  align-items: center;
+  border-radius: 8px;
+  color: var(--cms-text);
+  font-size: 12px;
+}
+
+.cms-content-row.is-alt {
+  background: #fdfcfa;
+}
+
+.cms-content-head {
+  min-height: 42px;
+  color: var(--cms-text);
+  background: var(--cms-paper);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.cms-content-row strong {
+  color: #1e2e53;
+  font-size: 13px;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.cms-content-row > a {
+  color: var(--cms-coral);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.cms-content-row > a:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--cms-coral) 35%, transparent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (max-width: 1280px) {
+  .cms-content-row {
+    grid-template-columns: minmax(220px, 2fr) 90px 135px 105px 75px;
+    gap: 10px;
+    padding-inline: 12px;
+  }
+
+  .cms-content-shortcuts a {
+    min-width: 0;
+    flex: 1 1 0;
+  }
+}
