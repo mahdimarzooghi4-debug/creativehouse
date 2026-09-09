@@ -90,6 +90,20 @@
   gap: 14px;
 }
 
+.news-detail-tag {
+  min-width: 150px;
+  height: 36px;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  color: var(--coral);
+  background: rgba(251,140,116,.12);
+  font-size: 14px;
+  font-weight: 500;
+}
+
 .news-detail-actions {
   margin-top: 12px;
   display: flex;
