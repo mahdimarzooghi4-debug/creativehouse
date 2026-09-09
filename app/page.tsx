@@ -1,12 +1,9 @@
 import { NewsArt, type NewsArtVariant } from "../components/news-art";
 import { SiteFooter, SiteHeader } from "../components/site-chrome";
+import { db } from "../lib/db";
+import { formatPersianMonth, newsCategoryLabels } from "../lib/content-utils";
 
-const startups = Array.from({ length: 4 }, (_, index) => ({
-  id: index + 1,
-  title: "نام استارتاپ",
-  description: "معرفی کوتاه محصول یا راهکار استارتاپ و مسئله‌ای که برای آن راه‌حل ساخته است.",
-  href: `/startups/sample-${String(index + 1).padStart(2, "0")}`,
-}));
+export const dynamic = "force-dynamic";
 
 const programs = [
   {
@@ -46,28 +43,31 @@ const partners = [
   "جایگاه همراه جدید",
 ];
 
-const news: Array<{ meta: string; title: string; slug: string; art: NewsArtVariant }> = [
-  {
-    meta: "برنامه‌ها • شهریور ۱۴۰۵",
-    title: "نخستین گردهمایی تیم‌های منتخب خانه خلاق آینه برگزار شد",
-    slug: "selected-teams-gathering",
-    art: "stage",
-  },
-  {
-    meta: "استارتاپ‌ها • مرداد ۱۴۰۵",
-    title: "سه تیم خلاق وارد مرحله منتورینگ و توسعه محصول شدند",
-    slug: "teams-enter-mentoring",
-    art: "workshop",
-  },
-  {
-    meta: "گزارش فعالیت • تیر ۱۴۰۵",
-    title: "یک روز از کارگاه مسئله‌محور خانه خلاق؛ از ایده تا نمونه اولیه",
-    slug: "problem-workshop-day",
-    art: "lab",
-  },
-];
+const newsArt: NewsArtVariant[] = ["stage", "workshop", "lab"];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const now = new Date();
+  const [publishedStartups, homeNews] = await Promise.all([
+    db.startup.findMany({
+      where: { deletedAt: null, status: "published" },
+      orderBy: [{ featured: "desc" }, { displayOrder: "asc" }, { updatedAt: "desc" }],
+      take: 4,
+    }),
+    db.news.findMany({
+      where: {
+        deletedAt: null,
+        OR: [
+          { status: "published" },
+          { status: "scheduled", publishedAt: { lte: now } },
+        ],
+      },
+      orderBy: [{ featured: "desc" }, { publishedAt: "desc" }, { createdAt: "desc" }],
+      take: 3,
+    }),
+  ]);
+
+  const startupCount = await db.startup.count({ where: { deletedAt: null, status: "published" } });
+
   return (
     <main>
       <SiteHeader active="home" />
@@ -105,7 +105,7 @@ export default function HomePage() {
               <p>کمک می‌کنیم ایده‌های خلاق از مرحله تصور عبور کنند، ساخته شوند، با واقعیت آزموده شوند و به راهکار یا کسب‌وکار اثرگذار برای خدمت به محرومان تبدیل شوند.</p>
             </article>
             <div className="metric-grid">
-              <article className="metric"><strong>+۲۰</strong><span>استارتاپ همراه</span></article>
+              <article className="metric"><strong>{startupCount.toLocaleString("fa-IR")}</strong><span>استارتاپ همراه</span></article>
               <article className="metric"><strong>+۱۲</strong><span>برنامه و رویداد</span></article>
               <article className="metric"><strong>+۳۰</strong><span>منتور و متخصص</span></article>
             </div>
@@ -118,16 +118,16 @@ export default function HomePage() {
           <div className="section-heading">
             <p className="eyebrow">استارتاپ‌های خانه خلاق</p>
             <h2>ایده‌هایی که وارد مرحله ساخت شده‌اند</h2>
-            <p>هر استارتاپ در سایت نهایی پروفایل مستقل، معرفی محصول، حوزه فعالیت، دستاوردها و مسیر ارتباطی خواهد داشت.</p>
+            <p>پروفایل‌های این بخش مستقیماً از پنل مدیریت سایت به‌روزرسانی می‌شوند.</p>
           </div>
           <div className="startup-grid">
-            {startups.map((startup) => (
+            {publishedStartups.map((startup) => (
               <article className="startup-card" key={startup.id}>
-                <span className="tag">پروفایل استارتاپ</span>
-                <h3>{startup.title}</h3>
-                <p>{startup.description}</p>
+                <span className="tag">{startup.field}</span>
+                <h3>{startup.name}</h3>
+                <p>{startup.summary || "معرفی کوتاه این استارتاپ به‌زودی تکمیل می‌شود."}</p>
                 <div className="card-divider" />
-                <a href={startup.href}>مشاهده پروفایل ←</a>
+                <a href={`/startups/${startup.slug}`}>مشاهده پروفایل ←</a>
               </article>
             ))}
           </div>
@@ -197,10 +197,10 @@ export default function HomePage() {
             <h2>خانه خلاق در جریان است</h2>
           </div>
           <div className="news-grid">
-            {news.map((item) => (
-              <article className="news-card" key={item.slug}>
-                <NewsArt variant={item.art} />
-                <p className="news-meta">{item.meta}</p>
+            {homeNews.map((item, index) => (
+              <article className="news-card" key={item.id}>
+                <NewsArt variant={newsArt[index % newsArt.length]} />
+                <p className="news-meta">{newsCategoryLabels[item.category] || item.category}{item.publishedAt ? ` • ${formatPersianMonth(item.publishedAt)}` : ""}</p>
                 <h3>{item.title}</h3>
                 <a href={`/news/${item.slug}`}>مشاهده خبر</a>
               </article>
