@@ -1,0 +1,242 @@
+.cms-partners-dark-button {
+  min-height: 44px;
+  padding: 0 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 10px;
+  color: #fff;
+  background: var(--cms-navy);
+  font-family: Estedad, Vazirmatn, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+
+.cms-partners-dark-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(24, 43, 94, .14);
+}
+
+.cms-partners-dark-button:focus-visible,
+.cms-partner-action:focus-visible,
+.cms-partner-save-order:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--cms-coral) 35%, transparent);
+  outline-offset: 2px;
+}
+
+.cms-partners-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  direction: ltr;
+}
+
+.cms-partners-header-actions > * {
+  direction: rtl;
+}
+
+.cms-add-partner {
+  width: 190px;
+}
+
+.cms-partners-stat-grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 300px);
+  gap: 20px;
+}
+
+.cms-partners-stat {
+  height: 108px;
+  padding: 13px 18px 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid #e4e1de;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.cms-partners-stat > span {
+  color: #667080;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.cms-partners-stat strong {
+  margin-top: 2px;
+  color: var(--cms-navy);
+  font-size: 26px;
+  line-height: 1.5;
+  font-weight: 800;
+}
+
+.cms-partners-stat small {
+  margin-top: auto;
+  color: #667080;
+  font-size: 12px;
+}
+
+.cms-partners-hint {
+  width: 520px;
+  margin: 31px 0 0 auto;
+  color: #667080;
+  font-size: 13px;
+  line-height: 24px;
+  text-align: right;
+}
+
+.cms-partners-grid {
+  width: 940px;
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: repeat(4, 220px);
+  gap: 20px;
+  direction: rtl;
+}
+
+.cms-partner-card {
+  height: 250px;
+  padding: 19px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e4e1de;
+  border-radius: 16px;
+  background: #fff;
+  scroll-margin-top: 24px;
+}
+
+.cms-partner-logo {
+  width: 180px;
+  height: 112px;
+  flex: 0 0 112px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e4e1de;
+  border-radius: 12px;
+  color: #667080;
+  background: var(--cms-paper);
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.cms-partner-card h2 {
+  min-height: 48px;
+  margin-top: 15px;
+  color: var(--cms-navy);
+  font-family: Estedad, Vazirmatn, sans-serif;
+  font-size: 13px;
+  line-height: 1.85;
+  font-weight: 500;
+  text-align: right;
+}
+
+.cms-partner-card-footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  direction: ltr;
+}
+
+.cms-partner-card-footer > * {
+  direction: rtl;
+}
+
+.cms-partner-status {
+  width: 90px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.cms-partner-status--active {
+  color: #2e8b6d;
+  background: #eaf5f0;
+}
+
+.cms-partner-status--draft {
+  color: #667080;
+  background: #f4f1ed;
+}
+
+.cms-partner-action {
+  width: 70px;
+  padding: 0;
+  border: 0;
+  color: #e66f51;
+  background: transparent;
+  font-family: Estedad, Vazirmatn, sans-serif;
+  font-size: 12px;
+  line-height: 24px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+}
+
+.cms-partner-order-card {
+  width: 940px;
+  height: 150px;
+  margin-top: 34px;
+  padding: 16px 29px 0;
+  position: relative;
+  border: 1px solid #e4e1de;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.cms-partner-order-card h2 {
+  color: var(--cms-navy);
+  font-family: Estedad, Vazirmatn, sans-serif;
+  font-size: 18px;
+  line-height: 30.6px;
+  font-weight: 800;
+}
+
+.cms-partner-order-card p {
+  margin-top: 10px;
+  color: #667080;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.cms-partner-save-order {
+  width: 160px;
+  height: 42px;
+  position: absolute;
+  left: 29px;
+  bottom: -1px;
+  cursor: pointer;
+}
+
+@media (max-width: 1280px) {
+  .cms-partners-stat-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cms-partners-grid,
+  .cms-partner-order-card {
+    width: 100%;
+  }
+
+  .cms-partners-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .cms-partner-card {
+    padding: 14px;
+  }
+
+  .cms-partner-logo {
+    width: 100%;
+  }
+}
