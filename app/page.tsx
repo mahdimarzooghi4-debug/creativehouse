@@ -1,7 +1,11 @@
+import { NewsArt, type NewsArtVariant } from "../components/news-art";
+import { SiteFooter, SiteHeader } from "../components/site-chrome";
+
 const startups = Array.from({ length: 4 }, (_, index) => ({
   id: index + 1,
   title: "نام استارتاپ",
   description: "معرفی کوتاه محصول یا راهکار استارتاپ و مسئله‌ای که برای آن راه‌حل ساخته است.",
+  href: `/startups/sample-${String(index + 1).padStart(2, "0")}`,
 }));
 
 const programs = [
@@ -10,16 +14,19 @@ const programs = [
     tag: "برنامه ویژه",
     description: "مسیر تبدیل مسئله‌های واقعی به راهکارهای قابل اجرا؛ با صفحه اختصاصی رویداد و فرآیند ثبت‌نام مستقل.",
     featured: true,
+    href: "/programs/ayene",
   },
   {
     title: "برنامه رشد و شتابدهی",
     tag: "توسعه کسب‌وکار",
     description: "منتورینگ، اعتبارسنجی، طراحی مسیر رشد و آماده‌سازی برای توسعه بازار و همکاری‌های سازمانی.",
+    href: "/programs/growth",
   },
   {
     title: "کارگاه‌ها و شبکه‌سازی",
     tag: "جامعه خلاق",
     description: "نشست‌ها، کارگاه‌های تخصصی و اتصال استارتاپ‌ها به منتورها، متخصصان و مجموعه‌های همکار.",
+    href: "/programs/workshops",
   },
 ];
 
@@ -39,87 +46,31 @@ const partners = [
   "جایگاه همراه جدید",
 ];
 
-const news = [
+const news: Array<{ meta: string; title: string; slug: string; art: NewsArtVariant }> = [
   {
     meta: "برنامه‌ها • شهریور ۱۴۰۵",
     title: "نخستین گردهمایی تیم‌های منتخب خانه خلاق آینه برگزار شد",
-    image: "/images/news-1.svg",
+    slug: "selected-teams-gathering",
+    art: "stage",
   },
   {
     meta: "استارتاپ‌ها • مرداد ۱۴۰۵",
     title: "سه تیم خلاق وارد مرحله منتورینگ و توسعه محصول شدند",
-    image: "/images/news-2.svg",
+    slug: "teams-enter-mentoring",
+    art: "workshop",
   },
   {
     meta: "گزارش فعالیت • تیر ۱۴۰۵",
     title: "یک روز از کارگاه مسئله‌محور خانه خلاق؛ از ایده تا نمونه اولیه",
-    image: "/images/news-3.svg",
+    slug: "problem-workshop-day",
+    art: "lab",
   },
 ];
-
-function Brand() {
-  return (
-    <a className="brand" href="/" aria-label="خانه خلاق و نوآوری آینه">
-      <span className="brand__title">خانه خلاق و نوآوری <b>آینه</b></span>
-      <img className="brand__logo" src="/images/brand-creative-house.png" alt="" />
-    </a>
-  );
-}
-
-function Header() {
-  return (
-    <header className="site-header shell">
-      <Brand />
-      <nav className="main-nav" aria-label="ناوبری اصلی">
-        <a href="/">خانه</a>
-        <a href="/about">درباره ما</a>
-        <a href="/startups">استارتاپ‌ها</a>
-        <a href="/programs">برنامه‌ها</a>
-        <a href="/news">اخبار</a>
-      </nav>
-      <a className="button button--primary header-cta" href="/collaboration">همکاری با ما</a>
-    </header>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="site-footer">
-      <div className="shell footer-grid">
-        <div className="footer-brand">
-          <Brand />
-          <p className="footer-slogan">وطن<span>،</span> ساختنی است</p>
-        </div>
-        <div>
-          <h3>برنامه‌ها</h3>
-          <a href="/programs">همه برنامه‌ها</a>
-          <a href="/programs/ayene">رویداد آینه</a>
-          <a href="/programs">برنامه‌های آینده</a>
-        </div>
-        <div>
-          <h3>خانه خلاق</h3>
-          <a href="/about">درباره ما</a>
-          <a href="/startups">استارتاپ‌ها</a>
-          <a href="/news">اخبار و رسانه</a>
-          <a href="/licenses">مجوزها و تأییدیه‌ها</a>
-        </div>
-        <div className="footer-contact">
-          <h3>ارتباط با ما</h3>
-          <p>آدرس: تهران، خیابان انقلاب، خیابان رازی، کوچه شهبازیان، پلاک ۲۲</p>
-          <p>تلفن: ۰۲۱-۶۶۴۸۵۳۷۴</p>
-          <p>تلفن: ۰۲۱-۶۶۴۰۶۴۷۵</p>
-          <p>ایمیل: info@ayenehouse.ir</p>
-        </div>
-      </div>
-      <div className="shell footer-bottom">تمام حقوق برای خانه خلاق و نوآوری آینه محفوظ است</div>
-    </footer>
-  );
-}
 
 export default function HomePage() {
   return (
     <main>
-      <Header />
+      <SiteHeader active="home" />
 
       <section className="hero">
         <div className="shell hero-grid">
@@ -135,7 +86,7 @@ export default function HomePage() {
 
           <div className="hero-visual" aria-label="تصویر محیط خلاق و نوآوری ایران">
             <div className="hero-photo-frame">
-              <img src="/images/hero-home.png" alt="جوانان ایرانی در محیط خلاق پیرامون نقشه ایران" />
+              <img src="/images/hero-home.webp" alt="جوانان ایرانی در محیط خلاق پیرامون نقشه ایران" />
             </div>
             <div className="hero-ornament" aria-hidden="true"><span /><i /><span /></div>
           </div>
@@ -176,7 +127,7 @@ export default function HomePage() {
                 <h3>{startup.title}</h3>
                 <p>{startup.description}</p>
                 <div className="card-divider" />
-                <a href={`/startups/${startup.id}`}>مشاهده پروفایل ←</a>
+                <a href={startup.href}>مشاهده پروفایل ←</a>
               </article>
             ))}
           </div>
@@ -197,7 +148,7 @@ export default function HomePage() {
                 <span className="tag">{program.tag}</span>
                 <h3>{program.title}</h3>
                 <p>{program.description}</p>
-                <a href="/programs">{program.featured ? "ورود به صفحه رویداد" : "مشاهده جزئیات"} ←</a>
+                <a href={program.href}>{program.featured ? "ورود به صفحه رویداد" : "مشاهده جزئیات"} ←</a>
               </article>
             ))}
           </div>
@@ -246,22 +197,19 @@ export default function HomePage() {
             <h2>خانه خلاق در جریان است</h2>
           </div>
           <div className="news-grid">
-            {news.map((item, index) => (
-              <article className="news-card" key={item.title}>
-                <div className="news-image">
-                  <img src={item.image} alt="" />
-                  <span aria-hidden="true">{index + 1}</span>
-                </div>
+            {news.map((item) => (
+              <article className="news-card" key={item.slug}>
+                <NewsArt variant={item.art} />
                 <p className="news-meta">{item.meta}</p>
                 <h3>{item.title}</h3>
-                <a href={`/news/${index + 1}`}>مشاهده خبر</a>
+                <a href={`/news/${item.slug}`}>مشاهده خبر</a>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <Footer />
+      <SiteFooter />
     </main>
   );
 }
