@@ -1,16 +1,26 @@
+import { notFound } from "next/navigation";
 import { CmsShell } from "../../../../components/cms-shell";
+import { collaborationStatusLabels, collaborationTypeLabels } from "../../../../lib/collaboration-utils";
+import { formatPersianDate } from "../../../../lib/content-utils";
+import { db } from "../../../../lib/db";
 
-const requestDetails = [
-  ["نوع همکاری", "منتور"],
-  ["نام", "سارا احمدی"],
-  ["ایمیل", "sara@example.ir"],
-  ["شماره تماس", "۰۹۱۲۱۲۳۴۵۶۷"],
-  ["زمان مناسب تماس", "۹ تا ۱۲"],
-  ["شهر", "تهران"],
-] as const;
+export const dynamic = "force-dynamic";
 
 export default async function AdminCollaborationDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  await params;
+  const { id } = await params;
+  const request = await db.collaborationRequest.findUnique({ where: { id } });
+  if (!request) notFound();
+
+  const requestDetails = [
+    ["نوع همکاری", collaborationTypeLabels[request.type] || request.type],
+    ["نام", request.name],
+    ["نام مجموعه / تیم", request.organization || "—"],
+    ["ایمیل", request.email || "—"],
+    ["شماره تماس", request.phone],
+    ["زمان مناسب تماس", request.preferredContactTime || "—"],
+    ["شهر", request.city || "—"],
+  ] as const;
+
   return (
     <CmsShell active="collaboration">
       <div className="cms-dashboard cms-collaboration-detail-page">
@@ -36,42 +46,47 @@ export default async function AdminCollaborationDetailPage({ params }: { params:
               </div>
             </section>
 
-            <form className="cms-collaboration-card cms-collaboration-followup-card" action="/admin/collaboration" method="get" aria-labelledby="collaboration-followup-title">
+            <form className="cms-collaboration-card cms-collaboration-followup-card" action={`/api/admin/collaboration/${request.id}`} method="post" aria-labelledby="collaboration-followup-title">
               <h2 id="collaboration-followup-title">پیگیری درخواست</h2>
               <label className="cms-collaboration-form-field">
                 <span>وضعیت فعلی</span>
-                <input value="جدید" readOnly />
+                <input value={collaborationStatusLabels[request.status] || request.status} readOnly />
               </label>
               <label className="cms-collaboration-form-field">
                 <span>وضعیت جدید</span>
-                <select name="status" defaultValue="following">
+                <select name="status" defaultValue={request.status}>
                   <option value="new">جدید</option>
                   <option value="following">در حال پیگیری</option>
                   <option value="contacted">تماس گرفته شد</option>
                   <option value="closed">بسته شد</option>
                 </select>
               </label>
+              <label className="cms-collaboration-form-field">
+                <span>یادداشت داخلی</span>
+                <textarea name="internalNote" rows={5} maxLength={3000} defaultValue={request.internalNote || ""} placeholder="یادداشت پیگیری فقط برای مدیر سایت" />
+              </label>
               <div className="cms-collaboration-followup-actions">
-                <button className="cms-collaboration-primary-button" type="submit" name="result" value="updated">ثبت نتیجه پیگیری</button>
-                <button className="cms-outline-button" type="submit" name="result" value="draft-saved">ذخیره پیش‌نویس</button>
+                <button className="cms-collaboration-primary-button" type="submit" name="operation" value="update">ثبت نتیجه پیگیری</button>
+                <button className="cms-outline-button" type="submit" name="operation" value="draft">ذخیره یادداشت</button>
               </div>
             </form>
           </div>
 
           <section className="cms-collaboration-card cms-collaboration-note-card" aria-labelledby="collaboration-note-title">
             <h2 id="collaboration-note-title">پیام و یادداشت‌ها</h2>
+            {request.subject ? <div className="cms-collaboration-message-block"><span>موضوع همکاری</span><div>{request.subject}</div></div> : null}
             <div className="cms-collaboration-message-block">
               <span>متن درخواست</span>
-              <div>برای همکاری به‌عنوان منتور در حوزه توسعه محصول و مدل کسب‌وکار اعلام آمادگی می‌کنم.</div>
+              <div>{request.message}</div>
             </div>
             <div className="cms-collaboration-message-block cms-collaboration-internal-note">
               <span>یادداشت داخلی</span>
-              <div>تماس اولیه انجام شود و رزومه تخصصی دریافت شود.</div>
+              <div>{request.internalNote || "هنوز یادداشتی ثبت نشده است."}</div>
             </div>
             <div className="cms-collaboration-history">
               <h3>تاریخچه پیگیری</h3>
-              <p>امروز، ۱۰:۲۰&nbsp; • &nbsp;درخواست دریافت شد</p>
-              <p>امروز، ۱۰:۲۵&nbsp; • &nbsp;در صف بررسی قرار گرفت</p>
+              <p>{formatPersianDate(request.createdAt)}&nbsp; • &nbsp;درخواست دریافت شد</p>
+              {request.updatedAt.getTime() !== request.createdAt.getTime() ? <p>{formatPersianDate(request.updatedAt)}&nbsp; • &nbsp;آخرین به‌روزرسانی</p> : null}
             </div>
           </section>
         </div>
