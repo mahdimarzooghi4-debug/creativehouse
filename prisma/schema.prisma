@@ -128,6 +128,7 @@ model CollaborationRequest {
   email                String?
   city                 String?
   preferredContactTime String?
+  subject              String?
   message              String
   internalNote         String?
   status               String   @default("new")
@@ -136,18 +137,24 @@ model CollaborationRequest {
 }
 
 model HomepageSettings {
-  id                 String   @id @default("main")
-  heroEyebrow        String?
-  heroTitle          String
-  heroSubtitle       String?
-  heroPrimaryLabel   String?
-  heroPrimaryHref    String?
-  heroSecondaryLabel String?
-  heroSecondaryHref  String?
-  heroMediaId        String?
-  featuredNewsSlug   String?
-  featuredStartupIds String?
-  updatedAt          DateTime @updatedAt
+  id                  String   @id @default("main")
+  heroEyebrow         String?
+  heroTitle           String
+  heroSubtitle        String?
+  heroPrimaryLabel    String?
+  heroPrimaryHref     String?
+  heroSecondaryLabel  String?
+  heroSecondaryHref   String?
+  heroMediaId         String?
+  statPrograms        String?
+  statStartups        String?
+  statProvinces       String?
+  statPartners        String?
+  featuredNewsSlug    String?
+  featuredProgramSlug String?
+  featuredStartupIds  String?
+  featuredPartnerIds  String?
+  updatedAt           DateTime @updatedAt
 }
 
 model SiteSettings {
