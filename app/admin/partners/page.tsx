@@ -13,7 +13,16 @@ const partners = [
   ["new", "همراه جدید", "افزودن لوگو", "پیش‌نویس", "draft", "تکمیل"],
 ] as const;
 
-export default function AdminPartnersPage() {
+const resultMessages: Record<string, string> = {
+  saved: "اطلاعات همراه ذخیره شد.",
+  published: "همراه با موفقیت فعال شد.",
+  "order-saved": "ترتیب نمایش همراهان ذخیره شد.",
+};
+
+export default async function AdminPartnersPage({ searchParams }: { searchParams: Promise<{ result?: string }> }) {
+  const { result } = await searchParams;
+  const feedback = result ? resultMessages[result] : undefined;
+
   return (
     <CmsShell active="partners">
       <div className="cms-dashboard cms-partners-page">
@@ -24,9 +33,11 @@ export default function AdminPartnersPage() {
           </div>
           <div className="cms-partners-header-actions">
             <a className="cms-outline-button cms-view-site" href="/">مشاهده سایت</a>
-            <a className="cms-partners-dark-button cms-add-partner" href="#partner-new">افزودن همراه</a>
+            <a className="cms-partners-dark-button cms-add-partner" href="/admin/partners/new">افزودن همراه</a>
           </div>
         </header>
+
+        {feedback ? <div className="cms-secondary-feedback" role="status">{feedback}</div> : null}
 
         <section className="cms-partners-stat-grid" aria-label="آمار همراهان">
           {partnerStats.map(([label, value, note]) => (
@@ -38,7 +49,7 @@ export default function AdminPartnersPage() {
           ))}
         </section>
 
-        <p className="cms-partners-hint">برای تغییر ترتیب نمایش، کارت‌ها را در نسخه نهایی CMS جابه‌جا می‌کنیم.</p>
+        <p className="cms-partners-hint">ترتیب نمایش نهایی پس از اتصال دیتابیس با Drag & Drop ذخیره می‌شود.</p>
 
         <section className="cms-partners-grid" aria-label="فهرست همراهان">
           {partners.map(([slug, name, logoText, status, tone, action]) => (
@@ -49,17 +60,17 @@ export default function AdminPartnersPage() {
               <h2>{name}</h2>
               <div className="cms-partner-card-footer">
                 <span className={`cms-partner-status cms-partner-status--${tone}`}>{status}</span>
-                <button className="cms-partner-action" type="button">{action}</button>
+                <a className="cms-partner-action" href={slug === "new" ? "/admin/partners/new" : `/admin/partners/${slug}`}>{action}</a>
               </div>
             </article>
           ))}
         </section>
 
-        <section className="cms-partner-order-card" aria-labelledby="partner-order-title">
+        <form className="cms-partner-order-card" action="/admin/partners" method="get" aria-labelledby="partner-order-title">
           <h2 id="partner-order-title">ترتیب نمایش در صفحه اصلی</h2>
           <p>معاونت علمی ریاست جمهوری&nbsp; ← &nbsp;کمیته امداد&nbsp; ← &nbsp;ستاد توسعه فناوری‌های نرم&nbsp; ← &nbsp;سایر همراهان</p>
-          <button className="cms-outline-button cms-partner-save-order" type="button">ذخیره ترتیب</button>
-        </section>
+          <button className="cms-outline-button cms-partner-save-order" type="submit" name="result" value="order-saved">ذخیره ترتیب</button>
+        </form>
       </div>
     </CmsShell>
   );
