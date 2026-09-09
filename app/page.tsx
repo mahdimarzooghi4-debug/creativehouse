@@ -21,6 +21,31 @@ function prependUnique<T extends { id: string }>(selected: T | null, items: T[],
   return result.slice(0, take);
 }
 
+function HeroFallback() {
+  return (
+    <div className="hero-photo-fallback" role="img" aria-label="تصویر گرافیکی ایران و شبکه نوآوری">
+      <svg viewBox="0 0 520 293" aria-hidden="true">
+        <defs>
+          <linearGradient id="hero-bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#f8f4ee" />
+            <stop offset="1" stopColor="#eef1f8" />
+          </linearGradient>
+        </defs>
+        <rect width="520" height="293" rx="20" fill="url(#hero-bg)" />
+        <circle cx="88" cy="68" r="46" fill="#fbe4dd" />
+        <circle cx="452" cy="232" r="58" fill="#e7ebf5" />
+        <path d="M280 45 333 52 355 77 386 83 405 116 398 146 431 170 412 207 377 216 354 247 310 240 286 258 250 242 224 251 206 221 177 207 186 174 166 148 190 119 183 91 220 78 235 52 267 58Z" fill="#364e92" opacity=".92" />
+        <path d="M230 112 276 88 325 104 360 144 329 183 282 204 238 181 214 145Z" fill="#faf9f7" opacity=".9" />
+        <path d="M236 145 282 123 327 149 282 177Z" fill="#fb8c74" opacity=".9" />
+        <path d="M92 196C155 144 206 137 259 151M329 122c49-22 91-17 126 16" fill="none" stroke="#e0c89f" strokeWidth="4" strokeLinecap="round" strokeDasharray="7 9" />
+        <circle cx="93" cy="196" r="9" fill="#fb8c74" />
+        <circle cx="456" cy="138" r="9" fill="#fb8c74" />
+        <circle cx="282" cy="150" r="8" fill="#faf9f7" stroke="#fb8c74" strokeWidth="4" />
+      </svg>
+    </div>
+  );
+}
+
 export default async function HomePage() {
   const now = new Date();
   const settings = await getHomepageSettings();
@@ -64,7 +89,9 @@ export default async function HomePage() {
             </div>
           </div>
           <div className="hero-visual" aria-label="تصویر محیط خلاق و نوآوری ایران">
-            <div className="hero-photo-frame"><img src={heroMedia ? `/uploads/${heroMedia.storageKey}` : "/images/hero-home.webp"} alt="جوانان ایرانی در محیط خلاق پیرامون نقشه ایران" /></div>
+            <div className="hero-photo-frame">
+              {heroMedia ? <img src={`/uploads/${heroMedia.storageKey}`} alt="جوانان ایرانی در محیط خلاق پیرامون نقشه ایران" /> : <HeroFallback />}
+            </div>
             <div className="hero-ornament" aria-hidden="true"><span /><i /><span /></div>
           </div>
         </div>
