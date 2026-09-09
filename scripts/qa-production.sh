@@ -32,7 +32,7 @@ expect_body() {
 }
 
 echo "Checking public routes..."
-for route in / /about /startups /programs /programs?type=event /news /licenses /collaboration /api/health; do
+for route in / /about /startups /programs /programs?type=event /news /licenses /collaboration /admin/login /api/health; do
   expect_status 200 "$BASE_URL$route"
 done
 
@@ -57,7 +57,7 @@ login_status="$(curl -sS -D "$login_headers" -o /dev/null -w '%{http_code}' \
   "$BASE_URL/api/admin/login")"
 [[ "$login_status" == "303" ]] || fail "admin login returned HTTP $login_status"
 
-grep -qi '^location: /admin/content' "$login_headers" || fail "login did not preserve requested admin destination"
+grep -Eqi '^location: .*\/admin/content' "$login_headers" || fail "login did not preserve requested admin destination"
 session="$(grep -i '^set-cookie:' "$login_headers" | sed -n 's/.*ayene_admin_session=\([^;]*\).*/\1/p' | head -n 1)"
 [[ -n "$session" ]] || fail "admin session cookie was not issued"
 auth_header="Cookie: ayene_admin_session=$session"
