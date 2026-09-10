@@ -38,22 +38,36 @@ export function SiteHeader({ active = null }: { active?: ActiveNav }) {
   );
 }
 
+function FooterTagline({ value }: { value: string }) {
+  const commaIndex = value.indexOf("،");
+  if (commaIndex < 0) return <>{value}</>;
+  return (
+    <>
+      {value.slice(0, commaIndex)}
+      <span>،</span>
+      {value.slice(commaIndex + 1)}
+    </>
+  );
+}
+
 export async function SiteFooter() {
   const settings = await getSiteSettings();
+  const tagline = settings.tagline || "وطن، ساختنی است";
+
   return (
     <footer className="site-footer">
       <div className="shell footer-grid">
         <div className="footer-brand">
           <Brand footer />
-          <p className="footer-slogan">{settings.tagline || "وطن، ساختنی است"}</p>
+          <p className="footer-slogan"><FooterTagline value={tagline} /></p>
         </div>
-        <div>
+        <div className="footer-programs">
           <h3>برنامه‌ها</h3>
           <a href="/programs">همه برنامه‌ها</a>
-          <a href="/programs?type=event">رویدادها</a>
-          <a href="/programs?type=workshop">کارگاه‌ها</a>
+          <a href="/programs?type=event">رویداد آینه</a>
+          <a href="/programs">برنامه‌های آینده</a>
         </div>
-        <div>
+        <div className="footer-house">
           <h3>خانه خلاق</h3>
           <a href="/about">درباره ما</a>
           <a href="/startups">استارتاپ‌ها</a>

@@ -6,6 +6,7 @@ import "./pages.css";
 import "./news-art.css";
 import "./qa-fixes.css";
 import "./metric-alignment.css";
+import "./footer-fixes.css";
 import { getSiteSettings } from "../lib/site-settings";
 
 export async function generateMetadata(): Promise<Metadata> {

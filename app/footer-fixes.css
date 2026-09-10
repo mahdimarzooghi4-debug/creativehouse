@@ -1,0 +1,137 @@
+/* Exact desktop footer geometry from Figma node 534:42. */
+.site-footer {
+  box-sizing: border-box;
+  position: relative;
+  height: 340px;
+  min-height: 340px;
+  padding: 0;
+  overflow: hidden;
+  color: var(--white);
+  background: var(--navy);
+}
+
+.site-footer .footer-grid {
+  position: relative;
+  display: block;
+  width: 1240px;
+  height: 274px;
+  min-height: 274px;
+  margin-inline: auto;
+}
+
+.site-footer .footer-brand {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  width: 210px;
+  height: 114px;
+}
+
+.site-footer .footer-brand .brand {
+  box-sizing: border-box;
+  width: 210px;
+  height: 70px;
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+}
+
+.site-footer .footer-brand .brand__title {
+  color: var(--navy-2);
+}
+
+.site-footer .footer-brand .brand__logo-shell,
+.site-footer .footer-brand .brand__logo {
+  border-radius: 8px;
+}
+
+.site-footer .footer-slogan {
+  box-sizing: border-box;
+  width: 210px;
+  height: 30px;
+  margin: 14px 0 0;
+  color: var(--gold);
+  font-family: "Estedad Variable", "Vazirmatn Variable", Tahoma, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 30px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.site-footer .footer-slogan span {
+  color: var(--coral);
+}
+
+.site-footer .footer-programs,
+.site-footer .footer-house,
+.site-footer .footer-contact {
+  position: absolute;
+  top: 64px;
+  text-align: right;
+}
+
+.site-footer .footer-programs {
+  right: 370px;
+  width: 150px;
+}
+
+.site-footer .footer-house {
+  right: 580px;
+  width: 160px;
+}
+
+.site-footer .footer-contact {
+  left: 0;
+  width: 240px;
+  max-width: 240px;
+}
+
+.site-footer .footer-programs h3,
+.site-footer .footer-house h3,
+.site-footer .footer-contact h3 {
+  box-sizing: border-box;
+  width: 100%;
+  height: 24px;
+  margin: 0 0 16px;
+  color: var(--gold);
+  font-family: "Vazirmatn Variable", Tahoma, Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: right;
+}
+
+.site-footer .footer-programs a,
+.site-footer .footer-house a,
+.site-footer .footer-contact p {
+  display: block;
+  margin: 0;
+  color: var(--white);
+  font-family: "Vazirmatn Variable", Tahoma, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 32px;
+  text-align: right;
+}
+
+.site-footer .footer-bottom {
+  box-sizing: border-box;
+  position: absolute;
+  top: 274px;
+  left: 50%;
+  width: 1240px;
+  height: 66px;
+  margin: 0;
+  transform: translateX(-50%);
+  border-top: 1px solid rgba(224, 200, 159, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-family: "Vazirmatn Variable", Tahoma, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 22px;
+  text-align: center;
+}
