@@ -20,8 +20,8 @@ export default async function AdminLoginPage({ searchParams }: { searchParams: P
     <main className="cms-login" dir="rtl">
       <section className="cms-login__visual" aria-label="هویت خانه خلاق و نوآوری آینه">
         <a className="cms-login__brand" href="/" aria-label="خانه خلاق و نوآوری آینه">
-          <span className="cms-login__brand-title">خانه خلاق و نوآوری <b>آینه</b></span>
           <BrandMark className="cms-login__brand-mark" />
+          <span className="cms-login__brand-title">خانه خلاق و نوآوری <b>آینه</b></span>
         </a>
         <div className="cms-login__identity-copy">
           <h1>وطن<span className="cms-login__identity-comma">،</span> ساختنی است</h1>
