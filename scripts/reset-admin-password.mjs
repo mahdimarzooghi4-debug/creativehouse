@@ -2,7 +2,7 @@ import { randomBytes, scrypt as scryptCallback } from "node:crypto";
 import { promisify } from "node:util";
 import { PrismaClient } from "@prisma/client";
 
-process.env.DATABASE_URL ||= "file:./prisma/dev.db";
+process.env.DATABASE_URL ||= "file:./dev.db";
 
 const scrypt = promisify(scryptCallback);
 const KEY_LENGTH = 64;
