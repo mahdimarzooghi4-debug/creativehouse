@@ -1,6 +1,6 @@
 import { CmsShell } from "../../../components/cms-shell";
 import { db } from "../../../lib/db";
-import { contentStatusLabels, formatPersianDate, newsCategoryLabels } from "../../../lib/content-utils";
+import { contentStatusLabels, formatPersianDate, newsCategoryLabels, toPersianDigits } from "../../../lib/content-utils";
 
 export const dynamic = "force-dynamic";
 
@@ -38,9 +38,9 @@ export default async function AdminNewsPage({ searchParams }: AdminNewsPageProps
   ]);
 
   const newsStats = [
-    ["کل خبرها", String(total), `${published} منتشرشده`],
-    ["پیش‌نویس", String(draft), "نیازمند بازبینی"],
-    ["خبر منتخب", String(featured), "نمایش در بالای صفحه"],
+    ["کل خبرها", toPersianDigits(total), `${toPersianDigits(published)} منتشرشده`],
+    ["پیش‌نویس", toPersianDigits(draft), "نیازمند بازبینی"],
+    ["خبر منتخب", toPersianDigits(featured), "نمایش در بالای صفحه"],
   ] as const;
 
   return (
@@ -103,7 +103,7 @@ export default async function AdminNewsPage({ searchParams }: AdminNewsPageProps
                 <span>{newsCategoryLabels[item.category] || item.category}</span>
                 <span><i className={`cms-news-status cms-news-status--${item.status}`}>{contentStatusLabels[item.status] || item.status}</i></span>
                 <span>{formatPersianDate(item.publishedAt)}</span>
-                <span>{item.views.toLocaleString("fa-IR")}</span>
+                <span>{toPersianDigits(item.views.toLocaleString("fa-IR"))}</span>
               </a>
             ))}
             {newsItems.length === 0 ? <p className="cms-flow-notice">خبری با این فیلتر پیدا نشد.</p> : null}

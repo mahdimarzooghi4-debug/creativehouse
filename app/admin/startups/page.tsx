@@ -1,6 +1,6 @@
 import { CmsShell } from "../../../components/cms-shell";
 import { db } from "../../../lib/db";
-import { contentStatusLabels, formatPersianDate, startupStageLabels } from "../../../lib/content-utils";
+import { contentStatusLabels, formatPersianDate, startupStageLabels, toPersianDigits } from "../../../lib/content-utils";
 
 export const dynamic = "force-dynamic";
 
@@ -38,9 +38,9 @@ export default async function AdminStartupsPage({ searchParams }: AdminStartupsP
   ]);
 
   const startupStats = [
-    ["کل استارتاپ‌ها", String(total), `${published} منتشرشده`],
-    ["پیش‌نویس", String(draft), "نیازمند تکمیل"],
-    ["منتخب صفحه اصلی", String(featured), "قابل جابه‌جایی"],
+    ["کل استارتاپ‌ها", toPersianDigits(total), `${toPersianDigits(published)} منتشرشده`],
+    ["پیش‌نویس", toPersianDigits(draft), "نیازمند تکمیل"],
+    ["منتخب صفحه اصلی", toPersianDigits(featured), "قابل جابه‌جایی"],
   ] as const;
 
   return (
