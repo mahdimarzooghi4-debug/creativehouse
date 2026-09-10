@@ -6,6 +6,7 @@ import { ADMIN_SESSION_COOKIE, ADMIN_SESSION_MAX_AGE, createSessionToken } from 
 
 const WINDOW_MS = 15 * 60 * 1000;
 const MAX_ATTEMPTS = 5;
+const RATE_LIMIT_ENABLED = process.env.NODE_ENV === "production";
 
 type Attempt = { count: number; resetAt: number };
 const attempts = new Map<string, Attempt>();
@@ -15,6 +16,7 @@ function clientKey(request: NextRequest) {
 }
 
 function isBlocked(key: string) {
+  if (!RATE_LIMIT_ENABLED) return false;
   const now = Date.now();
   const item = attempts.get(key);
   if (!item || item.resetAt <= now) {
@@ -25,6 +27,7 @@ function isBlocked(key: string) {
 }
 
 function recordFailure(key: string) {
+  if (!RATE_LIMIT_ENABLED) return;
   const now = Date.now();
   const current = attempts.get(key);
   if (!current || current.resetAt <= now) {
