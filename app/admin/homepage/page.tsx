@@ -1,6 +1,7 @@
 import { CmsShell } from "../../../components/cms-shell";
 import { db } from "../../../lib/db";
 import { CMS_HERO_MEDIA_ALT, getHomepageSettings, splitStoredIds } from "../../../lib/homepage-settings";
+import { toPersianDigits } from "../../../lib/content-utils";
 
 export const dynamic = "force-dynamic";
 
@@ -27,10 +28,10 @@ export default async function AdminHomepageSettingsPage({ searchParams }: { sear
   const feedback = result ? resultMessages[result] : undefined;
   const selectedStartupId = splitStoredIds(settings.featuredStartupIds)[0] || startups[0]?.id || "";
   const stats = [
-    ["برنامه‌ها", settings.statPrograms || String(programCount), "statPrograms"],
-    ["استارتاپ‌ها", settings.statStartups || String(startupCount), "statStartups"],
-    ["استان‌های درگیر", settings.statProvinces || "۳۱", "statProvinces"],
-    ["همراهان", settings.statPartners || String(partnerCount), "statPartners"],
+    ["برنامه‌ها", toPersianDigits(settings.statPrograms || programCount), "statPrograms"],
+    ["استارتاپ‌ها", toPersianDigits(settings.statStartups || startupCount), "statStartups"],
+    ["استان‌های درگیر", toPersianDigits(settings.statProvinces || "۳۱"), "statProvinces"],
+    ["همراهان", toPersianDigits(settings.statPartners || partnerCount), "statPartners"],
   ] as const;
   const heroMedia = settings.heroMediaId ? await db.media.findUnique({ where: { id: settings.heroMediaId } }) : null;
   const effectiveHeroMedia = heroMedia?.altText === CMS_HERO_MEDIA_ALT ? heroMedia : null;
