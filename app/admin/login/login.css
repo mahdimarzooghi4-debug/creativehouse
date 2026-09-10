@@ -28,10 +28,11 @@
 .cms-login__brand {
   position: absolute;
   top: 82px;
-  left: 50%;
+  right: 72px;
+  left: auto;
   width: 210px;
   height: 70px;
-  transform: translateX(-50%);
+  transform: none;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -76,6 +77,10 @@
   font-size: 28px;
   line-height: 1.7;
   font-weight: 800;
+}
+
+.cms-login__identity-comma {
+  color: var(--cms-login-coral);
 }
 
 .cms-login__identity-copy p {
