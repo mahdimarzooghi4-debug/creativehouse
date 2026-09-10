@@ -15,6 +15,9 @@ const resultMessages: Record<string, string> = {
   error: "ثبت درخواست انجام نشد. لطفاً دوباره تلاش کنید یا از اطلاعات تماس مستقیم استفاده کنید.",
 };
 
+const toPersianDigits = (value: number | string) =>
+  String(value).replace(/\d/g, (digit) => "۰۱۲۳۴۵۶۷۸۹"[Number(digit)]);
+
 export default async function CollaborationPage({ searchParams }: { searchParams: Promise<{ result?: string }> }) {
   const [{ result }, settings] = await Promise.all([searchParams, getSiteSettings()]);
   const feedback = result ? resultMessages[result] : undefined;
@@ -71,9 +74,9 @@ export default async function CollaborationPage({ searchParams }: { searchParams
                 <h3>قبل از ارسال فرم هم می‌توانید با ما در تماس باشید</h3>
                 <div className="collaboration-side__contact">
                   <p>{settings.address}</p>
-                  {settings.phone1 ? <p>تلفن: {settings.phone1}</p> : null}
-                  {settings.phone2 ? <p>تلفن: {settings.phone2}</p> : null}
-                  {settings.email ? <p>{settings.email}</p> : null}
+                  {settings.phone1 ? <p className="collaboration-contact-row"><span>تلفن:</span><bdi className="collaboration-contact-value" dir="ltr">{settings.phone1}</bdi></p> : null}
+                  {settings.phone2 ? <p className="collaboration-contact-row"><span>تلفن:</span><bdi className="collaboration-contact-value" dir="ltr">{settings.phone2}</bdi></p> : null}
+                  {settings.email ? <p className="collaboration-contact-row collaboration-contact-row--email"><bdi className="collaboration-contact-value" dir="ltr">{settings.email}</bdi></p> : null}
                 </div>
                 <p className="collaboration-side__note">پس از ارسال، درخواست بررسی می‌شود و در صورت تناسب، تیم خانه خلاق برای ادامه مسیر با شما تماس می‌گیرد.</p>
               </aside>
@@ -134,7 +137,7 @@ export default async function CollaborationPage({ searchParams }: { searchParams
             <div className="collaboration-next-grid">
               {nextSteps.map((step, index) => (
                 <article className="collaboration-next-card" key={step}>
-                  <span>{index + 1}</span>
+                  <span>{toPersianDigits(index + 1)}</span>
                   <strong>{step}</strong>
                 </article>
               ))}
