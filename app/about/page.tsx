@@ -14,6 +14,8 @@ const model = [
   ["رشد و اثر", "بهبود مدل، توسعه همکاری و آماده‌شدن برای مقیاس."],
 ];
 
+const modelNumbers = ["۱", "۲", "۳", "۴"];
+
 const audience = [
   ["تیم‌ها و استارتاپ‌ها", "تیم‌هایی که می‌خواهند ایده یا محصول خود را در میدان واقعی بسازند و رشد دهند."],
   ["سازمان‌ها و مجموعه‌ها", "مجموعه‌هایی که مسئله، ظرفیت همکاری یا فرصت اجرای یک راهکار خلاق دارند."],
@@ -22,10 +24,10 @@ const audience = [
 
 export default function AboutPage() {
   return (
-    <div className="public-page">
+    <div className="public-page about-page">
       <SiteHeader active="about" />
       <main className="public-page__main">
-        <section className="identity-hero">
+        <section className="identity-hero about-hero">
           <div className="shell identity-hero__grid">
             <div className="identity-panel" aria-hidden="true">
               <span className="identity-panel__coral" />
@@ -39,13 +41,13 @@ export default function AboutPage() {
             <div className="identity-copy">
               <p className="eyebrow">درباره خانه خلاق</p>
               <h1>جایی برای ساختن، آزمودن<br />و اثر گذاشتن</h1>
-              <p>خانه خلاق و نوآوری آینه به عنوان بازوی نوآوری کمیته امداد امام خمینی(ره) فضایی برای تبدیل ایده‌های خلاق به راهکارها و کسب‌وکارهای قابل اجراست؛ جایی که تیم‌ها با مسئله‌های واقعی روبه‌رو می‌شوند، می‌سازند، می‌آزمایند و رشد می‌کنند.</p>
+              <p>خانه خلاق و نوآوری آینه به عنوان بازوی نوآوری کمیته امداد امام خمینی<span className="about-rah">(ره)</span> فضایی برای تبدیل ایده‌های خلاق به راهکارها و کسب‌وکارهای قابل اجراست؛ جایی که تیم‌ها با مسئله‌های واقعی روبه‌رو می‌شوند، می‌سازند، می‌آزمایند و رشد می‌کنند.</p>
               <div className="slogan-chip">وطن<span>،</span>&nbsp; ساختنی است</div>
             </div>
           </div>
         </section>
 
-        <section className="content-section content-section--white">
+        <section className="content-section content-section--white about-purpose">
           <div className="shell">
             <div className="section-intro">
               <p className="eyebrow">ماموریت و چشم‌انداز</p>
@@ -66,7 +68,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="content-section">
+        <section className="content-section about-values">
           <div className="shell">
             <div className="section-intro">
               <p className="eyebrow">ارزش‌های ما</p>
@@ -85,7 +87,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="content-section content-section--white">
+        <section className="content-section content-section--white about-model">
           <div className="shell">
             <div className="section-intro">
               <p className="eyebrow">مدل همراهی</p>
@@ -95,7 +97,7 @@ export default function AboutPage() {
             <div className="four-card-grid model-grid">
               {model.map(([title, text], index) => (
                 <article className="step-card" key={title}>
-                  <span className="step-card__number">{index + 1}</span>
+                  <span className="step-card__number">{modelNumbers[index]}</span>
                   <h3>{title}</h3>
                   <p>{text}</p>
                 </article>
@@ -104,7 +106,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="content-section">
+        <section className="content-section about-audience">
           <div className="shell">
             <div className="section-intro">
               <p className="eyebrow">برای چه کسانی؟</p>
