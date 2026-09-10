@@ -24,7 +24,7 @@ export default async function AdminLoginPage({ searchParams }: { searchParams: P
           <BrandMark className="cms-login__brand-mark" />
         </a>
         <div className="cms-login__identity-copy">
-          <h1>وطن، ساختنی است</h1>
+          <h1>وطن<span className="cms-login__identity-comma">،</span> ساختنی است</h1>
           <p>مدیریت محتوای خانه خلاق، برنامه‌ها، استارتاپ‌ها و اخبار</p>
         </div>
       </section>
