@@ -78,8 +78,8 @@ export default async function HomePage() {
             <h1>{renderHeroTitle(settings.heroTitle)}</h1>
             <p className="hero-lead">{settings.heroSubtitle}</p>
             <div className="hero-actions">
-              <a className="button button--primary" href={settings.heroPrimaryHref || "/startups"}>{settings.heroPrimaryLabel || "مشاهده استارتاپ‌ها"}</a>
-              <a className="button button--secondary" href={settings.heroSecondaryHref || "/about"}>{settings.heroSecondaryLabel || "آشنایی با خانه خلاق"}</a>
+              <a className="hero-action hero-action--primary" href={settings.heroPrimaryHref || "/startups"}><span className="hero-action__label hero-action__label--primary">{settings.heroPrimaryLabel || "مشاهده استارتاپ‌ها"}</span></a>
+              <a className="hero-action hero-action--secondary" href={settings.heroSecondaryHref || "/about"}><span className="hero-action__label hero-action__label--secondary">{settings.heroSecondaryLabel || "آشنایی با خانه خلاق"}</span></a>
             </div>
           </div>
           <div className={`hero-visual${effectiveHeroMedia ? " hero-visual--cms" : " hero-visual--figma"}`} aria-label="تصویر محیط خلاق و نوآوری ایران">
