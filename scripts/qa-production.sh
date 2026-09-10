@@ -44,6 +44,13 @@ if grep -R 'src="/images/' app components >/dev/null 2>&1; then
   fail "hard-coded /images asset reference remains without a checked-in production asset"
 fi
 
+echo "Checking responsive safeguards..."
+grep -Fq 'import "./responsive.css";' app/layout.tsx || fail "responsive stylesheet is not loaded by the root layout"
+grep -Fq 'min-width: 0 !important;' app/responsive.css || fail "public layout still lacks the mobile min-width override"
+grep -Fq '@media (max-width: 760px)' app/responsive.css || fail "mobile breakpoint is missing"
+grep -Fq '.site-footer .footer-grid' app/responsive.css || fail "responsive footer override is missing"
+grep -Fq '.about-page .public-page__main' app/responsive.css || fail "responsive About override is missing"
+
 echo "Checking admin protection..."
 unauth_status="$(curl -sS -o /dev/null -w '%{http_code}' "$BASE_URL/admin")"
 [[ "$unauth_status" == "307" || "$unauth_status" == "308" ]] || fail "unauthenticated /admin did not redirect"
