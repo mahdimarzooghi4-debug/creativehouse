@@ -14,7 +14,7 @@
     "db:migrate": "prisma migrate deploy",
     "db:migrate:dev": "prisma migrate dev",
     "db:studio": "prisma studio",
-    "admin:reset-password": "node scripts/reset-admin-password.mjs"
+    "admin:reset-password": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/reset-admin-password.mjs"
   },
   "engines": {
     "node": ">=22.11.0"
