@@ -5,7 +5,15 @@
 .startups-page .public-hero__copy {
   direction: rtl;
   text-align: right;
-  align-items: flex-end;
+  align-items: stretch;
+}
+
+.startups-page .public-hero__copy .eyebrow,
+.startups-page .public-hero__copy h1,
+.startups-page .public-hero__copy > p:not(.eyebrow) {
+  width: 100%;
+  direction: rtl;
+  text-align: right;
 }
 
 .startups-page .hero-stat-pair {
