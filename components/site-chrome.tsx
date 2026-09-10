@@ -12,8 +12,22 @@ const navItems: Array<{ key: Exclude<ActiveNav, null>; label: string; href: stri
 ];
 
 export function Brand({ footer = false }: { footer?: boolean }) {
+  if (footer) {
+    return (
+      <a className="brand brand--footer" href="/" aria-label="خانه خلاق و نوآوری آینه">
+        <img
+          className="footer-brand__figma-lockup"
+          src="/figma-footer-brand-lockup.png"
+          alt="خانه خلاق و نوآوری آینه"
+          width={210}
+          height={70}
+        />
+      </a>
+    );
+  }
+
   return (
-    <a className={`brand${footer ? " brand--footer" : ""}`} href="/" aria-label="خانه خلاق و نوآوری آینه">
+    <a className="brand" href="/" aria-label="خانه خلاق و نوآوری آینه">
       <span className="brand__title">خانه خلاق و نوآوری <b>آینه</b></span>
       <span className="brand__logo-shell" aria-hidden="true">
         <BrandMark className="brand__logo" />
