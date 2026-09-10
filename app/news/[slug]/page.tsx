@@ -24,8 +24,13 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
   const cover = news.coverMediaId ? await db.media.findUnique({ where: { id: news.coverMediaId } }) : null;
   const categoryLabel = newsCategoryLabels[news.category] || news.category;
   const tags = (news.tags || "").split(/[،,]/).map((tag) => tag.trim()).filter(Boolean);
-  const paragraphs = news.body.split(/\n{2,}/).map((part) => part.trim()).filter(Boolean);
-  const readingMinutes = Math.max(1, Math.ceil(news.body.length / 850));
+  const normalizedBody = news.body
+    .replace(/\\r\\n/g, "\n")
+    .replace(/\\n/g, "\n")
+    .replace(/\\r/g, "\n")
+    .replace(/\r\n?/g, "\n");
+  const paragraphs = normalizedBody.split(/\n\s*\n+/).map((part) => part.trim()).filter(Boolean);
+  const readingMinutes = Math.max(1, Math.ceil(normalizedBody.length / 850));
 
   return (
     <div className="public-page">
@@ -88,8 +93,8 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
               <p className="eyebrow">متن خبر</p>
               <h2>شرح کامل</h2>
             </div>
-            <div className={`news-highlights-layout${cover ? " news-highlights-layout--with-media" : ""}`}>
-              <div className="news-highlight-grid">
+            <div className={`news-highlights-layout${cover ? " news-highlights-layout--with-media" : " news-highlights-layout--text-only"}`}>
+              <div className={`news-highlight-grid${cover ? "" : " news-highlight-grid--full"}`}>
                 {paragraphs.map((paragraph, index) => (
                   <article className="news-highlight-card" key={`${news.id}-${index}`}>
                     <div className="news-highlight-card__accent" />
