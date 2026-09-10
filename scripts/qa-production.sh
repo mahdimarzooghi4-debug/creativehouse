@@ -96,6 +96,25 @@ delete_status="$(curl -sS -o /dev/null -w '%{http_code}' \
 [[ "$delete_status" == "303" ]] || fail "startup delete returned HTTP $delete_status"
 expect_status 404 "$BASE_URL/startups/qa-startup"
 
+echo "Checking partner website link..."
+partner_name="qa-partner"
+partner_create_status="$(curl -sS -o /dev/null -w '%{http_code}' \
+  -H "$auth_header" \
+  -X POST \
+  -F 'operation=publish' \
+  -F "name=$partner_name" \
+  -F 'website=qa-partner.example' \
+  -F 'order=0' \
+  "$BASE_URL/api/admin/partners")"
+[[ "$partner_create_status" == "303" ]] || fail "partner create returned HTTP $partner_create_status"
+expect_body 'href="https://qa-partner.example/"' "$BASE_URL/"
+partner_delete_status="$(curl -sS -o /dev/null -w '%{http_code}' \
+  -H "$auth_header" \
+  -X POST \
+  -F 'operation=delete' \
+  "$BASE_URL/api/admin/partners/qa-partner")"
+[[ "$partner_delete_status" == "303" ]] || fail "partner delete returned HTTP $partner_delete_status"
+
 echo "Checking public collaboration submission..."
 collab_headers="$TMP_DIR/collab-headers"
 collab_status="$(curl -sS -D "$collab_headers" -o /dev/null -w '%{http_code}' \
