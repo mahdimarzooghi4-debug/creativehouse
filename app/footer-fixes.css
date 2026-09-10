@@ -1,4 +1,4 @@
-/* Exact desktop footer geometry from Figma node 534:42. */
+/* Desktop footer geometry from Figma node 534:42. */
 .site-footer {
   box-sizing: border-box;
   position: relative;
@@ -27,21 +27,40 @@
   height: 114px;
 }
 
+/* Keep the footer lockup on the navy surface. Only the mark gets a light tile. */
 .site-footer .footer-brand .brand {
   box-sizing: border-box;
   width: 210px;
   height: 70px;
   margin: 0;
   padding: 0;
-  background: var(--paper);
+  background: transparent;
 }
 
 .site-footer .footer-brand .brand__title {
-  color: var(--navy-2);
+  box-sizing: border-box;
+  color: var(--white);
+  padding-inline-end: 10px;
 }
 
-.site-footer .footer-brand .brand__logo-shell,
+.site-footer .footer-brand .brand__title b {
+  color: var(--coral);
+}
+
+.site-footer .footer-brand .brand__logo-shell {
+  width: 82px;
+  height: 70px;
+  flex: 0 0 82px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--paper);
+}
+
 .site-footer .footer-brand .brand__logo {
+  width: 82px;
+  height: 70px;
   border-radius: 8px;
 }
 
