@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SiteFooter, SiteHeader } from "../../components/site-chrome";
 import { db } from "../../lib/db";
 
@@ -76,7 +77,14 @@ export default async function StartupsPage({ searchParams }: { searchParams: Pro
             </div>
             <div className="filter-row" aria-label="فیلتر استارتاپ‌ها">
               {categories.map((item) => (
-                <a className={`filter-chip${item === category ? " filter-chip--active" : ""}`} href={item === "همه" ? "/startups" : `/startups?category=${encodeURIComponent(item)}`} key={item}>{item}</a>
+                <Link
+                  className={`filter-chip${item === category ? " filter-chip--active" : ""}`}
+                  href={item === "همه" ? "/startups" : `/startups?category=${encodeURIComponent(item)}`}
+                  scroll={false}
+                  key={item}
+                >
+                  {item}
+                </Link>
               ))}
             </div>
             <div className="directory-grid">
