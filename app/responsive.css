@@ -1,0 +1,798 @@
+/*
+ * Final responsive pass for the public site.
+ * Desktop geometry remains unchanged; these overrides only apply below the
+ * original desktop canvas width and remove the old forced 1180/1240px layout.
+ */
+
+body {
+  min-width: 0 !important;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media (max-width: 1180px) {
+  .shell {
+    width: min(960px, calc(100% - 48px)) !important;
+    max-width: calc(100% - 48px) !important;
+  }
+
+  /* Header */
+  .site-header {
+    height: auto !important;
+    min-height: 88px;
+    padding-block: 10px;
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+
+  .main-nav {
+    order: 3;
+    width: 100%;
+    height: auto !important;
+    min-height: 42px;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px 24px;
+  }
+
+  /* Home */
+  .home-page .hero {
+    height: auto !important;
+    padding: 56px 0 64px !important;
+    overflow: visible !important;
+  }
+
+  .home-page .hero-grid {
+    height: auto !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 42px !important;
+  }
+
+  .home-page .hero-copy {
+    height: auto !important;
+    padding-top: 0 !important;
+    align-items: stretch !important;
+  }
+
+  .home-page .hero-copy > * {
+    width: auto !important;
+    max-width: 100%;
+  }
+
+  .home-page .hero-visual {
+    width: min(560px, 100%) !important;
+    justify-self: center;
+  }
+
+  .home-page .hero-photo-frame {
+    width: min(544px, 100%) !important;
+  }
+
+  .home-page .hero-ornament {
+    width: min(524px, 94%) !important;
+  }
+
+  .home-page .impact-grid,
+  .home-page .program-grid,
+  .home-page .news-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .home-page .startup-grid,
+  .home-page .service-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .home-page .partner-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  /* Shared listing/hero sections */
+  .public-page__main {
+    overflow-x: hidden !important;
+  }
+
+  .public-page .public-hero__row {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 28px !important;
+  }
+
+  .public-page .public-hero__copy {
+    order: 1;
+  }
+
+  .public-page .hero-stat-pair {
+    order: 2;
+    width: min(410px, 100%) !important;
+    height: auto !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .public-page .hero-stat {
+    width: auto !important;
+  }
+
+  .public-page .two-card-grid,
+  .public-page .four-card-grid,
+  .public-page .three-card-grid,
+  .public-page .directory-grid,
+  .public-page .program-directory-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .public-page .featured-startup,
+  .public-page .featured-program {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 28px !important;
+  }
+
+  .public-page .featured-startup__visual,
+  .public-page .featured-program__visual {
+    width: 100%;
+  }
+
+  /* Programs */
+  .public-page .programs-hero {
+    min-height: 0 !important;
+  }
+
+  .public-page .programs-hero__bottom {
+    flex-direction: column !important;
+    gap: 24px !important;
+  }
+
+  .public-page .programs-hero__bottom > p {
+    max-width: none !important;
+  }
+
+  /* Startup detail */
+  .public-page .startup-detail-hero,
+  .public-page .program-detail-hero,
+  .public-page .news-detail-hero,
+  .public-page .collaboration-hero {
+    min-height: 0 !important;
+  }
+
+  .public-page .startup-detail-hero__grid,
+  .public-page .program-detail-hero__grid,
+  .public-page .news-detail-hero__grid,
+  .public-page .collaboration-hero__grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 34px !important;
+  }
+
+  .public-page .startup-detail-visual,
+  .public-page .program-detail-visual,
+  .public-page .news-detail-visual,
+  .public-page .collaboration-visual {
+    width: min(500px, 100%) !important;
+    justify-self: center;
+  }
+
+  .public-page .startup-about-grid,
+  .public-page .program-overview-grid,
+  .public-page .program-participation-grid,
+  .public-page .news-summary-grid,
+  .public-page .news-closing-grid,
+  .public-page .inquiry-grid,
+  .public-page .collaboration-form-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 28px !important;
+  }
+
+  .public-page .startup-product-grid,
+  .public-page .milestone-grid,
+  .public-page .startup-team-grid,
+  .public-page .program-outcome-grid,
+  .public-page .program-journey-grid,
+  .public-page .news-story-grid,
+  .public-page .documents-grid,
+  .public-page .verification-grid,
+  .public-page .collaboration-mode-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .public-page .program-metrics,
+  .public-page .news-summary-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .public-page .program-metric,
+  .public-page .news-summary-metric {
+    width: auto !important;
+  }
+
+  /* News */
+  .public-page .news-featured-card {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 28px !important;
+  }
+
+  .public-page .news-directory-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .public-page .news-highlights-layout--with-media {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas: "text" "media" !important;
+  }
+
+  /* Collaboration */
+  .public-page .collaboration-form-grid {
+    margin-top: 32px !important;
+  }
+
+  .public-page .collaboration-form,
+  .public-page .collaboration-side {
+    min-height: 0 !important;
+  }
+
+  .public-page .collaboration-next-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  /* About: remove desktop-only absolute geometry below desktop width. */
+  .about-page .public-page__main {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .about-page .about-hero {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 56px 0 !important;
+    overflow: visible !important;
+  }
+
+  .about-page .about-hero .identity-hero__grid {
+    position: static !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 34px !important;
+    width: min(960px, calc(100% - 48px)) !important;
+    height: auto !important;
+  }
+
+  .about-page .about-hero .identity-copy,
+  .about-page .about-hero .identity-panel {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    max-width: 580px;
+    height: auto !important;
+    margin: 0 !important;
+  }
+
+  .about-page .about-hero .identity-copy {
+    min-height: 0 !important;
+    order: 1;
+    justify-self: end;
+  }
+
+  .about-page .about-hero .identity-panel {
+    min-height: 390px !important;
+    order: 2;
+    justify-self: start;
+  }
+
+  .about-page .about-hero .identity-copy .eyebrow,
+  .about-page .about-hero .identity-copy h1,
+  .about-page .about-hero .identity-copy > p:not(.eyebrow),
+  .about-page .about-hero .slogan-chip {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    width: auto !important;
+    max-width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .about-page .about-hero .identity-copy h1 {
+    margin-top: 16px !important;
+  }
+
+  .about-page .about-hero .identity-copy > p:not(.eyebrow) {
+    margin-top: 20px !important;
+  }
+
+  .about-page .about-hero .slogan-chip {
+    width: 260px !important;
+    height: 58px !important;
+    margin-top: 24px !important;
+    position: relative !important;
+  }
+
+  .about-page .about-hero .slogan-chip__text {
+    top: 13px !important;
+    left: 18px !important;
+  }
+
+  .about-page .about-purpose,
+  .about-page .about-values,
+  .about-page .about-model,
+  .about-page .about-audience {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 56px 0 !important;
+    overflow: visible !important;
+  }
+
+  .about-page .about-purpose > .shell,
+  .about-page .about-values > .shell,
+  .about-page .about-model > .shell,
+  .about-page .about-audience > .shell {
+    position: static !important;
+    width: min(960px, calc(100% - 48px)) !important;
+    height: auto !important;
+  }
+
+  .about-page .about-purpose .section-intro,
+  .about-page .about-values .section-intro,
+  .about-page .about-model .section-intro,
+  .about-page .about-audience .section-intro {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 0 28px !important;
+  }
+
+  .about-page .about-purpose .section-intro .eyebrow,
+  .about-page .about-purpose .section-intro h2,
+  .about-page .about-values .section-intro .eyebrow,
+  .about-page .about-values .section-intro h2,
+  .about-page .about-values .section-intro > p:not(.eyebrow),
+  .about-page .about-model .section-intro .eyebrow,
+  .about-page .about-model .section-intro h2,
+  .about-page .about-model .section-intro > p:not(.eyebrow),
+  .about-page .about-audience .section-intro .eyebrow,
+  .about-page .about-audience .section-intro h2 {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .about-page .about-purpose .section-intro h2,
+  .about-page .about-values .section-intro h2,
+  .about-page .about-model .section-intro h2,
+  .about-page .about-audience .section-intro h2 {
+    margin-top: 8px !important;
+    line-height: 1.5 !important;
+  }
+
+  .about-page .about-values .section-intro > p:not(.eyebrow),
+  .about-page .about-model .section-intro > p:not(.eyebrow) {
+    margin-top: 8px !important;
+  }
+
+  .about-page .about-purpose .two-card-grid,
+  .about-page .about-values .four-card-grid,
+  .about-page .about-model .model-grid,
+  .about-page .about-audience .audience-grid {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-auto-rows: auto !important;
+    gap: 18px !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .about-page .about-purpose .purpose-card,
+  .about-page .about-values .info-card,
+  .about-page .about-model .step-card,
+  .about-page .about-audience .info-card {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 220px !important;
+    padding: 24px !important;
+  }
+
+  .about-page .about-purpose .purpose-card--featured {
+    left: auto !important;
+    width: auto !important;
+  }
+
+  .about-page .about-purpose .purpose-card .eyebrow,
+  .about-page .about-purpose .purpose-card h3,
+  .about-page .about-purpose .purpose-card p:not(.eyebrow),
+  .about-page .about-values .info-card h3,
+  .about-page .about-values .info-card p,
+  .about-page .about-model .step-card h3,
+  .about-page .about-model .step-card p,
+  .about-page .about-audience .info-card h3,
+  .about-page .about-audience .info-card p {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .about-page .about-purpose .purpose-card h3,
+  .about-page .about-values .info-card h3,
+  .about-page .about-model .step-card h3,
+  .about-page .about-audience .info-card h3 {
+    margin-top: 12px !important;
+  }
+
+  .about-page .about-purpose .purpose-card p:not(.eyebrow),
+  .about-page .about-values .info-card p,
+  .about-page .about-model .step-card p,
+  .about-page .about-audience .info-card p {
+    margin-top: 12px !important;
+  }
+
+  .about-page .about-values .info-card__accent {
+    position: static !important;
+    margin: 0 0 20px !important;
+  }
+
+  .about-page .about-model .step-card__number {
+    position: static !important;
+    margin: 0 0 18px auto !important;
+  }
+
+  .about-page .about-audience .info-card::after {
+    top: auto !important;
+    left: auto !important;
+    right: 24px !important;
+    bottom: 24px !important;
+  }
+
+  /* Footer */
+  .site-footer {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 42px 0 0 !important;
+    overflow: visible !important;
+  }
+
+  .site-footer .footer-grid {
+    position: static !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 34px 28px !important;
+    width: min(960px, calc(100% - 48px)) !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .site-footer .footer-brand,
+  .site-footer .footer-programs,
+  .site-footer .footer-house,
+  .site-footer .footer-contact {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+    width: auto !important;
+    max-width: none !important;
+    height: auto !important;
+  }
+
+  .site-footer .footer-bottom {
+    position: static !important;
+    width: min(960px, calc(100% - 48px)) !important;
+    min-height: 64px;
+    height: auto !important;
+    margin: 34px auto 0 !important;
+    transform: none !important;
+    padding: 18px 0 !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .shell {
+    width: calc(100% - 32px) !important;
+    max-width: calc(100% - 32px) !important;
+  }
+
+  .site-header {
+    min-height: 0;
+    padding-block: 10px 14px;
+  }
+
+  .site-header .brand {
+    width: 82px !important;
+  }
+
+  .site-header .brand__title {
+    display: none;
+  }
+
+  .site-header .header-cta {
+    width: auto !important;
+    min-width: 108px;
+    padding-inline: 16px;
+  }
+
+  .main-nav {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+
+  .main-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .main-nav a {
+    white-space: nowrap;
+  }
+
+  .home-page .hero,
+  .public-page .public-hero,
+  .public-page .programs-hero,
+  .public-page .news-page-hero,
+  .public-page .licenses-hero,
+  .public-page .startup-detail-hero,
+  .public-page .program-detail-hero,
+  .public-page .news-detail-hero,
+  .public-page .collaboration-hero {
+    padding-top: 44px !important;
+    padding-bottom: 48px !important;
+  }
+
+  .home-page .hero h1,
+  .public-page .public-hero__copy h1,
+  .public-page .programs-hero h1,
+  .public-page .news-page-hero h1,
+  .public-page .licenses-hero h1,
+  .public-page .startup-detail-copy h1,
+  .public-page .program-detail-copy h1,
+  .public-page .news-detail-copy h1,
+  .public-page .collaboration-hero__copy h1,
+  .about-page .about-hero .identity-copy h1 {
+    font-size: clamp(31px, 9vw, 38px) !important;
+    line-height: 1.5 !important;
+    letter-spacing: -0.4px !important;
+  }
+
+  .home-page .section,
+  .public-page .content-section,
+  .public-page .content-section--large,
+  .public-page .documents-section,
+  .public-page .verification-section,
+  .public-page .licenses-inquiry,
+  .public-page .news-featured-section,
+  .public-page .news-directory-section,
+  .public-page .news-summary,
+  .public-page .news-highlights,
+  .public-page .news-story,
+  .public-page .news-closing,
+  .public-page .program-overview,
+  .public-page .program-outcomes,
+  .public-page .program-journey,
+  .public-page .program-participation,
+  .public-page .startup-about-section,
+  .public-page .startup-product-section,
+  .public-page .startup-milestones,
+  .public-page .startup-team-section,
+  .public-page .collaboration-modes,
+  .public-page .collaboration-form-section {
+    padding-top: 48px !important;
+    padding-bottom: 52px !important;
+  }
+
+  .home-page .section-heading h2,
+  .public-page .section-intro h2 {
+    font-size: clamp(27px, 7.5vw, 32px) !important;
+  }
+
+  .home-page .startup-grid,
+  .home-page .service-grid,
+  .home-page .partner-grid,
+  .public-page .two-card-grid,
+  .public-page .four-card-grid,
+  .public-page .three-card-grid,
+  .public-page .directory-grid,
+  .public-page .program-directory-grid,
+  .public-page .startup-product-grid,
+  .public-page .milestone-grid,
+  .public-page .startup-team-grid,
+  .public-page .program-outcome-grid,
+  .public-page .program-journey-grid,
+  .public-page .news-directory-grid,
+  .public-page .news-story-grid,
+  .public-page .documents-grid,
+  .public-page .verification-grid,
+  .public-page .collaboration-mode-grid,
+  .public-page .collaboration-next-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .public-page .program-metrics,
+  .public-page .news-summary-metrics {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .public-page .hero-stat-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  .public-page .hero-stat {
+    min-width: 0;
+    padding-inline: 16px !important;
+  }
+
+  .public-page .programs-stat-row {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .public-page .filter-row {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+
+  .public-page .filter-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .public-page .filter-chip {
+    flex: 0 0 auto;
+  }
+
+  .public-page .collaboration-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .public-page .collaboration-form__two {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .public-page .program-detail-buttons,
+  .public-page .news-detail-actions,
+  .public-page .program-detail-actions,
+  .home-page .hero-actions {
+    width: 100% !important;
+    height: auto !important;
+    flex-wrap: wrap !important;
+    overflow: visible !important;
+  }
+
+  .home-page .hero-action,
+  .public-page .program-detail-buttons .button,
+  .public-page .news-detail-actions .button {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    flex: 1 1 100% !important;
+  }
+
+  .home-page .hero-visual {
+    height: auto !important;
+  }
+
+  .home-page .hero-photo-frame {
+    height: auto !important;
+    aspect-ratio: 544 / 317;
+  }
+
+  .about-page .about-hero .identity-hero__grid,
+  .about-page .about-purpose > .shell,
+  .about-page .about-values > .shell,
+  .about-page .about-model > .shell,
+  .about-page .about-audience > .shell,
+  .site-footer .footer-grid,
+  .site-footer .footer-bottom {
+    width: calc(100% - 32px) !important;
+    max-width: calc(100% - 32px) !important;
+  }
+
+  .about-page .about-purpose .two-card-grid,
+  .about-page .about-values .four-card-grid,
+  .about-page .about-model .model-grid,
+  .about-page .about-audience .audience-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .about-page .about-hero .identity-panel {
+    min-height: 340px !important;
+  }
+
+  .about-page .identity-panel::before {
+    left: 24px !important;
+    width: 160px !important;
+  }
+
+  .about-page .identity-panel__coral {
+    left: auto !important;
+    right: 24px !important;
+  }
+
+  .about-page .identity-panel__gold {
+    left: auto !important;
+    right: 100px !important;
+  }
+
+  .about-page .identity-panel__text {
+    left: 24px !important;
+    width: calc(100% - 48px) !important;
+  }
+
+  .about-page .identity-panel__kicker,
+  .about-page .identity-panel h2,
+  .about-page .identity-panel__caption {
+    width: min(300px, 100%) !important;
+  }
+
+  .about-page .identity-panel__caption {
+    white-space: normal !important;
+  }
+
+  .site-footer .footer-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .site-footer .footer-brand {
+    margin-bottom: 4px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .shell {
+    width: calc(100% - 24px) !important;
+    max-width: calc(100% - 24px) !important;
+  }
+
+  .site-header .header-cta {
+    min-width: 96px;
+    height: 46px;
+    padding-inline: 12px;
+    font-size: 13px;
+  }
+
+  .public-page .hero-stat-pair,
+  .public-page .collaboration-options {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .public-page .hero-stat {
+    height: auto !important;
+    min-height: 106px;
+  }
+
+  .about-page .about-hero .identity-hero__grid,
+  .about-page .about-purpose > .shell,
+  .about-page .about-values > .shell,
+  .about-page .about-model > .shell,
+  .about-page .about-audience > .shell,
+  .site-footer .footer-grid,
+  .site-footer .footer-bottom {
+    width: calc(100% - 24px) !important;
+    max-width: calc(100% - 24px) !important;
+  }
+
+  .about-page .about-hero .slogan-chip {
+    width: 100% !important;
+  }
+
+  .about-page .about-hero .slogan-chip__text {
+    left: 0 !important;
+    width: 100% !important;
+  }
+
+  .public-page .startup-detail-visual,
+  .public-page .program-detail-visual,
+  .public-page .news-detail-visual,
+  .public-page .collaboration-visual {
+    min-height: 280px;
+    height: 280px !important;
+  }
+}
