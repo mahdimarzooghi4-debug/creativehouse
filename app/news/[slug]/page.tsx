@@ -88,14 +88,21 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
               <p className="eyebrow">متن خبر</p>
               <h2>شرح کامل</h2>
             </div>
-            <div className="news-highlight-grid">
-              {paragraphs.map((paragraph, index) => (
-                <article className="news-highlight-card" key={`${news.id}-${index}`}>
-                  <div className="news-highlight-card__accent" />
-                  <h3>{index === 0 ? news.title : `بخش ${(index + 1).toLocaleString("fa-IR")}`}</h3>
-                  <p>{paragraph}</p>
-                </article>
-              ))}
+            <div className={`news-highlights-layout${cover ? " news-highlights-layout--with-media" : ""}`}>
+              <div className="news-highlight-grid">
+                {paragraphs.map((paragraph, index) => (
+                  <article className="news-highlight-card" key={`${news.id}-${index}`}>
+                    <div className="news-highlight-card__accent" />
+                    <h3>{index === 0 ? news.title : `بخش ${(index + 1).toLocaleString("fa-IR")}`}</h3>
+                    <p>{paragraph}</p>
+                  </article>
+                ))}
+              </div>
+              {cover ? (
+                <figure className="news-highlight-media">
+                  <img src={`/uploads/${cover.storageKey}`} alt={`تصویر خبر ${news.title}`} />
+                </figure>
+              ) : null}
             </div>
           </div>
         </section>
