@@ -23,7 +23,7 @@ export default async function StartupsPage({ searchParams }: { searchParams: Pro
   const cover = featured?.coverMediaId ? await db.media.findUnique({ where: { id: featured.coverMediaId } }) : null;
 
   return (
-    <div className="public-page">
+    <div className="public-page startups-page">
       <SiteHeader active="startups" />
       <main className="public-page__main">
         <section className="public-hero">
