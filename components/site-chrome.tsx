@@ -50,6 +50,15 @@ function FooterTagline({ value }: { value: string }) {
   );
 }
 
+function FooterContactLine({ label, value }: { label: string; value: string }) {
+  return (
+    <p className="footer-contact__line">
+      <span>{label}: </span>
+      <bdi className="footer-contact__value" dir="ltr">{value}</bdi>
+    </p>
+  );
+}
+
 export async function SiteFooter() {
   const settings = await getSiteSettings();
   const tagline = settings.tagline || "وطن، ساختنی است";
@@ -77,9 +86,9 @@ export async function SiteFooter() {
         <div className="footer-contact">
           <h3>ارتباط با ما</h3>
           {settings.address ? <p>آدرس: {settings.address}</p> : null}
-          {settings.phone1 ? <p>تلفن: {settings.phone1}</p> : null}
-          {settings.phone2 ? <p>تلفن: {settings.phone2}</p> : null}
-          {settings.email ? <p>ایمیل: {settings.email}</p> : null}
+          {settings.phone1 ? <FooterContactLine label="تلفن" value={settings.phone1} /> : null}
+          {settings.phone2 ? <FooterContactLine label="تلفن" value={settings.phone2} /> : null}
+          {settings.email ? <FooterContactLine label="ایمیل" value={settings.email} /> : null}
         </div>
       </div>
       <div className="shell footer-bottom">تمام حقوق برای {settings.siteName} محفوظ است</div>
