@@ -241,6 +241,10 @@
   min-height: 0;
 }
 
+.news-highlights-layout--with-media > .news-highlight-card--article {
+  grid-area: text;
+}
+
 .news-highlight-card__accent {
   width: 54px;
   height: 6px;
@@ -265,6 +269,18 @@
   font-size: 16px;
   line-height: 1.85;
   white-space: pre-line;
+}
+
+.news-highlight-card__body {
+  margin-top: 14px;
+}
+
+.news-highlight-card__body p {
+  margin-top: 0;
+}
+
+.news-highlight-card__body p + p {
+  margin-top: 18px;
 }
 
 .news-story {
