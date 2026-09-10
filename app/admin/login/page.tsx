@@ -1,5 +1,3 @@
-import { BrandMark } from "../../../components/brand-mark";
-
 const errorMessages: Record<string, string> = {
   invalid: "نام کاربری یا رمز عبور صحیح نیست.",
   locked: "تلاش‌های ورود بیش از حد مجاز بود. حدود ۱۵ دقیقه بعد دوباره امتحان کن.",
@@ -20,8 +18,13 @@ export default async function AdminLoginPage({ searchParams }: { searchParams: P
     <main className="cms-login" dir="rtl">
       <section className="cms-login__visual" aria-label="هویت خانه خلاق و نوآوری آینه">
         <a className="cms-login__brand" href="/" aria-label="خانه خلاق و نوآوری آینه">
-          <BrandMark className="cms-login__brand-mark" />
-          <span className="cms-login__brand-title">خانه خلاق و نوآوری <b>آینه</b></span>
+          <img
+            src="/figma-footer-brand-lockup.png"
+            alt="خانه خلاق و نوآوری آینه"
+            width={210}
+            height={70}
+            style={{ width: "210px", height: "70px", objectFit: "contain", display: "block" }}
+          />
         </a>
         <div className="cms-login__identity-copy">
           <h1>وطن<span className="cms-login__identity-comma">،</span> ساختنی است</h1>
