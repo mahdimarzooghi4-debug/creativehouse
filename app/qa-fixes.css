@@ -370,3 +370,26 @@ h3,
   border-radius: 12px;
   white-space: nowrap;
 }
+
+/* The middle program card should use the same visual style as the standard left card. */
+.home-page .home-programs .program-grid > .program-card:nth-child(2) {
+  color: var(--navy);
+  background: var(--paper);
+}
+
+.home-page .home-programs .program-grid > .program-card:nth-child(2) .tag {
+  color: var(--coral);
+  background: var(--coral-soft);
+}
+
+.home-page .home-programs .program-grid > .program-card:nth-child(2) h3 {
+  font-size: 24px;
+}
+
+.home-page .home-programs .program-grid > .program-card:nth-child(2) p {
+  color: var(--text);
+}
+
+.home-page .home-programs .program-grid > .program-card:nth-child(2) a {
+  color: var(--navy-2);
+}
