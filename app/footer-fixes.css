@@ -27,20 +27,27 @@
   height: 114px;
 }
 
-/* Keep the footer lockup on the navy surface. Only the mark gets a light tile. */
+/* Preserve the exact 210×70 Figma lockup. Do not add a synthetic tile around the exported mark. */
 .site-footer .footer-brand .brand {
   box-sizing: border-box;
   width: 210px;
   height: 70px;
   margin: 0;
   padding: 0;
+  direction: ltr;
+  align-items: center;
+  justify-content: flex-start;
   background: transparent;
 }
 
 .site-footer .footer-brand .brand__title {
   box-sizing: border-box;
+  flex: 0 0 128px;
+  width: 128px;
+  padding: 0;
   color: var(--white);
-  padding-inline-end: 10px;
+  direction: rtl;
+  text-align: right;
 }
 
 .site-footer .footer-brand .brand__title b {
@@ -53,15 +60,18 @@
   flex: 0 0 82px;
   display: grid;
   place-items: center;
-  overflow: hidden;
-  border-radius: 8px;
-  background: var(--paper);
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
 }
 
 .site-footer .footer-brand .brand__logo {
-  width: 82px;
-  height: 70px;
-  border-radius: 8px;
+  display: block;
+  width: 82px !important;
+  height: 70px !important;
+  max-width: none !important;
+  object-fit: contain;
+  border-radius: 0;
 }
 
 .site-footer .footer-slogan {
@@ -132,6 +142,18 @@
   font-weight: 500;
   line-height: 32px;
   text-align: right;
+}
+
+.site-footer .footer-contact__line {
+  direction: rtl;
+  unicode-bidi: isolate;
+}
+
+.site-footer .footer-contact__value {
+  display: inline-block;
+  direction: ltr;
+  unicode-bidi: isolate;
+  white-space: nowrap;
 }
 
 .site-footer .footer-bottom {
