@@ -1,4 +1,5 @@
 import { CmsShell } from "../../../components/cms-shell";
+import { toPersianDigits } from "../../../lib/content-utils";
 import { db } from "../../../lib/db";
 
 export const dynamic = "force-dynamic";
@@ -25,9 +26,9 @@ export default async function AdminPartnersPage({ searchParams }: { searchParams
     db.partner.count({ where: { deletedAt: null, status: "active", featured: true } }),
   ]);
   const partnerStats = [
-    ["همراهان فعال", String(active), "نمایش در سایت"],
-    ["جایگاه‌های خالی", String(Math.max(0, 12 - total)), "قابل افزودن"],
-    ["همراه اصلی", String(featured), "نمایش برجسته"],
+    ["همراهان فعال", toPersianDigits(active), "نمایش در سایت"],
+    ["جایگاه‌های خالی", toPersianDigits(Math.max(0, 12 - total)), "قابل افزودن"],
+    ["همراه اصلی", toPersianDigits(featured), "نمایش برجسته"],
   ] as const;
 
   return (
