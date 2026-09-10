@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SiteFooter, SiteHeader } from "../../components/site-chrome";
 import { programTypeLabels } from "../../lib/content-utils";
 import { db } from "../../lib/db";
@@ -73,7 +74,14 @@ export default async function ProgramsPage({ searchParams }: { searchParams: Pro
             </div>
             <div className="filter-row" aria-label="فیلتر برنامه‌ها">
               {filters.map((filter) => (
-                <a className={`filter-chip${selectedType === filter.value ? " filter-chip--active" : ""}`} href={filter.value === "all" ? "/programs" : `/programs?type=${filter.value}`} key={filter.value}>{filter.label}</a>
+                <Link
+                  className={`filter-chip${selectedType === filter.value ? " filter-chip--active" : ""}`}
+                  href={filter.value === "all" ? "/programs" : `/programs?type=${filter.value}`}
+                  scroll={false}
+                  key={filter.value}
+                >
+                  {filter.label}
+                </Link>
               ))}
             </div>
             <div className="program-directory-grid">
