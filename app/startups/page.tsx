@@ -9,6 +9,8 @@ const journey = [
   ["همراهی و رشد", "منتورینگ، اتصال به شبکه، توسعه محصول و نمایش دستاوردها."],
 ];
 
+const journeyNumbers = ["۱", "۲", "۳"];
+
 export default async function StartupsPage({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
   const { category = "همه" } = await searchParams;
   const startups = await db.startup.findMany({
@@ -99,8 +101,14 @@ export default async function StartupsPage({ searchParams }: { searchParams: Pro
             </div>
             <div className="three-card-grid">
               {journey.map(([title, text], index) => (
-                <article className="step-card" key={title}>
-                  <span className="step-card__number">{index + 1}</span>
+                <article className="step-card" key={title} dir="rtl">
+                  <span
+                    className="step-card__number"
+                    dir="rtl"
+                    style={{ marginRight: 0, marginLeft: "auto" }}
+                  >
+                    {journeyNumbers[index]}
+                  </span>
                   <h3>{title}</h3>
                   <p>{text}</p>
                 </article>
