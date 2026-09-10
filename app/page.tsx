@@ -54,8 +54,8 @@ function prependUnique<T extends { id: string }>(selected: T | null, items: T[],
 }
 
 function plusMetric(value: string | null | undefined, fallback: string) {
-  const normalized = (value || fallback).trim();
-  return normalized.startsWith("+") ? normalized : `+${normalized}`;
+  const normalized = (value || fallback).replace(/\+/g, "").trim();
+  return `${normalized}+`;
 }
 
 function renderHeroTitle(title: string) {
@@ -156,9 +156,9 @@ export default async function HomePage() {
           <div className="impact-grid">
             <article className="mission-card"><h3>ماموریت ما</h3><p>کمک می‌کنیم ایده‌های خلاق از مرحله تصور عبور کنند، ساخته شوند، با واقعیت آزموده شوند و به راهکار یا کسب‌وکار اثرگذار برای خدمت به محرومان تبدیل شوند.</p></article>
             <div className="metric-grid">
-              <article className="metric"><strong>{plusMetric(settings.statStartups, startupCount.toLocaleString("fa-IR"))}</strong><span>استارتاپ همراه</span></article>
-              <article className="metric"><strong>{plusMetric(settings.statPrograms, programCount.toLocaleString("fa-IR"))}</strong><span>برنامه و رویداد</span></article>
-              <article className="metric"><strong>+۳۰</strong><span>منتور و متخصص</span></article>
+              <article className="metric"><strong dir="ltr">{plusMetric(settings.statStartups, startupCount.toLocaleString("fa-IR"))}</strong><span>استارتاپ همراه</span></article>
+              <article className="metric"><strong dir="ltr">{plusMetric(settings.statPrograms, programCount.toLocaleString("fa-IR"))}</strong><span>برنامه و رویداد</span></article>
+              <article className="metric"><strong dir="ltr">۳۰+</strong><span>منتور و متخصص</span></article>
             </div>
           </div>
         </div>
