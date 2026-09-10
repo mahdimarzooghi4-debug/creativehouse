@@ -32,8 +32,16 @@ export default async function StartupDetailPage({ params }: { params: Promise<{ 
       <main className="public-page__main">
         <section className="startup-detail-hero">
           <div className="shell startup-detail-hero__grid">
-            <div className="startup-detail-visual" aria-hidden="true">
-              {cover ? <img src={`/uploads/${cover.storageKey}`} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : (
+            <div className={`startup-detail-visual${logo ? " startup-detail-visual--logo" : ""}`}>
+              {logo ? (
+                <img
+                  className="startup-detail-visual__logo"
+                  src={`/uploads/${logo.storageKey}`}
+                  alt={`لوگوی ${startup.name}`}
+                />
+              ) : cover ? (
+                <img src={`/uploads/${cover.storageKey}`} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              ) : (
                 <>
                   <span className="startup-detail-visual__navy" />
                   <span className="startup-detail-visual__coral" />

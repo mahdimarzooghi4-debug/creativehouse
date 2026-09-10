@@ -20,6 +20,20 @@
   overflow: hidden;
 }
 
+.startup-detail-visual--logo {
+  display: grid;
+  place-items: center;
+}
+
+.startup-detail-visual__logo {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 72%;
+  max-height: 64%;
+  object-fit: contain;
+}
+
 .startup-detail-visual__navy,
 .startup-detail-visual__coral,
 .startup-detail-visual__gold {
