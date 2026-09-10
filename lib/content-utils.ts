@@ -31,23 +31,35 @@ export const programTypeLabels: Record<string, string> = {
   mentoring: "منتورینگ",
 };
 
+export function toPersianDigits(value: string | number | bigint) {
+  return String(value).replace(/\d/g, (digit) => "۰۱۲۳۴۵۶۷۸۹"[Number(digit)]);
+}
+
+const persianDateFormatter = new Intl.DateTimeFormat("fa-IR", {
+  calendar: "persian",
+  numberingSystem: "arabext",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  timeZone: "Asia/Tehran",
+});
+
+const persianMonthFormatter = new Intl.DateTimeFormat("fa-IR", {
+  calendar: "persian",
+  numberingSystem: "arabext",
+  year: "numeric",
+  month: "long",
+  timeZone: "Asia/Tehran",
+});
+
 export function formatPersianDate(value?: Date | null) {
   if (!value) return "—";
-  return new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    timeZone: "Asia/Tehran",
-  }).format(value);
+  return toPersianDigits(persianDateFormatter.format(value));
 }
 
 export function formatPersianMonth(value?: Date | null) {
   if (!value) return "";
-  return new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
-    year: "numeric",
-    month: "long",
-    timeZone: "Asia/Tehran",
-  }).format(value);
+  return toPersianDigits(persianMonthFormatter.format(value));
 }
 
 export function formatDateInput(value?: Date | null) {
