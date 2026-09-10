@@ -239,12 +239,15 @@
   padding: 22px 24px;
   border-radius: 18px;
   background: var(--white);
+  direction: rtl;
+  text-align: right;
 }
 
 .milestone-card span {
   width: 46px;
   height: 46px;
-  margin-right: auto;
+  margin-right: 0;
+  margin-left: auto;
   display: grid;
   place-items: center;
   border-radius: 12px;
