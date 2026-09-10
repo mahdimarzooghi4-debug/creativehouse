@@ -27,51 +27,23 @@
   height: 114px;
 }
 
-/* Preserve the exact 210×70 Figma lockup. Do not add a synthetic tile around the exported mark. */
+/* Figma node 570:2 is rendered as one exact 210×70 export. */
 .site-footer .footer-brand .brand {
-  box-sizing: border-box;
+  display: block;
   width: 210px;
   height: 70px;
   margin: 0;
   padding: 0;
-  direction: ltr;
-  align-items: center;
-  justify-content: flex-start;
+  line-height: 0;
   background: transparent;
 }
 
-.site-footer .footer-brand .brand__title {
-  box-sizing: border-box;
-  flex: 0 0 128px;
-  width: 128px;
-  padding: 0;
-  color: var(--white);
-  direction: rtl;
-  text-align: right;
-}
-
-.site-footer .footer-brand .brand__title b {
-  color: var(--coral);
-}
-
-.site-footer .footer-brand .brand__logo-shell {
-  width: 82px;
-  height: 70px;
-  flex: 0 0 82px;
-  display: grid;
-  place-items: center;
-  overflow: visible;
-  border-radius: 0;
-  background: transparent;
-}
-
-.site-footer .footer-brand .brand__logo {
+.site-footer .footer-brand__figma-lockup {
   display: block;
-  width: 82px !important;
+  width: 210px !important;
   height: 70px !important;
   max-width: none !important;
   object-fit: contain;
-  border-radius: 0;
 }
 
 .site-footer .footer-slogan {
