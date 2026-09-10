@@ -30,7 +30,7 @@ export default async function StartupsPage({ searchParams }: { searchParams: Pro
           <div className="shell public-hero__row">
             <div className="hero-stat-pair" aria-label="آمار استارتاپ‌ها">
               <article className="hero-stat hero-stat--filled">
-                <strong>{startups.length.toLocaleString("fa-IR")}</strong>
+                <strong><bdi className="hero-stat__number" dir="ltr">+{startups.length.toLocaleString("fa-IR")}</bdi></strong>
                 <span>استارتاپ همراه</span>
               </article>
               <article className="hero-stat">
@@ -40,7 +40,7 @@ export default async function StartupsPage({ searchParams }: { searchParams: Pro
             </div>
             <div className="public-hero__copy">
               <p className="eyebrow">استارتاپ‌های خانه خلاق</p>
-              <h1>ایده‌هایی که وارد مرحله ساخت شده‌اند</h1>
+              <h1 dir="rtl">ایده‌هایی که وارد مرحله ساخت شده‌اند</h1>
               <p>در این صفحه تیم‌ها و استارتاپ‌های همراه خانه خلاق آینه معرفی می‌شوند؛ هر تیم پروفایل مستقل، حوزه فعالیت و مسیر رشد خود را دارد.</p>
             </div>
           </div>
