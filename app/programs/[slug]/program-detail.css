@@ -235,12 +235,15 @@
   padding: 22px 24px;
   border-radius: 16px;
   background: var(--white);
+  direction: rtl;
+  text-align: right;
 }
 
 .program-journey-card span {
   width: 44px;
   height: 44px;
-  margin-right: auto;
+  margin-right: 0;
+  margin-left: auto;
   display: grid;
   place-items: center;
   border-radius: 10px;
