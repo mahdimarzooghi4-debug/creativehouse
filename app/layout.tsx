@@ -11,6 +11,7 @@ import "./about-figma.css";
 import "./about-hero-588-16.css";
 import "./startups-hero-fix.css";
 import "./typography-refinement.css";
+import "./responsive.css";
 import { getSiteSettings } from "../lib/site-settings";
 
 export async function generateMetadata(): Promise<Metadata> {
