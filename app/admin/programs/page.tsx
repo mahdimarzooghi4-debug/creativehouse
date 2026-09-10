@@ -1,5 +1,5 @@
 import { CmsShell } from "../../../components/cms-shell";
-import { contentStatusLabels, formatPersianDate, programTypeLabels } from "../../../lib/content-utils";
+import { contentStatusLabels, formatPersianDate, programTypeLabels, toPersianDigits } from "../../../lib/content-utils";
 import { db } from "../../../lib/db";
 
 export const dynamic = "force-dynamic";
@@ -38,9 +38,9 @@ export default async function AdminProgramsPage({ searchParams }: AdminProgramsP
   ]);
 
   const programStats = [
-    ["کل برنامه‌ها", String(total), `${published + active} منتشرشده`],
-    ["فعال", String(active), "در حال اجرا"],
-    ["زمان‌بندی‌شده", String(scheduled), "انتشار آینده"],
+    ["کل برنامه‌ها", toPersianDigits(total), `${toPersianDigits(published + active)} منتشرشده`],
+    ["فعال", toPersianDigits(active), "در حال اجرا"],
+    ["زمان‌بندی‌شده", toPersianDigits(scheduled), "انتشار آینده"],
   ] as const;
 
   return (
@@ -94,7 +94,7 @@ export default async function AdminProgramsPage({ searchParams }: AdminProgramsP
               <a className={`cms-programs-row${index % 2 ? " is-alt" : ""}`} role="row" href={`/admin/programs/${program.slug}`} key={program.id}>
                 <strong>{program.title}</strong>
                 <span>{programTypeLabels[program.type] || program.type}</span>
-                <span>{program.duration || "—"}</span>
+                <span>{toPersianDigits(program.duration || "—")}</span>
                 <span><i className={`cms-program-status cms-program-status--${program.status}`}>{contentStatusLabels[program.status] || program.status}</i></span>
                 <span>{formatPersianDate(program.updatedAt)}</span>
               </a>
