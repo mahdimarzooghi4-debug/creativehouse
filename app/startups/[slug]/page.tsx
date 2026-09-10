@@ -12,6 +12,8 @@ const milestones = [
   ["رشد و بازار", "مدل درآمد، توسعه بازار و همکاری"],
 ];
 
+const milestoneNumbers = ["۱", "۲", "۳", "۴"];
+
 export default async function StartupDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const startup = await db.startup.findFirst({ where: { slug, deletedAt: null, status: "published" } });
@@ -109,8 +111,8 @@ export default async function StartupDetailPage({ params }: { params: Promise<{ 
             </div>
             <div className="milestone-grid">
               {milestones.map(([title, text], index) => (
-                <article className="milestone-card" key={title}>
-                  <span>{index + 1}</span>
+                <article className="milestone-card" key={title} dir="rtl">
+                  <span>{milestoneNumbers[index]}</span>
                   <h3>{title}</h3>
                   <p>{text}</p>
                 </article>
