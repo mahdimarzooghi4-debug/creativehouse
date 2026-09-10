@@ -34,7 +34,7 @@ export default async function StartupsPage({ searchParams }: { searchParams: Pro
                 <span>استارتاپ همراه</span>
               </article>
               <article className="hero-stat">
-                <strong>+۳۰</strong>
+                <strong><bdi className="hero-stat__number" dir="ltr">+۳۰</bdi></strong>
                 <span>منتور و متخصص</span>
               </article>
             </div>
