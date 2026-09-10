@@ -1,0 +1,6 @@
+.home-page .metric strong {
+  width: 100%;
+  text-align: right;
+  align-self: stretch;
+  direction: rtl;
+}
