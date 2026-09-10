@@ -14,6 +14,38 @@ const services = [
 ];
 const newsArt: NewsArtVariant[] = ["stage", "workshop", "lab"];
 
+const heroActionsStyle = {
+  display: "flex",
+  gap: "12px",
+  width: "352px",
+  height: "52px",
+  direction: "ltr",
+  overflow: "hidden",
+} as const;
+
+const heroActionBaseStyle = {
+  boxSizing: "border-box",
+  width: "170px",
+  minWidth: "170px",
+  maxWidth: "170px",
+  height: "52px",
+  minHeight: "52px",
+  maxHeight: "52px",
+  flex: "0 0 170px",
+  padding: "14px 24px",
+  borderRadius: "12px",
+  display: "flex",
+  alignItems: "flex-start",
+  overflow: "hidden",
+  fontFamily: '"Vazirmatn Variable", Tahoma, Arial, sans-serif',
+  fontSize: "15px",
+  fontWeight: 500,
+  lineHeight: "normal",
+  textDecoration: "none",
+  whiteSpace: "nowrap",
+  transform: "none",
+} as const;
+
 function prependUnique<T extends { id: string }>(selected: T | null, items: T[], take: number) {
   const result: T[] = [];
   if (selected) result.push(selected);
@@ -77,9 +109,21 @@ export default async function HomePage() {
             <p className="eyebrow">{settings.heroEyebrow}</p>
             <h1>{renderHeroTitle(settings.heroTitle)}</h1>
             <p className="hero-lead">{settings.heroSubtitle}</p>
-            <div className="hero-actions">
-              <a className="hero-action hero-action--primary" href={settings.heroPrimaryHref || "/startups"}><span className="hero-action__label hero-action__label--primary">{settings.heroPrimaryLabel || "مشاهده استارتاپ‌ها"}</span></a>
-              <a className="hero-action hero-action--secondary" href={settings.heroSecondaryHref || "/about"}><span className="hero-action__label hero-action__label--secondary">{settings.heroSecondaryLabel || "آشنایی با خانه خلاق"}</span></a>
+            <div className="hero-actions" style={heroActionsStyle}>
+              <a
+                className="hero-action hero-action--secondary"
+                href={settings.heroSecondaryHref || "/about"}
+                style={{ ...heroActionBaseStyle, background: "#ffffff", color: "#182b5e", border: "1px solid #e7eaf2", justifyContent: "flex-end" }}
+              >
+                <span style={{ display: "block", width: "118px", textAlign: "center", direction: "rtl" }}>{settings.heroSecondaryLabel || "آشنایی با خانه خلاق"}</span>
+              </a>
+              <a
+                className="hero-action hero-action--primary"
+                href={settings.heroPrimaryHref || "/startups"}
+                style={{ ...heroActionBaseStyle, background: "#fb8c74", color: "#f5f7fc", border: "1px solid transparent", justifyContent: "flex-start" }}
+              >
+                <span style={{ display: "block", width: "122px", textAlign: "center", direction: "rtl" }}>{settings.heroPrimaryLabel || "مشاهده استارتاپ‌ها"}</span>
+              </a>
             </div>
           </div>
           <div className={`hero-visual${effectiveHeroMedia ? " hero-visual--cms" : " hero-visual--figma"}`} aria-label="تصویر محیط خلاق و نوآوری ایران">
