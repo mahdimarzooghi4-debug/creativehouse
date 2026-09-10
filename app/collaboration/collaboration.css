@@ -177,6 +177,28 @@
   line-height: 2.05;
 }
 
+.collaboration-contact-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 6px;
+  direction: rtl;
+  text-align: right;
+}
+
+.collaboration-contact-row--email {
+  direction: ltr;
+  justify-content: flex-end;
+}
+
+.collaboration-contact-value {
+  display: inline-block;
+  direction: ltr;
+  unicode-bidi: isolate;
+  white-space: nowrap;
+  text-align: left;
+}
+
 .collaboration-side__note {
   margin-top: auto;
   padding: 20px 18px;
@@ -247,6 +269,7 @@
 }
 
 .collaboration-form fieldset {
+  min-width: 0;
   margin: 0 0 20px;
   padding: 0;
   border: 0;
@@ -257,14 +280,18 @@
 }
 
 .collaboration-options {
-  display: flex;
-  gap: 16px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  direction: rtl;
 }
 
 .collaboration-option {
-  min-width: 184px;
+  min-width: 0;
+  width: 100%;
   height: 42px;
-  padding: 0 20px;
+  padding: 0 8px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -273,6 +300,7 @@
   color: var(--navy);
   background: var(--white);
   font-size: 14px;
+  white-space: nowrap;
   cursor: pointer;
 }
 
