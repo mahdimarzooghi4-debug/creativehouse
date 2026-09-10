@@ -1,4 +1,5 @@
 import { CmsShell } from "../../../components/cms-shell";
+import { toPersianDigits } from "../../../lib/content-utils";
 import { db } from "../../../lib/db";
 
 export const dynamic = "force-dynamic";
@@ -27,9 +28,9 @@ export default async function AdminLicensesPage({ searchParams }: { searchParams
     db.license.count({ where: { deletedAt: null, status: "draft" } }),
   ]);
   const licenseStats = [
-    ["کل اسناد", String(total), `${published} منتشرشده`],
-    ["پیش‌نویس", String(draft), "در انتظار تکمیل"],
-    ["جایگاه آماده", String(Math.max(0, 9 - total)), "قابل افزایش"],
+    ["کل اسناد", toPersianDigits(total), `${toPersianDigits(published)} منتشرشده`],
+    ["پیش‌نویس", toPersianDigits(draft), "در انتظار تکمیل"],
+    ["جایگاه آماده", toPersianDigits(Math.max(0, 9 - total)), "قابل افزایش"],
   ] as const;
 
   return (
