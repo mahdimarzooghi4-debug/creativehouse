@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { BrandMark } from "./brand-mark";
 
 const navItems = [
   ["dashboard", "/admin", "داشبورد"],
@@ -45,8 +44,13 @@ export function CmsShell({ active = "dashboard", children }: { active?: CmsSecti
       <main className="cms-main">{children}</main>
       <aside className="cms-sidebar">
         <a className="cms-brand" href="/" aria-label="خانه خلاق و نوآوری آینه">
-          <span className="cms-brand__title">خانه خلاق و نوآوری <b>آینه</b></span>
-          <BrandMark className="cms-brand__mark" />
+          <img
+            src="/figma-footer-brand-lockup.png"
+            alt="خانه خلاق و نوآوری آینه"
+            width={210}
+            height={70}
+            style={{ width: "210px", height: "70px", objectFit: "contain", display: "block" }}
+          />
         </a>
 
         <p className="cms-sidebar__title">پنل مدیریت خانه خلاق</p>
