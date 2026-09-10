@@ -1,0 +1,19 @@
+.startups-page .public-hero__row {
+  direction: ltr;
+}
+
+.startups-page .public-hero__copy {
+  direction: rtl;
+  text-align: right;
+  align-items: flex-end;
+}
+
+.startups-page .hero-stat-pair {
+  direction: ltr;
+}
+
+.startups-page .hero-stat {
+  direction: rtl;
+  text-align: right;
+  align-items: flex-end;
+}
