@@ -110,7 +110,7 @@ export function CmsNewsEditor({ mode = "edit", news }: NewsEditorProps) {
             <label className="cms-news-upload-field">
               <input type="file" name="cover" accept="image/png,image/jpeg,image/webp" />
               <span>تصویر خبر</span>
-              <small>PNG / JPG / WebP • حداکثر ۵ مگابایت</small>
+              <small>در صفحه خبر کنار متن کامل هم نمایش داده می‌شود • PNG / JPG / WebP • حداکثر ۵ مگابایت</small>
             </label>
           </section>
         </div>
