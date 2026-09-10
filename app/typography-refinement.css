@@ -1,0 +1,269 @@
+/*
+ * Public-site typography refinement.
+ * Keep navigation, forms and the admin CMS stable; reduce only the display
+ * hierarchy that felt oversized in the browser compared with the rest of UI.
+ */
+
+/* Home */
+.home-page .hero h1 {
+  font-size: 50px !important;
+  line-height: 1.45 !important;
+  letter-spacing: -1.2px !important;
+}
+
+.home-page .hero-lead {
+  font-size: 18px !important;
+  line-height: 2.15 !important;
+}
+
+.home-page .section-heading h2 {
+  font-size: 36px !important;
+  line-height: 1.48 !important;
+}
+
+.home-page .section-heading > p:last-child:not(.eyebrow) {
+  font-size: 16px !important;
+  line-height: 1.9 !important;
+}
+
+.home-page .mission-card p {
+  font-size: 18px !important;
+}
+
+.home-page .metric strong {
+  font-size: 34px !important;
+}
+
+.home-page .startup-card h3,
+.home-page .program-card h3 {
+  font-size: 21px !important;
+}
+
+.home-page .program-card--featured h3 {
+  font-size: 24px !important;
+}
+
+.home-page .service-card h3 {
+  font-size: 20px !important;
+}
+
+.home-page .news-card h3 {
+  font-size: 17px !important;
+}
+
+/* Shared public pages */
+.public-page .public-hero__copy h1 {
+  font-size: 42px !important;
+  line-height: 1.48 !important;
+  letter-spacing: -0.7px !important;
+}
+
+.public-page .public-hero__copy > p:not(.eyebrow) {
+  font-size: 16px !important;
+  line-height: 1.95 !important;
+}
+
+.public-page .section-intro h2 {
+  font-size: 34px !important;
+  line-height: 1.52 !important;
+  letter-spacing: -0.35px !important;
+}
+
+.public-page .section-intro > p:not(.eyebrow) {
+  font-size: 15px !important;
+  line-height: 1.95 !important;
+}
+
+.public-page .hero-stat strong {
+  font-size: 30px !important;
+}
+
+.public-page .identity-copy h1,
+.public-page.about-page .about-hero .identity-copy h1 {
+  font-size: 42px !important;
+  line-height: 1.45 !important;
+}
+
+.public-page .identity-copy > p:not(.eyebrow),
+.public-page.about-page .about-hero .identity-copy > p:not(.eyebrow) {
+  font-size: 16px !important;
+  line-height: 1.9 !important;
+}
+
+.public-page .identity-panel h2,
+.public-page.about-page .about-hero .identity-panel h2 {
+  font-size: 38px !important;
+  line-height: 1.4 !important;
+}
+
+.public-page .slogan-chip,
+.public-page .slogan-chip__text {
+  font-size: 17px !important;
+}
+
+.public-page .purpose-card h3 {
+  font-size: 22px !important;
+}
+
+.public-page .info-card h3,
+.public-page .step-card h3 {
+  font-size: 20px !important;
+}
+
+.public-page .featured-startup__body h3 {
+  font-size: 26px !important;
+}
+
+.public-page .directory-card h3 {
+  font-size: 21px !important;
+}
+
+/* Programs directory */
+.public-page .programs-hero h1 {
+  font-size: 40px !important;
+  line-height: 1.48 !important;
+}
+
+.public-page .programs-hero__bottom > p {
+  font-size: 16px !important;
+  line-height: 1.9 !important;
+}
+
+.public-page .programs-stat strong {
+  font-size: 27px !important;
+}
+
+.public-page .featured-program__copy h3 {
+  font-size: 26px !important;
+}
+
+.public-page .featured-program__visual strong {
+  font-size: 20px !important;
+}
+
+.public-page .program-directory-card h3 {
+  font-size: 21px !important;
+}
+
+/* Startup profile */
+.public-page .startup-detail-visual strong {
+  font-size: 26px !important;
+}
+
+.public-page .startup-detail-copy h1 {
+  font-size: 40px !important;
+  line-height: 1.5 !important;
+}
+
+.public-page .startup-detail-copy > p:not(.eyebrow) {
+  font-size: 16px !important;
+  line-height: 1.85 !important;
+}
+
+.public-page .startup-product-card h3 {
+  font-size: 21px !important;
+}
+
+.public-page .milestone-card h3,
+.public-page .team-card h3 {
+  font-size: 18px !important;
+}
+
+/* Program detail */
+.public-page .program-detail-visual strong {
+  font-size: 34px !important;
+}
+
+.public-page .program-detail-copy h1 {
+  font-size: 42px !important;
+  line-height: 1.5 !important;
+}
+
+.public-page .program-detail-copy > p:not(.eyebrow) {
+  font-size: 17px !important;
+  line-height: 1.85 !important;
+}
+
+.public-page .program-goal h3 {
+  font-size: 23px !important;
+}
+
+.public-page .program-metric strong {
+  font-size: 28px !important;
+}
+
+.public-page .program-outcome-card h3 {
+  font-size: 21px !important;
+}
+
+.public-page .program-journey-card h3 {
+  font-size: 20px !important;
+}
+
+/* News detail */
+.public-page .news-detail-visual strong {
+  font-size: 34px !important;
+}
+
+.public-page .news-detail-copy h1 {
+  font-size: 42px !important;
+  line-height: 1.48 !important;
+}
+
+.public-page .news-detail-copy > p:not(.eyebrow) {
+  font-size: 17px !important;
+  line-height: 1.85 !important;
+}
+
+.public-page .news-summary-copy h3 {
+  font-size: 23px !important;
+}
+
+.public-page .news-summary-metric strong {
+  font-size: 27px !important;
+}
+
+.public-page .news-highlight-card h3 {
+  font-size: 21px !important;
+}
+
+/* Collaboration */
+.public-page .collaboration-visual strong {
+  font-size: 34px !important;
+}
+
+.public-page .collaboration-visual p {
+  font-size: 16px !important;
+}
+
+.public-page .collaboration-hero__copy h1 {
+  font-size: 42px !important;
+  line-height: 1.48 !important;
+}
+
+.public-page .collaboration-hero__copy > p:last-child {
+  font-size: 17px !important;
+  line-height: 1.85 !important;
+}
+
+.public-page .collaboration-mode h3 {
+  font-size: 21px !important;
+}
+
+.public-page .collaboration-mode p {
+  font-size: 15px !important;
+}
+
+.public-page .collaboration-side h3 {
+  font-size: 26px !important;
+  line-height: 1.55 !important;
+}
+
+.public-page .collaboration-side__contact,
+.public-page .collaboration-side__note {
+  font-size: 15px !important;
+}
+
+.public-page .collaboration-next-card strong {
+  font-size: 20px !important;
+}
