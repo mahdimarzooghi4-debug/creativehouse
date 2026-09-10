@@ -58,6 +58,18 @@ function plusMetric(value: string | null | undefined, fallback: string) {
   return `${normalized}+`;
 }
 
+function normalizeWebsiteUrl(value: string | null | undefined) {
+  const trimmed = value?.trim();
+  if (!trimmed) return null;
+  const candidate = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+  try {
+    const url = new URL(candidate);
+    return url.protocol === "http:" || url.protocol === "https:" ? url.toString() : null;
+  } catch {
+    return null;
+  }
+}
+
 function renderHeroTitle(title: string) {
   const commaIndex = title.indexOf("،");
   if (commaIndex < 0) return title;
@@ -173,7 +185,9 @@ export default async function HomePage() {
       <section className="section section--white partners-section" id="partners"><div className="shell"><div className="section-heading"><p className="eyebrow">همراهان خانه خلاق</p><h2>با همراهی مجموعه‌هایی که ساختن را جدی می‌گیرند</h2></div><div className="partner-grid">{partnerSlots.map((partner, index) => {
         if (!partner) return <article className="partner-card partner-card--placeholder" key={`partner-placeholder-${index}`}><div className={`partner-mark partner-mark--${(index % 6) + 1}`} aria-hidden="true" /><p>جایگاه همراه جدید</p></article>;
         const logo = partner.logoMediaId ? logoById.get(partner.logoMediaId) : undefined;
-        return <article className="partner-card" key={partner.id}><div className={`partner-mark partner-mark--${(index % 6) + 1}`} aria-hidden={!logo}>{logo ? <img src={`/uploads/${logo.storageKey}`} alt="" style={{ width: "100%", height: "100%", objectFit: "contain", borderRadius: "50%" }} /> : null}</div><p>{partner.name}</p></article>;
+        const websiteHref = normalizeWebsiteUrl(partner.website);
+        const content = <><div className={`partner-mark partner-mark--${(index % 6) + 1}`} aria-hidden={!logo}>{logo ? <img src={`/uploads/${logo.storageKey}`} alt="" style={{ width: "100%", height: "100%", objectFit: "contain", borderRadius: "50%" }} /> : null}</div><p>{partner.name}</p></>;
+        return websiteHref ? <a className="partner-card partner-card--link" href={websiteHref} target="_blank" rel="noopener noreferrer" aria-label={`ورود به وب‌سایت ${partner.name}`} style={{ color: "inherit", textDecoration: "none" }} key={partner.id}>{content}</a> : <article className="partner-card" key={partner.id}>{content}</article>;
       })}</div></div></section>
 
       <section className="section news-section"><div className="shell"><div className="section-heading"><p className="eyebrow">اخبار و فعالیت‌ها</p><h2>خانه خلاق در جریان است</h2></div><div className="news-grid">{homeNews.map((item, index) => <article className="news-card" key={item.id}><NewsArt variant={newsArt[index % newsArt.length]} /><p className="news-meta">{newsCategoryLabels[item.category] || item.category}{item.publishedAt ? ` • ${formatPersianMonth(item.publishedAt)}` : ""}</p><h3>{item.title}</h3><a href={`/news/${item.slug}`}>مشاهده خبر</a></article>)}</div></div></section>
