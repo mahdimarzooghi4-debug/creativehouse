@@ -42,7 +42,7 @@ export default function AboutPage() {
               <p className="eyebrow">درباره خانه خلاق</p>
               <h1>جایی برای ساختن، آزمودن<br />و اثر گذاشتن</h1>
               <p>خانه خلاق و نوآوری آینه به عنوان بازوی نوآوری کمیته امداد امام خمینی<span className="about-rah">(ره)</span> فضایی برای تبدیل ایده‌های خلاق به راهکارها و کسب‌وکارهای قابل اجراست؛ جایی که تیم‌ها با مسئله‌های واقعی روبه‌رو می‌شوند، می‌سازند، می‌آزمایند و رشد می‌کنند.</p>
-              <div className="slogan-chip">وطن<span>،</span>&nbsp; ساختنی است</div>
+              <div className="slogan-chip"><span className="slogan-chip__text">وطن<span>،</span> ساختنی است</span></div>
             </div>
           </div>
         </section>
