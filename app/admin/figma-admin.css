@@ -1,0 +1,82 @@
+.cms-shell .cms-main,
+.cms-shell .cms-main *,
+.cms-shell .cms-sidebar,
+.cms-shell .cms-sidebar * {
+  font-family: "Estedad Variable", Estedad, "Vazirmatn Variable", Vazirmatn, Tahoma, Arial, sans-serif;
+  font-variation-settings: "kshd" 100;
+}
+
+.cms-shell .cms-brand {
+  direction: ltr;
+  justify-content: flex-end;
+}
+
+.cms-shell .cms-brand__title {
+  direction: rtl;
+  padding-right: 0;
+  padding-left: 4px;
+  font-family: "Vazirmatn Variable", Vazirmatn, Tahoma, Arial, sans-serif;
+  font-variation-settings: normal;
+  font-size: 11px;
+  line-height: normal;
+  font-weight: 500;
+  text-align: right;
+}
+
+.cms-shell .cms-brand__mark {
+  width: 82px;
+  height: 70px;
+  flex: 0 0 82px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.cms-shell .cms-sidebar__title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.cms-shell .cms-nav a {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.cms-shell .cms-nav a.is-active {
+  font-weight: 500;
+}
+
+.cms-shell .cms-page-header h1 {
+  font-size: 28px;
+  line-height: normal;
+  letter-spacing: 0;
+  font-weight: 800;
+}
+
+.cms-shell .cms-page-header p {
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.cms-shell .cms-outline-button,
+.cms-shell .cms-primary-button,
+.cms-shell .cms-dark-button {
+  font-size: 14px;
+}
+
+.cms-shell .cms-startup-stat > span {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.cms-shell .cms-startup-stat strong {
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.cms-shell .cms-startup-stat small,
+.cms-shell .cms-startups-row,
+.cms-shell .cms-startups-row strong,
+.cms-shell .cms-startup-status {
+  font-size: 12px;
+}
