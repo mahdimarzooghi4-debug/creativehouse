@@ -15,5 +15,17 @@
 .startups-page .hero-stat {
   direction: rtl;
   text-align: right;
-  align-items: flex-end;
+  align-items: stretch;
+}
+
+.startups-page .hero-stat strong,
+.startups-page .hero-stat span {
+  width: 100%;
+  text-align: right;
+}
+
+.startups-page .hero-stat__number {
+  display: inline-block;
+  direction: ltr;
+  unicode-bidi: isolate;
 }
