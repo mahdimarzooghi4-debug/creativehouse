@@ -1,0 +1,654 @@
+/* Pixel geometry for Figma node 588:3 — Creative House / About / Desktop. */
+.about-page {
+  background: var(--paper);
+}
+
+.about-page .public-page__main {
+  height: 2880px;
+  overflow: hidden;
+}
+
+/* Hero: 1440 × 580, directly below the 88px shared header. */
+.about-page .about-hero {
+  box-sizing: border-box;
+  position: relative;
+  height: 580px;
+  min-height: 580px;
+  padding: 0;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.about-page .about-hero .identity-hero__grid {
+  position: relative;
+  display: block;
+  width: 1240px;
+  height: 580px;
+}
+
+.about-page .identity-panel {
+  box-sizing: border-box;
+  position: absolute;
+  top: 96px;
+  left: 0;
+  width: 560px;
+  height: 390px;
+  padding: 0;
+  border-radius: 28px;
+  overflow: hidden;
+  background: var(--navy);
+  color: var(--white);
+  direction: rtl;
+}
+
+.about-page .identity-panel::before {
+  top: 48px;
+  left: 40px;
+  width: 220px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--gold);
+}
+
+.about-page .identity-panel__coral {
+  top: 48px;
+  left: 430px;
+  width: 74px;
+  height: 74px;
+  border-radius: 18px;
+  background: var(--coral);
+}
+
+.about-page .identity-panel__gold {
+  top: 150px;
+  left: 382px;
+  width: 122px;
+  height: 122px;
+  border-radius: 24px;
+  background: rgba(224, 200, 159, 0.95);
+}
+
+.about-page .identity-panel__text {
+  position: absolute;
+  top: 88px;
+  left: 40px;
+  width: 360px;
+  height: 244px;
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+  text-align: right;
+}
+
+.about-page .identity-panel__kicker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 310px;
+  height: 30px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 30px;
+}
+
+.about-page .identity-panel h2 {
+  position: absolute;
+  top: 54px;
+  left: 0;
+  width: 300px;
+  height: 120px;
+  margin: 0;
+  font-family: "Estedad Variable", Estedad, "Vazirmatn Variable", Tahoma, Arial, sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 56px;
+  letter-spacing: 0;
+  text-align: right;
+}
+
+.about-page .identity-panel__caption {
+  position: absolute;
+  top: 214px;
+  left: 0;
+  width: 360px;
+  height: 30px;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 28px;
+  white-space: nowrap;
+}
+
+.about-page .identity-copy {
+  position: absolute;
+  top: 92px;
+  left: 660px;
+  width: 580px;
+  height: 398px;
+  direction: rtl;
+  text-align: right;
+}
+
+.about-page .identity-copy .eyebrow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 580px;
+  height: 24px;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.about-page .identity-copy h1 {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 580px;
+  height: 132px;
+  margin: 0;
+  font-family: "Estedad Variable", Estedad, "Vazirmatn Variable", Tahoma, Arial, sans-serif;
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 64px;
+  letter-spacing: 0;
+  text-align: right;
+}
+
+.about-page .identity-copy > p:not(.eyebrow) {
+  position: absolute;
+  top: 192px;
+  left: 0;
+  width: 560px;
+  height: 120px;
+  margin: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 34px;
+  text-align: right;
+}
+
+.about-page .about-rah {
+  font-size: 10px;
+  line-height: inherit;
+}
+
+.about-page .slogan-chip {
+  box-sizing: border-box;
+  position: absolute;
+  top: 340px;
+  left: 320px;
+  width: 260px;
+  height: 58px;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: var(--white);
+  font-family: "Estedad Variable", Estedad, "Vazirmatn Variable", Tahoma, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 30px;
+  text-align: center;
+}
+
+/* Shared fixed-section foundations. */
+.about-page .about-purpose,
+.about-page .about-values,
+.about-page .about-model,
+.about-page .about-audience {
+  box-sizing: border-box;
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+}
+
+.about-page .about-purpose > .shell,
+.about-page .about-values > .shell,
+.about-page .about-model > .shell,
+.about-page .about-audience > .shell {
+  position: relative;
+  width: 1240px;
+  height: 100%;
+}
+
+/* Mission + vision: 500px. */
+.about-page .about-purpose {
+  height: 500px;
+  background: var(--white);
+}
+
+.about-page .about-purpose .section-intro {
+  position: absolute;
+  top: 72px;
+  left: 0;
+  width: 1240px;
+  height: 94px;
+  margin: 0;
+  text-align: right;
+}
+
+.about-page .about-purpose .section-intro .eyebrow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1240px;
+  height: 24px;
+  margin: 0;
+  font-size: 15px;
+  line-height: 24px;
+}
+
+.about-page .about-purpose .section-intro h2 {
+  position: absolute;
+  top: 36px;
+  left: 0;
+  width: 1240px;
+  height: 58px;
+  margin: 0;
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 58px;
+  letter-spacing: 0;
+}
+
+.about-page .about-purpose .two-card-grid {
+  position: absolute;
+  top: 204px;
+  left: 0;
+  display: block;
+  width: 1240px;
+  height: 230px;
+}
+
+.about-page .about-purpose .purpose-card {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 596px;
+  height: 230px;
+  min-height: 230px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  overflow: hidden;
+  background: var(--paper);
+  direction: rtl;
+  text-align: right;
+}
+
+.about-page .about-purpose .purpose-card--featured {
+  left: 620px;
+  width: 620px;
+  border-color: var(--navy);
+  background: var(--navy);
+  color: var(--white);
+}
+
+.about-page .about-purpose .purpose-card .eyebrow {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  width: 540px;
+  height: 28px;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 28px;
+}
+
+.about-page .about-purpose .purpose-card--featured .eyebrow {
+  width: 564px;
+  color: var(--gold);
+}
+
+.about-page .about-purpose .purpose-card h3 {
+  position: absolute;
+  top: 70px;
+  left: 28px;
+  width: 540px;
+  height: 38px;
+  margin: 0;
+  font-family: "Estedad Variable", Estedad, "Vazirmatn Variable", Tahoma, Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 38px;
+  text-align: right;
+}
+
+.about-page .about-purpose .purpose-card--featured h3 {
+  width: 564px;
+}
+
+.about-page .about-purpose .purpose-card p:not(.eyebrow) {
+  position: absolute;
+  top: 124px;
+  left: 28px;
+  width: 530px;
+  height: 78px;
+  margin: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 28px;
+  text-align: right;
+}
+
+.about-page .about-purpose .purpose-card--featured p:not(.eyebrow) {
+  width: 550px;
+  color: var(--white);
+}
+
+/* Values: 600px. */
+.about-page .about-values {
+  height: 600px;
+  background: var(--paper);
+}
+
+.about-page .about-values .section-intro {
+  position: absolute;
+  top: 72px;
+  left: 0;
+  width: 1240px;
+  height: 136px;
+  margin: 0;
+  text-align: right;
+}
+
+.about-page .about-values .section-intro .eyebrow,
+.about-page .about-model .section-intro .eyebrow,
+.about-page .about-audience .section-intro .eyebrow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1240px;
+  height: 24px;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.about-page .about-values .section-intro h2,
+.about-page .about-model .section-intro h2,
+.about-page .about-audience .section-intro h2 {
+  position: absolute;
+  top: 36px;
+  left: 0;
+  width: 1240px;
+  height: 58px;
+  margin: 0;
+  font-family: "Estedad Variable", Estedad, "Vazirmatn Variable", Tahoma, Arial, sans-serif;
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 58px;
+  letter-spacing: 0;
+  text-align: right;
+}
+
+.about-page .about-values .section-intro > p:not(.eyebrow),
+.about-page .about-model .section-intro > p:not(.eyebrow) {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  width: 1240px;
+  height: 36px;
+  margin: 0;
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 32px;
+  text-align: right;
+}
+
+.about-page .about-values .four-card-grid {
+  position: absolute;
+  top: 256px;
+  left: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 298px);
+  grid-auto-rows: 260px;
+  gap: 16px;
+  width: 1240px;
+  height: 260px;
+  direction: rtl;
+}
+
+.about-page .about-values .info-card {
+  box-sizing: border-box;
+  position: relative;
+  width: 298px;
+  height: 260px;
+  min-height: 260px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--white);
+  direction: rtl;
+  text-align: right;
+}
+
+.about-page .about-values .info-card__accent {
+  position: absolute;
+  top: 24px;
+  left: 222px;
+  width: 54px;
+  height: 6px;
+  margin: 0;
+  border-radius: 3px;
+}
+
+.about-page .about-values .info-card h3 {
+  position: absolute;
+  top: 58px;
+  left: 22px;
+  width: 254px;
+  height: 38px;
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 38px;
+  text-align: right;
+}
+
+.about-page .about-values .info-card p {
+  position: absolute;
+  top: 116px;
+  left: 22px;
+  width: 254px;
+  height: 92px;
+  margin: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 28px;
+  text-align: right;
+}
+
+/* Model: 620px. */
+.about-page .about-model {
+  height: 620px;
+  background: var(--white);
+}
+
+.about-page .about-model .section-intro {
+  position: absolute;
+  top: 76px;
+  left: 0;
+  width: 1240px;
+  height: 134px;
+  margin: 0;
+  text-align: right;
+}
+
+.about-page .about-model .section-intro > p:not(.eyebrow) {
+  height: 34px;
+}
+
+.about-page .about-model .model-grid {
+  position: absolute;
+  top: 270px;
+  left: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 298px);
+  grid-auto-rows: 250px;
+  gap: 16px;
+  width: 1240px;
+  height: 250px;
+  direction: rtl;
+}
+
+.about-page .about-model .step-card {
+  box-sizing: border-box;
+  position: relative;
+  width: 298px;
+  height: 250px;
+  min-height: 250px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--paper);
+  direction: rtl;
+  text-align: right;
+}
+
+.about-page .about-model .step-card__number {
+  position: absolute;
+  top: 24px;
+  left: 238px;
+  width: 38px;
+  height: 38px;
+  margin: 0;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  color: var(--white);
+  background: var(--coral);
+  font-family: Inter, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 38px;
+  text-align: center;
+}
+
+.about-page .about-model .step-card h3 {
+  position: absolute;
+  top: 82px;
+  left: 22px;
+  width: 254px;
+  height: 38px;
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 38px;
+  text-align: right;
+}
+
+.about-page .about-model .step-card p {
+  position: absolute;
+  top: 138px;
+  left: 22px;
+  width: 254px;
+  height: 70px;
+  margin: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 28px;
+  text-align: right;
+}
+
+/* Audience: 580px. */
+.about-page .about-audience {
+  height: 580px;
+  background: var(--paper);
+}
+
+.about-page .about-audience .section-intro {
+  position: absolute;
+  top: 76px;
+  left: 0;
+  width: 1240px;
+  height: 94px;
+  margin: 0;
+  text-align: right;
+}
+
+.about-page .about-audience .audience-grid {
+  position: absolute;
+  top: 236px;
+  left: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 390px);
+  grid-auto-rows: 250px;
+  gap: 20px;
+  width: 1210px;
+  height: 250px;
+  direction: rtl;
+}
+
+.about-page .about-audience .info-card {
+  box-sizing: border-box;
+  position: relative;
+  width: 390px;
+  height: 250px;
+  min-height: 250px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--white);
+  direction: rtl;
+  text-align: right;
+}
+
+.about-page .about-audience .info-card h3 {
+  position: absolute;
+  top: 34px;
+  left: 24px;
+  width: 342px;
+  height: 40px;
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 40px;
+  text-align: right;
+}
+
+.about-page .about-audience .info-card p {
+  position: absolute;
+  top: 96px;
+  left: 24px;
+  width: 342px;
+  height: 92px;
+  margin: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 28px;
+  text-align: right;
+}
+
+.about-page .about-audience .info-card::after {
+  position: absolute;
+  top: 210px;
+  right: auto;
+  bottom: auto;
+  left: 296px;
+  width: 70px;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--gold);
+}
