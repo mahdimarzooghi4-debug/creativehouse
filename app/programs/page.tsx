@@ -16,6 +16,7 @@ const cycle = [
   ["اجرا و همراهی", "منتورینگ، کارگاه و توسعه راهکار"],
   ["ارزیابی و ارائه", "سنجش خروجی و اتصال به فرصت بعدی"],
 ];
+const cycleNumbers = ["۱", "۲", "۳"];
 
 export default async function ProgramsPage({ searchParams }: { searchParams: Promise<{ type?: string }> }) {
   const { type = "all" } = await searchParams;
@@ -76,14 +77,17 @@ export default async function ProgramsPage({ searchParams }: { searchParams: Pro
               ))}
             </div>
             <div className="program-directory-grid">
-              {visiblePrograms.map((program) => (
-                <article className={`program-directory-card${program.featured ? " program-directory-card--featured" : ""}`} key={program.id}>
-                  <span className="tag">{programTypeLabels[program.type] || program.type}</span>
-                  <h3>{program.title}</h3>
-                  <p>{program.summary || "معرفی این برنامه به‌زودی تکمیل می‌شود."}</p>
-                  <a href={`/programs/${program.slug}`}>{program.featured ? "ورود به برنامه" : "مشاهده جزئیات"} ←</a>
-                </article>
-              ))}
+              {visiblePrograms.map((program) => {
+                const isFeaturedCard = program.id === featured?.id;
+                return (
+                  <article className={`program-directory-card${isFeaturedCard ? " program-directory-card--featured" : ""}`} key={program.id}>
+                    <span className="tag">{programTypeLabels[program.type] || program.type}</span>
+                    <h3>{program.title}</h3>
+                    <p>{program.summary || "معرفی این برنامه به‌زودی تکمیل می‌شود."}</p>
+                    <a href={`/programs/${program.slug}`}>{isFeaturedCard ? "ورود به برنامه" : "مشاهده جزئیات"} ←</a>
+                  </article>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -93,7 +97,7 @@ export default async function ProgramsPage({ searchParams }: { searchParams: Pro
             <div className="section-intro section-intro--compact"><p className="eyebrow">چرخه یک برنامه</p><h2>از فراخوان تا خروجی قابل ارائه</h2></div>
             <div className="three-card-grid">
               {cycle.map(([title, text], index) => (
-                <article className="step-card" key={title}><span className="step-card__number">{index + 1}</span><h3>{title}</h3><p>{text}</p></article>
+                <article className="step-card" key={title} dir="rtl"><span className="step-card__number">{cycleNumbers[index]}</span><h3>{title}</h3><p>{text}</p></article>
               ))}
             </div>
           </div>

@@ -196,4 +196,11 @@
 
 .program-cycle .step-card {
   min-height: 150px;
+  direction: rtl;
+  text-align: right;
+}
+
+.program-cycle .step-card__number {
+  margin-right: 0;
+  margin-left: auto;
 }
