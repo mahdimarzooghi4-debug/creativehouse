@@ -1,5 +1,5 @@
 FROM node:22-alpine AS base
-RUN apk add --no-cache openssl sqlite
+RUN sed -i 's#https://dl-cdn.alpinelinux.org/alpine#https://mirror.math.princeton.edu/pub/alpinelinux#g' /etc/apk/repositories && apk add --no-cache openssl sqlite
 
 FROM base AS deps
 WORKDIR /app
