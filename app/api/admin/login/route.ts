@@ -80,7 +80,10 @@ export async function POST(request: NextRequest) {
   attempts.delete(key);
   await db.adminUser.update({ where: { id: user.id }, data: { lastLoginAt: new Date() } });
 
-  const response = NextResponse.redirect(new URL(safeNext(next), request.url), 303);
+  const proto = request.headers.get("x-forwarded-proto") ?? "https";
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
+  const origin = host ? `${proto}://${host}` : request.url;
+  const response = NextResponse.redirect(new URL(safeNext(next), origin), 303);
   response.cookies.set(ADMIN_SESSION_COOKIE, createSessionToken(user), {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
